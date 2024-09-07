@@ -1,0 +1,208 @@
+1. Consider the following code: 
+public class Student {
+     int age;
+     String name;
+
+     void display(){
+             System.out.println("My name is " + this.name + ". I am "  + this.age + " years old");
+     }
+
+     void sayHello(String name){
+             System.out.println(this.name + " says hello to " + name);
+     }
+}
+
+
+public class Client {
+   public static void main(String[] args) {
+       Student s1 = new Student();
+       s1.age = 10;
+       s1.name = "A";
+       s1.display();
+
+       Student s2 = s1;
+       s2.age = 20;
+       s2.name = "B";
+
+       s2.display();
+
+       s1.display();
+   }
+}
+
+ans = My name is B. I am 20 years old.
+
+2. Consider the following Code.
+
+public class Student {
+   int age;
+   String name;
+
+   void display(){
+       System.out.println("My name is " + this.name + ". I am "  + this.age + " years old");
+   }
+
+   void sayHello(String name){
+       System.out.println(this.name + " says hello to " + name);
+   }
+}
+
+public class Client {
+   public static void main(String[] args) {
+       Student s1 = new Student();
+       s1.age = 10;
+       s1.name = "A";
+
+       Student s2 = new Student();
+
+       Student temp = s1;
+       s1 = s2;
+       s2 = temp;
+
+       s2.display();
+
+   }
+}
+ans = My name is A. I am 10 years old.
+
+3. Consider the following code
+
+public class Student {
+   int age;
+   String name;
+
+   void display(){
+       System.out.println("My name is " + this.name + ". I am "  + this.age + " years old");
+   }
+
+   void sayHello(String name){
+       System.out.println(this.name + " says hello to " + name);
+   }
+}
+
+public class Client {
+   public static void main(String[] args) {
+       Student s1 = new Student();
+       s1.age = 10;
+       s1.name = "A";
+
+       Student s2 = new Student();
+
+       int tempAge = s1.age;
+       s1.age = s2.age;
+       s2.age = tempAge;
+
+       s2.display();
+
+   }
+}
+
+ans = My name is null. I am 10 years old.
+
+4. Consider the following code
+
+class Student {
+   int age;
+   String name;
+
+   void display(){
+       System.out.println("My name is " + this.name + ". I am "  + this.age + " years old");
+   }
+}
+
+public class Client {
+   public static void main(String[] args) {
+       Student s1 = new Student();
+       s1.age = 10;
+
+       Student s2 = s1;
+
+       s2.display();
+   }
+}
+
+ans = My name is null. I am 10 years old.
+
+5. Consider the following class Student
+
+class Student {
+   int age;
+   String name;
+
+   void display(){
+       System.out.println("My name is " + this.name + ". I am "  + this.age + " years old");
+   }
+
+   void sayHello(String name){
+       System.out.println(this.name + " says hello to " + name);
+   }
+}
+
+public class Client {
+   public static void main(String[] args) {
+       Student s1 = new Student();
+       s1.age = 10;
+       s1.name = "A";
+
+       Student s2 = new Student();
+       s2.age = 20;
+       s2.name = "B";
+
+       swap(s1, s2);
+
+       s1.display();
+   }
+
+   private static void swap(Student s1, Student s2) {
+       int tage = s1.age;
+       s1.age = s2.age;
+       s2.age = tage;
+
+       String tname = s1.name;
+       s1.name = s2.name;
+       s2.name = tname;
+   }
+}
+
+ans = My name is B. I am 20 years old.
+
+6. Consider the following code
+
+public class Student {
+   int age;
+   String name;
+
+   void display(){
+       System.out.println("My name is " + this.name + ". I am "  + this.age + " years old");
+   }
+
+   void sayHello(String name){
+       System.out.println(this.name + " says hello to " + name);
+   }
+}
+
+public class Client {
+   public static void main(String[] args) {
+       Student s1 = new Student();
+       s1.age = 10;
+       s1.name = "A";
+
+       Student s2 = new Student();
+       s2.age = 20;
+       s2.name = "B";
+
+       swap(s1, s2);
+
+       s1.display();
+   }
+
+   private static void swap(Student s1, Student s2) {
+        Student temp = s1;
+        s1 = s2;
+        s2 = temp;
+   }
+}
+
+ans = My name is A. I am 10 years old.
+
+7. Which module in JVM is responsible for memory cleanup: Garbage Collector

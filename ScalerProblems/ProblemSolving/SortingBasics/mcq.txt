@@ -1,0 +1,8 @@
+1. What is the time complexity of the following code snippet? 
+ArrayList v = new ArrayList();
+for(int i=0; i<N; i++){
+    v.append(i);
+}
+Collections.sort(v);
+
+ans = O(nlogn)

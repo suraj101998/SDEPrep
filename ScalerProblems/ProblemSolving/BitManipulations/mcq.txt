@@ -1,0 +1,8 @@
+1. Given two binary numbers A = 1001011 and B = 11001001. What is their sum? 100010100
+2. Which of the following is the correct conversion of 10101101(base 2) to decimal? 173
+3. Which of the following is a correct conversion of 76 (base 10) to binary? 1001100
+4. Given a = 1010011 and b = 1001001, their OR, XOR and AND are - OR = 1011011 , XOR = 0011010 , AND = 1000001
+5. If a&1 = 1, then a is? odd
+6. What are the values of a&a, a|a, a^a? a&a = a , a|a = a , a^a = 0
+7. Given a=10, what will be the 0-th bit in a|1 ? 1
+8. What happens to the 0-th bit in a when we perform a = a^1 ? It gets toggled
