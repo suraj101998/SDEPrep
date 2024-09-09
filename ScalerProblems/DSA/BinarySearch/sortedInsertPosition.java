@@ -1,4 +1,4 @@
-package ScalerProblems.DSA.BinarySearch;
+
 // Problem Description
 
 // You are given a sorted array A of size N and a target value B.

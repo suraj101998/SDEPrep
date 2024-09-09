@@ -1,6 +1,4 @@
-package ScalerProblems.DSA.BinarySearch;
-// Problem Description
-// Given a matrix of integers A of size N x M and an integer B. Write an efficient algorithm that searches for integer B in matrix A.
+
 
 // This matrix A has the following properties:
 

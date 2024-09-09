@@ -1,4 +1,4 @@
-package ScalerProblems.DSA.BinarySearch;
+
 // Problem Description
 // You are given a 2-D matrix C of size A × B.
 // You need to build a new 1-D array of size A by taking one element from each row of the 2-D matrix in such a way that the cost of the newly built array is minimized.
