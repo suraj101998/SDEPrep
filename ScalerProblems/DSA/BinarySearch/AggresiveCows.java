@@ -1,3 +1,5 @@
+package ScalerProblems.DSA.BinarySearch;
+
 import java.util.Arrays;
 // Problem Description
 // Farmer John has built a new long barn with N stalls. Given an array of integers A of size N where each element of the array represents the location of the stall and an integer B which represents the number of cows.

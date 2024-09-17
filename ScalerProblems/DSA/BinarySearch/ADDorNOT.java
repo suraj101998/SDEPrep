@@ -1,5 +1,4 @@
-// Problem Description
-// Given an array of integers A of size N and an integer B.
+package ScalerProblems.DSA.BinarySearch;
 
 // In a single operation, any one element of the array can be increased by 1. You are allowed to do at most B such operations.
 

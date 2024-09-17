@@ -1,3 +1,5 @@
+package ScalerProblems.DSA.BinarySearch;
+
 // Problem Description
 // Given an integer array A of size N.
 

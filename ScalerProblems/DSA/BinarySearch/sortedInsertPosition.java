@@ -1,3 +1,4 @@
+package ScalerProblems.DSA.BinarySearch;
 
 // Problem Description
 

@@ -1,5 +1,4 @@
-// Problem Description
-// You are given three positive integers, A, B, and C.
+package ScalerProblems.DSA.BinarySearch;
 
 // Any positive integer is magical if divisible by either B or C.
 

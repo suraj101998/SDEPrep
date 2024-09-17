@@ -1,3 +1,4 @@
+package ScalerProblems.DSA.BinarySearch;
 
 // Problem Description
 // Given an array of integers A, find and return the peak element in it.

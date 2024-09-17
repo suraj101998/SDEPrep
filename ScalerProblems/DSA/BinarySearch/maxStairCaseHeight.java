@@ -1,3 +1,4 @@
+package ScalerProblems.DSA.BinarySearch;
 
 // Problem Description
 // Given an integer A representing the number of square blocks. The height of each square block is 1. The task is to create a staircase of max-height using these blocks.

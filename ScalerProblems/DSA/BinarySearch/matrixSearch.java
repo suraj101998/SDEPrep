@@ -1,4 +1,4 @@
-
+package ScalerProblems.DSA.BinarySearch;
 
 // This matrix A has the following properties:
 

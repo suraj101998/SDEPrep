@@ -1,6 +1,4 @@
-// Problem Description
-// Given a sorted array of integers A of size N and an integer B, 
-// where array A is rotated at some pivot unknown beforehand.
+package ScalerProblems.DSA.BinarySearch;
 
 // For example, the array [0, 1, 2, 4, 5, 6, 7] might become [4, 5, 6, 7, 0, 1, 2].
 

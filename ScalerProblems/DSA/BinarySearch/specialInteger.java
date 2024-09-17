@@ -1,3 +1,5 @@
+package ScalerProblems.DSA.BinarySearch;
+
 // Problem Description
 // Given an array of integers A and an integer B, find and return the maximum value K such that there is no subarray in A of size K with the sum of elements greater than B.
 

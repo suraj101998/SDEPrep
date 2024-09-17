@@ -1,3 +1,4 @@
+package ScalerProblems.DSA.BinarySearch;
 
 // Problem Description
 // You are given a 2-D matrix C of size A × B.

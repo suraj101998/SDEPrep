@@ -1,5 +1,4 @@
-// Problem Description
-// Given an array of integers A of size N and an integer B.
+package ScalerProblems.DSA.BinarySearch;
 
 // The College library has N books. The ith book has A[i] number of pages.
 

@@ -5,7 +5,7 @@ public class secondLargestElement {
         int max=-1;
         int secondMax=-1;
        for(int i=0;i<A.length;i++){
-           if(max<A[i]){
+           if(max < A[i]){
                secondMax=max;
                max=A[i];
            }

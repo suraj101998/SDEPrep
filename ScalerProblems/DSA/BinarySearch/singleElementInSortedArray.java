@@ -1,3 +1,4 @@
+package ScalerProblems.DSA.BinarySearch;
 
 // Problem Description
 // Given a sorted array of integers A where every element appears twice except for one element which appears once, find and return this single element that appears only once.

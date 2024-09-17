@@ -1,6 +1,4 @@
-// Problem Description
-// Given 2 integers A and B and an array of integers C of size N. Element C[i] represents the length of ith board.
-// You have to paint all N boards [C0, C1, C2, C3 … CN-1]. There are A painters available and each of them takes B units of time to paint 1 unit of the board.
+package ScalerProblems.DSA.BinarySearch;
 
 // Calculate and return the minimum time required to paint all boards under the constraints that any painter will only paint contiguous sections of the board.
 // NOTE:
