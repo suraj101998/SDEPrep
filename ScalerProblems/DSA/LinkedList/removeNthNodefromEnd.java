@@ -45,11 +45,11 @@ In the first example, 4 is the second last element.
 Explanation 2:
 In the second example, 1 is the first and the last element.
  */
-class ListNode {
-     public int val;
-     public ListNode next;
-     ListNode(int x) { val = x; next = null; }
-}
+// class ListNode {
+//      public int val;
+//      public ListNode next;
+//      ListNode(int x) { val = x; next = null; }
+// }
 public class removeNthNodefromEnd {
     public ListNode removeNthFromEnd(ListNode A, int B) {
         // Create a newNode node that points to the head of the list

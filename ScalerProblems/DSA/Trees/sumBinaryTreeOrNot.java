@@ -1,4 +1,4 @@
-package ScalerProblems.DSA.Trees;
+
 /*
  * Problem Description
 Given a binary tree. Check whether the given tree is a Sum-binary Tree or not.

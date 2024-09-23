@@ -1,4 +1,4 @@
-package ScalerProblems.DSA.Trees;
+
 /*
  * Problem Description
 Given a binary tree A. Check whether it is possible to partition the tree to two trees which have equal sum of values after removing exactly one edge on the original tree.
