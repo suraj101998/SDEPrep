@@ -1,3 +1,4 @@
+package PracticeProblems.DSA.Trees;
 /*
  * Problem Description
 Given the root node of a Binary Tree denoted by A. You have to Serialize the given Binary Tree in the described format.
@@ -61,7 +62,20 @@ Explanation 2:
  The Level Order Traversal of the given tree will be [1, 2, 3, 4, 5, -1, 6, -1, -1, -1, -1, -1, -1].
  Since 3 has left child as NULL while 4 and 5 each has both NULL child.
  */
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+     val = x;
+     left=null;
+     right=null;
+    }
+}
 public class serializeBinaryTree {
     public int[] solve(TreeNode A) {
         if (A == null) {

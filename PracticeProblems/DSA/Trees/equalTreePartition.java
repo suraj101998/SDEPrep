@@ -1,4 +1,4 @@
-
+package PracticeProblems.DSA.Trees;
 /*
  * Problem Description
 Given a binary tree A. Check whether it is possible to partition the tree to two trees which have equal sum of values after removing exactly one edge on the original tree.
@@ -64,6 +64,18 @@ Explanation 1:
 Explanation 2:
  The given Tree cannot be partitioned.
  */
+import java.util.ArrayList;
+import java.util.List;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+     val = x;
+     left=null;
+     right=null;
+    }
+}
 public class equalTreePartition {
     private boolean canPartition = false;
     private int totalSum = 0;

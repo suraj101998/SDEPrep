@@ -1,3 +1,4 @@
+package PracticeProblems.DSA.Trees;
 /*
  * Problem Description
 You are given an integer array A denoting the Level Order Traversal of the Binary Tree.
@@ -63,7 +64,20 @@ Explanation 2:
  Each element of the array denotes the value of the node. If the val is -1 then it is the NULL/None child.
  Since 3 has left child as NULL while 4 and 5 each has both NULL child.
  */
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+     val = x;
+     left=null;
+     right=null;
+    }
+}
 public class deserializeBinaryTree {
     public TreeNode solve(int[] A) {
         if (A.length == 0) {

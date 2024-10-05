@@ -1,3 +1,4 @@
+package PracticeProblems.DSA.Trees;
 /*
  * Problem Description
 Given the inorder and postorder traversal of a tree, construct the binary tree.
@@ -54,7 +55,17 @@ Explanation 1:
 
  Create the binary tree and return the root node of the tree.
  */
-import java.util.*;
+import java.util.HashMap;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+     val = x;
+     left=null;
+     right=null;
+    }
+}
 public class binaryTreeInorderPostorder {
    private HashMap<Integer, Integer> inorderIndexMap;
    private int postIndex;

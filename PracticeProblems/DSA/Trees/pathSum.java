@@ -1,4 +1,4 @@
-
+package PracticeProblems.DSA.Trees;
 /*
  * Problem Description
 Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
@@ -64,6 +64,18 @@ Explanation 2:
 
  There is no path which has sum -1.
  */
+import java.util.ArrayList;
+import java.util.List;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+     val = x;
+     left=null;
+     right=null;
+    }
+}
 public class pathSum {
     public int hasPathSum(TreeNode A, int B) {
         if(A==null){

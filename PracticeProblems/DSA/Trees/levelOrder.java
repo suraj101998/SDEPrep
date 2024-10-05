@@ -1,3 +1,4 @@
+package PracticeProblems.DSA.Trees;
 /*
  * Problem Description
 Given a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
@@ -58,7 +59,20 @@ Explanation 1:
 
  Return the 2D array. Each row denotes the traversal of each level.
  */
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+     val = x;
+     left=null;
+     right=null;
+    }
+}
 public class levelOrder {
     public int[][] solve(TreeNode A) {
         if (A == null) {

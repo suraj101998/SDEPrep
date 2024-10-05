@@ -1,4 +1,4 @@
-
+package PracticeProblems.DSA.Trees;
 /*
  * Problem Description
 Given a binary tree. Check whether the given tree is a Sum-binary Tree or not.
@@ -65,6 +65,18 @@ Explanation 2:
 
  Sum of left subtree and right subtree is 27 which is not equal to the value of root node which is 26.
  */
+import java.util.ArrayList;
+import java.util.List;
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) {
+     val = x;
+     left=null;
+     right=null;
+    }
+}
 public class sumBinaryTreeOrNot {
     public int solve(TreeNode A) {
         int ans = isSumTree(A);
