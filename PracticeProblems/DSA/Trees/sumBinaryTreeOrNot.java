@@ -65,8 +65,7 @@ Explanation 2:
 
  Sum of left subtree and right subtree is 27 which is not equal to the value of root node which is 26.
  */
-import java.util.ArrayList;
-import java.util.List;
+
 class TreeNode {
     int val;
     TreeNode left;
