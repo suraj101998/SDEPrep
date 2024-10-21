@@ -80,6 +80,16 @@ Explanation 2:
 
 Node with value 6 is deleted
  */
+// class TreeNode {
+//     int val;
+//     TreeNode left;
+//     TreeNode right;
+//     TreeNode(int x) {
+//      val = x;
+//      left=null;
+//      right=null;
+//     }
+// }
 public class deleteBSTNode {
     public TreeNode solve(TreeNode A, int B) {
         if (A == null){ return null; }

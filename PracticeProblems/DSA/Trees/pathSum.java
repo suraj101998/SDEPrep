@@ -66,16 +66,16 @@ Explanation 2:
  */
 import java.util.ArrayList;
 import java.util.List;
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int x) {
-     val = x;
-     left=null;
-     right=null;
-    }
-}
+// class TreeNode {
+//     int val;
+//     TreeNode left;
+//     TreeNode right;
+//     TreeNode(int x) {
+//      val = x;
+//      left=null;
+//      right=null;
+//     }
+// }
 public class pathSum {
     public int hasPathSum(TreeNode A, int B) {
         if(A==null){

@@ -58,6 +58,16 @@ Explanation 1:
 
  You need to return the root node of the Binary Tree.
  */
+// class TreeNode {
+//     int val;
+//     TreeNode left;
+//     TreeNode right;
+//     TreeNode(int x) {
+//      val = x;
+//      left=null;
+//      right=null;
+//     }
+// }
 public class sortedArrayToBST {
     public TreeNode sortedArrayToBalancedBST(final int[] A) {
         return sortedArrayToBSTHelper(A, 0, A.length - 1); //where l=0 and r=A.length-1

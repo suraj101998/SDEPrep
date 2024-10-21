@@ -58,16 +58,16 @@ Explanation 2:
 
  The Inorder Traversal of the given tree is [6, 1, 3, 2].
  */
-class TreeNode {
-     int val;
-     TreeNode left;
-     TreeNode right;
-     TreeNode(int x) {
-      val = x;
-      left=null;
-      right=null;
-     }
- }
+// class TreeNode {
+//      int val;
+//      TreeNode left;
+//      TreeNode right;
+//      TreeNode(int x) {
+//       val = x;
+//       left=null;
+//       right=null;
+//      }
+//  }
 public class inorderTraversal {
         public int[] inorderTraversal(TreeNode A) {
         List<Integer> result = new ArrayList<>();

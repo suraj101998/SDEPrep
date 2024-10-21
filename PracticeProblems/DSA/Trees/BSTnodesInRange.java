@@ -78,6 +78,16 @@ Explanation 2:
  Nodes which are in range [2, 20] are : [8, 6, 7]
 
  */
+// class TreeNode {
+//     int val;
+//     TreeNode left;
+//     TreeNode right;
+//     TreeNode(int x) {
+//      val = x;
+//      left=null;
+//      right=null;
+//     }
+// }
 public class BSTnodesInRange {
     public int solve(TreeNode A, int B, int C) {
         if (A == null) {

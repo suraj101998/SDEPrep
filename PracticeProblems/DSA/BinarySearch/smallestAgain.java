@@ -43,22 +43,22 @@ import java.util.PriorityQueue;
 public class smallestAgain {
     public int solve(int[] A, int B) {
         int n = A.length;
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>((a, b) -> b - a); // Max-heap by negating values
+        PriorityQueue<Integer> triplet = new PriorityQueue<>((a, b) -> b - a); // Max-heap by negating values
         // Generate all triplet sums
         for (int i=0; i<n-2; i++) {
             for (int j=i+1; j<n-1; j++) {
                 for (int k=j+1; k<n; k++) {
                     int sum = A[i]+A[j]+A[k];
-                    if (minHeap.size() < B) {
-                        minHeap.add(sum);
-                    } else if (sum < minHeap.peek()) {
-                        minHeap.poll(); // Remove the largest element
-                        minHeap.add(sum);
+                    if (triplet.size() < B) {
+                        triplet.add(sum);
+                    } else if (sum < triplet.peek()) {
+                        triplet.poll(); // Remove the largest element
+                        triplet.add(sum);
                     }
                 }
             }
         }
         // The root of the heap is the Bth smallest element
-        return minHeap.peek();
+        return triplet.peek();
     }
 }
