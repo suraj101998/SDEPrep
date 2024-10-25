@@ -54,32 +54,26 @@ package PracticeProblems.DSA.BinarySearch;
 
 public class rotatedSortedArray {
     public int search(final int[] A, int B) {
-        int start = 0, end = A.length - 1;
-        
-        while (start <= end) {
-            int mid = (start + end) / 2;
-            
-            // If the target is found at mid
+        int l = 0, r = A.length - 1;
+        while (l <= r) {
+            int mid = (l + r) / 2;
             if (A[mid] == B) {
                 return mid;
             }
-            
-            // Determine which side is sorted
-            if (A[start] <= A[mid]) { // Left half is sorted
-                if (B >= A[start] && B < A[mid]) {
-                    end = mid - 1;  // Target is in the left half
+            if (A[l] <= A[mid]) {
+                if (B >= A[l] && B < A[mid]) {
+                    r = mid - 1;
                 } else {
-                    start = mid + 1;  // Target is in the right half
+                    l = mid + 1;
                 }
-            } else { // Right half is sorted
-                if (B > A[mid] && B <= A[end]) {
-                    start = mid + 1;  // Target is in the right half
+            } else {
+                if (B > A[mid] && B <= A[r]) {
+                    l = mid + 1;
                 } else {
-                    end = mid - 1;  // Target is in the left half
+                    r = mid - 1;
                 }
             }
         }
-        
-        return -1;  // Target is not found
+        return -1;
     }
 }
