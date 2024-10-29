@@ -75,20 +75,6 @@ Explanation 2:
 
 import java.util.Stack;
 
-/**
- * Definition for binary tree
- * class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) {
- *      val = x;
- *      left=null;
- *      right=null;
- *     }
- * }
- */
-
 public class commonNodesIn2BST {
     public int solve(TreeNode A, TreeNode B) {
         int temp = (int) common(A, B);

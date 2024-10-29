@@ -39,19 +39,6 @@ Explanation 2:
  Values of the left child of the root node of the trees are different.
  */
 
-/**
- * Definition for binary tree
- * class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) {
- *      val = x;
- *      left=null;
- *      right=null;
- *     }
- * }
- */
 
 public class identicalBinaryTree {
     public int isSameTree(TreeNode A, TreeNode B) {

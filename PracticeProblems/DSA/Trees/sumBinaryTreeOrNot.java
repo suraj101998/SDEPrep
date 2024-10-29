@@ -65,16 +65,7 @@ Explanation 2:
 
  Sum of left subtree and right subtree is 27 which is not equal to the value of root node which is 26.
  */
-// class TreeNode {
-//     int val;
-//     TreeNode left;
-//     TreeNode right;
-//     TreeNode(int x) {
-//      val = x;
-//      left=null;
-//      right=null;
-//     }
-// }
+
 public class sumBinaryTreeOrNot {
     public int solve(TreeNode A) {
         int ans = isSumTree(A);

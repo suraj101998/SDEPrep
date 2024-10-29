@@ -50,17 +50,12 @@ public class longestPalindromicSubstring {
     public String longestPalindrome(String A) {
         int n = A.length();
         if (n == 0) return "";
-
         boolean[][] dp = new boolean[n][n];
         int maxLength = 1;
         int start = 0;
-
-        // Every single character is a palindrome
         for (int i = 0; i < n; i++) {
             dp[i][i] = true;
         }
-
-        // Check for palindromes of length 2
         for (int i = 0; i < n - 1; i++) {
             if (A.charAt(i) == A.charAt(i + 1)) {
                 dp[i][i + 1] = true;
@@ -68,13 +63,9 @@ public class longestPalindromicSubstring {
                 maxLength = 2;
             }
         }
-
-        // Check for palindromes of length greater than 2
         for (int len = 3; len <= n; len++) {
             for (int i = 0; i < n - len + 1; i++) {
                 int j = i + len - 1;
-
-                // Check if the current substring is a palindrome
                 if (dp[i + 1][j - 1] && A.charAt(i) == A.charAt(j)) {
                     dp[i][j] = true;
                     if (len > maxLength) {
@@ -84,7 +75,6 @@ public class longestPalindromicSubstring {
                 }
             }
         }
-
         return A.substring(start, start + maxLength);
     }
 }

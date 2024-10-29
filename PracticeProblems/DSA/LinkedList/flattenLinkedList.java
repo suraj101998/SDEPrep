@@ -46,15 +46,6 @@ Explanation 1:
  */
 
 
-class ListNode {
-    int val;
-    ListNode right, down;
-    ListNode(int x) {
-        val = x;
-        right = down = null;
-    }
-}
-
 
 public class flattenLinkedList {
     ListNode flatten(ListNode root) {

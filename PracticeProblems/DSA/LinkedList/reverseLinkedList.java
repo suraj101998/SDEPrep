@@ -53,16 +53,12 @@ Expalantion 2:
 
  The linked list consists of only a single node. After reversing it, the list becomes : 3 -> NULL
  */
-// class ListNode {
-//     public int val;
-//     public ListNode next;
-//     ListNode(int x) { val = x; next = null; }
-//  }
+
 public class reverseLinkedList {
-    public List reverseList(ListNode A) {
-        ListNode prev = null;
-        ListNode curr = A;
-        ListNode nextcurr = null;
+    public List reverseList(Node A) {
+        Node prev = null;
+        Node curr = A;
+        Node nextcurr = null;
         while (curr != null) {
             // Store the next node
             nextcurr = curr.next;

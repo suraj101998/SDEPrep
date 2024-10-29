@@ -40,20 +40,6 @@ Explanation 2:
  Longest Path in the tree is 4 -> 2 -> 1 -> 3 -> 6 and the number of edges in this path is 4 so diameter is 4.
  */
 
-/**
- * Definition for binary tree
- * class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) {
- *      val = x;
- *      left=null;
- *      right=null;
- *     }
- * }
- */
-
 public class binaryTreeDiameter {
     private int maxDiameter = 0;
     public int solve(TreeNode A) {

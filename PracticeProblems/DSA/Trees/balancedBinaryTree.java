@@ -59,16 +59,7 @@ Explanation 2:
 Because for the root node, left subtree has depth 2 and right subtree has depth 0. 
 Difference = 2 > 1.
  */
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int x) {
-     val = x;
-     left=null;
-     right=null;
-    }
-}
+
 public class balancedBinaryTree {
     public int isBalanced(TreeNode A) {
         if (checkBalance(A) != -1) {

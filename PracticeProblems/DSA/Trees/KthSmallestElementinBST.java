@@ -40,19 +40,6 @@ Explanation 2:
 1st element is 1.
  */
 
- /**
- * Definition for binary tree
- * class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) {
- *         val = x;
- *         left = null;
- *         right = null;
- *     }
- * }
- */
 public class KthSmallestElementinBST {
     private int count = 0;
     private int result = -1;
