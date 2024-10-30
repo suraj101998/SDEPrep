@@ -1,0 +1,20 @@
+Spring boot Program Flow:
+NOTE:While Calling only parent is called because all the properties are 
+
+ENTITY- spring data jpa- by the help of hibernate, apache tomcat
+1.customer- only customer data
+2.transactions- only transactions data
+3.UserDepartmentResponse- mix of both customer and transaction data
+
+REPOSITORY- @Repository
+1. customerRepository
+2. transactionsRepository
+3. userdao- parent class- where objects are created
+a.userdao impl- all joining queries- child class- where methods are made
+b.userdao support jdbc- calls the JDBC to perform the joining- child class
+
+SERVICE- @service
+1.Service- parent class
+a.service impl- child class
+
+CONTROLLER- spring web
