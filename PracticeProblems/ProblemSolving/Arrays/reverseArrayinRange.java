@@ -44,7 +44,7 @@ import java.util.ArrayList;
 2. swap the elements at positions B and C: Store the element at A.get(B) in a temporary variable temp. Set the element at position B to A.get(C). Set the element at position C to temp.
 3. Increment B by 1 and decrement C by 1. Return A.
 */
-public class reverseInARange {
+public class reverseArrayinRange {
     public ArrayList<Integer> solve(ArrayList<Integer> A, int B, int C) {
         while(B<C){
             int temp = A.get(B);

@@ -1,0 +1,179 @@
+Spring Boot Main Annotations:
+
+@SpringBootApplication: A composite annotation that combines @Configuration, @EnableAutoConfiguration, and @ComponentScan for a Spring Boot application’s main entry point or main class.
+@ComponentScan: Scans for Spring managed beans in the specified package and its sub-packages.
+@EnableAutoConfiguration: Enables Spring Boot to automatically configure beans based on the application's classpath dependencies.
+@Configuration: Indicates a class as a source of bean definitions for the application context.
+
+
+Stereotype Annotations:
+
+@Component: Marks a class as a Spring-managed bean, eligible for component scanning.
+@Service: Specialization of @Component indicating a service layer component.
+@RestController / @Controller: Marks a class as a web controller, @RestController for REST APIs and @Controller for traditional MVC. @RestController combines @Controller and @ResponseBody.
+@Repository: Specialization of @Component indicating a DAO (Data Access Object) or data access layer.
+
+
+Spring Core Related Annotations:
+
+@Configuration: Defines a configuration class for bean definitions.
+@Bean: Indicates a method that produces a Spring bean.
+@Autowired: Injects dependencies automatically by type.
+@Qualifier: Specifies which bean to inject when multiple options are available.
+@Lazy: Initializes a bean only when it’s first accessed.
+@Value: Injects values into fields, such as from a properties file.
+@PropertySource: Declares a properties file as a source for values.
+@ConfigurationProperties: Binds external properties from a file to a class or java Object.
+@Profile: Activates beans only for specified environments (e.g., dev, prod).
+@Scope: Defines the scope of a bean (e.g., singleton, prototype).
+
+
+REST API Related Annotations:
+
+@RestController: Combines @Controller and @ResponseBody, simplifying REST API development.
+@RequestMapping: Maps HTTP requests to handler methods in the controller.
+@GetMapping: Maps HTTP GET requests.
+@PostMapping: Maps HTTP POST requests.
+@PutMapping: Maps HTTP PUT requests.
+@DeleteMapping: Maps HTTP DELETE requests.
+@RequestBody: Binds request body to a method parameter.
+@PathVariable: Extracts values from URI template variables.
+@RequestParam: Extracts query parameters from the URL.
+@ControllerAdvice & @ExceptionHandler: Global exception handling and advice for controllers.
+
+
+Spring Data JPA Related Annotations:
+
+@Entity: Marks a class as a JPA entity for database persistence.
+@Table: Specifies the table name for an entity.
+@Column: Specifies column mapping for a field.
+@Transactional: Declares transaction management boundaries.
+
+
+Entity Class Relationships:
+
+@OneToOne: Defines a one-to-one relationship between entities.
+@OneToMany: Defines a one-to-many relationship where one entity is linked to multiple instances of another entity.(parent to multiple children).
+@ManyToOne: Defines a many-to-one relationship where many entities are associated with a single instance of another entity.(many children to one parent).
+@ManyToMany: Defines a many-to-many relationship between two entities.
+
+
+---------------------------------------------------------------------------------------------
+
+1. key dependencies of Spring Boot?
+spring-boot-starter-parent
+spring-boot-maven-plugin
+spring-boot-starter-test
+spring-boot-starter-security
+spring-boot-starter-actuator
+Spring-boot-starter-web
+
+2. create a Spring Boot project using Spring Initializer?
+Step 1: Go to https://start.spring.io and launch Spring Initializr.
+Step 2: Specify Project Details—Once all the details are entered, select the Generate Project button to generate and download a Spring Boot project. Then, unzip the downloaded zip file and transfer it into your preferred IDE.
+Step 3: Next open Eclipse and import the file.
+
+3. What are the Spring Boot properties?
+Spring Boot Properties files are used to configure its auto-configuration and application properties.
+commonly used properties in Spring Boot include server.port, spring.profiles.active, spring. data source. URL, spring.jpa.show-sql etc.
+
+4. What are the Spring Boot Starters?
+Spring Boot Starters are a set of pre-configured dependencies that can be easily included in your project to quickly start using common features or technologies.
+
+5. What is Spring Boot Actuator?
+Spring Boot Actuator is a set of features that provides monitoring and management capabilities for your Spring Boot application.
+Actuator endpoints expose information about your application, such as health status, metrics, and environment variables, that can be used to monitor and manage it.
+
+6. What is thyme leaf?
+Thyme Leaf is a popular templating engine used in Spring Boot applications to build dynamic web pages.
+It is humanly readable, and developers can use it to create templates that can be rendered in HTML.
+
+7. How to use thyme leaf?
+include the thymeleaf-spring-boot-starter dependency in your project.
+
+8. How do you connect Spring Boot to the database using JPA?
+Configure the JPA properties in the application.properties or application.yml file to connect Spring Boot to a database using JPA. 
+
+9. How to connect the Spring Boot application to a database using JDBC?
+To connect the Spring Boot to a database using JDBC, configure the JDBC properties in the application.properties or application.yml file.
+
+10. Spring Vs Spring Boot?
+Spring is a framework that provides various modules for building enterprise-level applications.
+Spring Boot is a framework that simplifies Spring development by providing a pre-configured environment that enables developers to focus on building the application logic.
+
+11. What annotations are used to create an Interceptor?
+Interceptor is a prominent functionality of Spring Boot. It uses the annotated class @Component and implements the interface HandlerInterceptor.
+
+The interface contains 3 main methods, which are:
+The preHandle() Method − preHandle() is used to intercept the request before the handler's implementation. If preHandle() returns a “true” boolean value, developers can continue with handler execution. If preHandle() returns a “false” boolean value, developers should stop the handler execution. 
+The postHandle() Method − postHandle() is used for intercepting a request following the handler's implementation. It allows the manipulation of the ModelAndView Object before users render it.
+The afterCompletion() Method − A HandlerInterceptor callback approach, the afterCompletion() method is used when the entire request gets completed.
+
+12. What is a Swagger in Spring Boot?
+Swagger is used to detail and document RESTful APIs in a machine-readable and human-readable format that is easily understandable for testers, developers, and individuals with little knowledge of source code.
+
+13. What are Profiles in Spring Boot?
+Profiles in the Spring framework enable users to map components and beans to specific profiles, such as the Development (dev) profile, Production (prod) profile, or the Test profile. 
+In Spring Boot, the annotation @Profile maps components and beans to a certain profile. 
+Developers can also set up profiles using the SpringApplication, for instance, SpringApplication.setAdditionalProfiles("dev").
+
+14. What differentiates Spring Data JPA and Hibernate?
+A Java Persistence API (JPA) implementation, Hibernate facilitates Object-Relational Mapping (ORM), allowing users to store, retrieve, map, and update application data to and from Java objects and relational databases. Hibernate maps the data types in Java to SQL (Structured Query Language) data types and the classes in Java to the database tables, relieving developers from scripting data persistence SQL programs. 
+On the other hand, a Spring Data sub-project, Spring Data JPA, abstracts the DAL (Data Access Layer) by applying JPA and Object–Relational Mapping implementations, such as Hibernate. Spring Data JPA facilitates the smooth implementation of JPA repositories and intends to improve the overall implementation of DAL greatly.
+
+15. How are the @RestController and @Controller Annotation different?
+The traditional Spring @Controller annotation specifies that an annotated class represents a controller. It’s a @Component specialization and autodetected via the classpath scanning. The @Controller annotation and the annotated handler methodologies are used based on @RequestMapping annotations.
+Developers use the @RestController annotation to develop RESTful web services, utilizing the Spring Model–View–Controller (MVC). The Spring @RestController maps the request data using specified request handler methods. Once the handler method generates the response body, the @RestController modifies it to an XML or JSON response.
+
+16. What is Dependency Injection in Spring Boot?
+process of defining dependency, specifically through constructor arguments. Additionally, the dependencies here can also be set by the properties on the object instance once the construction is completed via the factory method. Dependency injection improves testability, promotes loose coupling, simplifies configuration and eases reusability.
+
+17. How does Spring Boot handle externalized configuration?
+The externalized configuration feature in Spring Boot allows users to use a single application code across different environments. This is achieved by separate configuration storage. Multiple ways can be used to achieve externalized configuration, such as configuration files, structured objects, property sources and injection, custom spring validator, environment abstraction, validation, and others. 
+
+18. What is Spring Boot DevTools?
+Spring Boot DevTools are tools that ease application development and optimization. These tools reduce development time and enhance productivity. They can auto-recompile the code without the requirement to restart the application manually. DevTools are also used for static resource caching, actuator endpoints, and automatic application restart. The ‘spring-boot-devtools’ module dependency can easily be added to the project.
+
+19. What is the use of Spring Boot Actuator endpoints?
+Sprint Boot comprises multiple built-in Actuator endpoints that monitor and interact with the application. Users can add their actuator endpoints as well. The endpoints can be enabled, disabled and exposed through HTTP or JMX. These are used for the application's health checkup to gather metrics, information and the list of beans. The actuator endpoints are useful for knowing the mappings between URLs and controller methods, accessing environment properties, gaining thread dumps, and offering multiple other information.
+
+20. What is Spring Boot Starter?
+Spring Boot Starter is a collection of dependency descriptors used to simplify the development process of Spring applications. It serves as the foundation for web applications, microservices and other Spring-based projects. It enhances the user’s productivity by directing the focus on writing rather than working on infrastructure handling. Spring Boot Starter also eases POM management and eliminates the requirement to remember dependency names and versions. 
+
+21. What are the different scopes available in Spring Boot?
+Singleton: It is the default scope where only a single instance is used for the complete application context. 
+Prototype: Here, each request creates a new bean instance. 
+Request: Every HTTP request creates a new bean instance.
+Session: Each HTTP session creates a new bean instance. 
+Application: The entire web application gets a new Bean instance.
+
+22. How does Spring Boot support logging?
+Sprint Boot supports logging to ease logging integration and configuration in the application. The default logging frameworks are Java Util Logging, Logback, and Log4j2. Further, Simple Logging Facade for Java (SLF4J) is used to switch logging frameworks. 
+
+23. What is Spring Boot’s embedded server, and how do you configure it?
+The feature of an embedded server in Spring Boot offers direct access to the web server within the application. It removes the need for separate server installation and configuration, easing the deployment process.
+The different methods to configure the server are: 
+
+Using application.properties or application.yml
+Via programmatic configurations 
+Through command-line agreements 
+
+24. purpose of Spring Boot’s @Conditional annotations?
+The @Conditional annotations create customizable and flexible configurations by applying specific settings or loading beans when certain conditions are met at runtime. These features contribute to easily managing different environments, optional dependencies and feature toggles. They can be directly used as a type-level annotation or indirectly annotated with @Component.
+
+25. How does Spring Boot achieve auto-configuration?
+The Spring Boot auto-configuration is achieved according to the jar dependencies the user adds. Spring Boot scans the classpath for configuration classes and specific libraries and automatically configures the beans based on them. The feature eliminates the manual configuration requirements.
+
+26. What are Spring Boot filters, and how are they used?
+The Spring Boot filters are powerful tools that positively influence the request-response lifecycle. They are the components of the servlet API that function at HTTP requests and responses. The filters serve the key aim of logging, authentication and input validation. They are also used for data transformation, caching, and security checks.
+
+27. How do you secure a Spring Boot application?
+The different ways to secure the Spring Boot application include:
+
+Password encoder: It is the sprint security password management process component that encodes and decodes the password by default. 
+HTTPS: It encrypts the data during the process of transmission. Enable TLS/SSL in application.properties to enable this protection. 
+CSRF protection: Protection against Cross-Site Request Forgery (CSRF) attacks is enabled by default in Spring Security. 
+Method level security: It is used when low privileged or unauthorized user access to sensitive functions is encountered. The @PreAuthorize annotation can be used here. 
+Parameterized queries: It is used to protect against SQL injections. 
+Rigorous input validation: The input's length, type, format and range must be validated. Built-in validation can be used here. 
+Sensitive data encryption: It will be done by the @EncryptablePropertySource function.

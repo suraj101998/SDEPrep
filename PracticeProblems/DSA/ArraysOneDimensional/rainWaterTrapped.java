@@ -23,13 +23,11 @@ Input 1:
 Input 2:
 A = [1, 2]
 
-
 Example Output
 Output 1:
 1
 Output 2:
 0
-
 
 Example Explanation
 Explanation 1:

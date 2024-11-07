@@ -1,6 +1,6 @@
 package PracticeProblems.DSA.LinkedList;
 
-class ListNode {
+public class ListNode {
     int val;
     ListNode right, down;
     ListNode(int x) {
