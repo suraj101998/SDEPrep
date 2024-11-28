@@ -22,10 +22,24 @@ default parent of all the java classes.
 Integral part of code and provides with certain method such as equals(), wait(), notify(), notifyAll(), toString() etc. 
 At a time a class can extend only one class.
 
-6. Difference B/w Immutable and mutable objects in java:
+6. Difference between Immutable and mutable objects in java:
 mutable: can modify the value once created.
 Immutable: cannot modify the value once created. eg: strings. However StringBuilders are mutable in java.
 
 7. what is HQL:
 hibernate query language used to interact with database using hibernate queries. 
 HQL uses classnames and variablenames.
+
+8. How to create Immutable class in java: (assume all the fields are also Immutable)
+step1: make class final so that one can inherit it.
+step2: make all the fields private and final so that no one can modify them.
+step3: remove all the setter method so that no one can set the values of variables.
+step4: create parameterized constuctor which can intialize all fields when we are creating the objects.
+
+9. what is final keyword in java:
+used whenever we want to restrict from modifying the value.
+can be used alongwith method: cannot override the method.
+can be used alongwith class: cannot extend or inherit the class.
+can be used alongwith the variable: cannot change the value of the variable.
+
+10. what is static keyword in java:

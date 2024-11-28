@@ -32,14 +32,14 @@ Explanation 1:
 Explanation 2:
  The stairs formed will have height 1, 2, 3, 4, 5.
 */
+
 public class maxStairCaseHeight {
     public int solve(int A) {
         if (A == 0) {
             return 0;
         }
         int l = 0, r = A;
-        int result = 0;
-        
+        int result = 0;      
         while (l <= r) {
             int mid = l + (r - l) / 2;
             long sum = (long) mid * (mid + 1) / 2;  
@@ -52,7 +52,6 @@ public class maxStairCaseHeight {
                 r = mid - 1; 
             }
         }
-        
         return result;
     }
 }

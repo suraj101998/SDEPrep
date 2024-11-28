@@ -34,7 +34,6 @@ Explanation 2: 100 is the peak.
 public class peakElement {
     public int solve(int[] A) {
         int N = A.length;
-        //single element is present in the array
         if(N==1){
             return A[0];
         }

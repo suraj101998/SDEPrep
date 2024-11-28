@@ -1,4 +1,7 @@
 package PracticeProblems.DSA.Hashing;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 /* Problem Description
 Given an array A of N integers.
 Find the length of the longest subarray in the array which sums to zero.
@@ -46,25 +49,23 @@ Explanation 2:
 
  No subarray sums up to 0.
  */
-
-import java.util.HashMap;
-
-public class longestSubarrayZeroSum {
-    public int solve(int[] A) {
-        HashMap<Long, Integer> pref = new HashMap<Long, Integer>();
-        Long curr = 0L;
-        int ans = 0;
-        pref.put(0L, 0);
-        for(int i = 1 ; i <= A.length ; i++){
-            curr += A[i - 1];
-            if(pref.containsKey(curr)){
-                ans = Math.max(ans, i - pref.get(curr));
+public class longestSubarrayZeroSum2 {
+    public int solve(ArrayList<Integer> A) {
+        HashMap<Long, Integer> pSum = new HashMap<>();
+        long totalSum = 0;
+        int maxLength = 0;
+        for (int i = 0; i < A.size(); i++) {
+            totalSum += A.get(i);
+            if (totalSum == 0) {
+                maxLength = i + 1;
             }
-            else{
-                pref.put(curr, i);
+            if (pSum.containsKey(totalSum)) {
+                int previousIndex = pSum.get(totalSum);
+                maxLength = Math.max(maxLength, i - previousIndex);
+            } else {
+                pSum.put(totalSum, i);
             }
         }
-        return ans;
+        return maxLength;
     }
 }
-

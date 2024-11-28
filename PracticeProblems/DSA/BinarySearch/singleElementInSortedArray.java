@@ -51,15 +51,15 @@ public class singleElementInSortedArray {
             if(A[mid] != A[mid-1] && A[mid] != A[mid+1]){
                 return A[mid];
             }
-            int fo= mid;
-            if(A[mid]==A[mid-1]){
-                fo =mid -1;
+            int fo = mid;
+            if(A[mid] == A[mid-1]){
+                fo= mid-1;
             }
-            if(fo%2==0){
+            if(fo % 2==0){
                 l= mid+1;
             }
             else{
-                r=mid-1;
+                r= mid-1;
             }
         }
         return -1;
