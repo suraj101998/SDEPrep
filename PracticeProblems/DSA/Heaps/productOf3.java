@@ -1,16 +1,13 @@
 package PracticeProblems.DSA.Heaps;
 /*
  * Problem Description
-
 Given an integer array A of size N.
-
 You have to find the product of the three largest integers in array A from range 1 to i, where i goes from 1 to N.
 Return an array B where B[i] is the product of the largest 3 integers in range 1 to i in array A. If i < 3, then the integer at index i in B should be -1.
 
 Problem Constraints
 1 <= N <= 105
 0 <= A[i] <= 103
-
 
 Input Format
 First and only argument is an integer array A.
