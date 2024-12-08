@@ -1,0 +1,159 @@
+//----------M2P--------------
+
+# What is Authentication and Authorization?
+Authentication:
+
+1)It is the process of verifying the identity of a user or system.
+2)Ensures that the entity attempting to access the system is(authenticate or not) who they claim to be.
+3)Example: Username and password verification, OTP, biometric checks, etc.
+
+Authorization:
+
+1)It is the process of determining whether a user has permission to access a resource or perform a specific action.
+2)Happens after authentication.
+3)Example: Granting or denying access to a file, API endpoint, or functionality based on user roles.
+
+# Core Differences Between @Controller and @RestController
+@Controller
+1)Used to define a controller that returns views (HTML/JSP) or handles responses via ViewResolvers.
+2)It is a specialization of the @Component annotation.
+3)it Requires @ResponseBody to send JSON or XML responses.
+4)Typically used for web applications where the response is an HTML page.
+
+
+@RestController
+1)Used to define a controller that returns JSON or XML responses directly (RESTful APIs).
+2)It is a combination of @Controller and @ResponseBody.
+3)Automatically serializes the response body to JSON or XML without needing @ResponseBody.
+4)Typically used for RESTful APIs where the response is JSON or XML.
+
+# Difference Between Comparable and Comparator in Java
+Both Comparable and Comparator are interfaces in Java used for sorting objects. The key difference lies in how and where the sorting logic is defined.
+
+@Comparable
+1)It is an interface used to define the natural ordering of objects.
+2)it is in java.lang package.
+3)Sorting logic is defined in the class itself.
+4)method: compareTo(Object o)
+5)Only one sorting logic can be defined (natural order).
+6)syntax: class ClassName implements Comparable<ClassName>
+
+
+@Comparator
+1)It is an interface used to define custom ordering of objects.
+2)it is in java.util package.
+3)Sorting logic is defined in a separate class.
+4)method: compare(Object o1, Object o2)
+5)Multiple custom sorting logics can be defined.
+6)syntax: class ClassName implements Comparator<AnotherClass>
+
+# What is a JWT Token?
+JWT (JSON Web Token) is a compact, URL-safe means of representing claims to be transferred between two parties. It is widely used for secure communication between a client and a server, especially in authentication and authorization scenarios.
+
+Structure of JWT
+A JWT token consists of three parts, separated by dots (.):
+
+Header:
+
+Contains metadata about the token, including the signing algorithm used.
+Example:
+json
+Copy code
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+Payload:
+
+Contains the claims or data you want to transmit. This can include user information, roles, or permissions.
+Example:
+json
+Copy code
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "role": "admin",
+  "iat": 1516239022
+}
+
+Signature:
+
+A cryptographic signature ensures the token hasn’t been tampered with. It’s created using the header, payload, and a secret key.
+Example:
+scss
+Copy code
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret
+)
+
+Final Token:
+
+Header.Payload.Signature
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImFkbWluIn0.
+SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+# Java Concurrency and Multithreading Overview
+Java provides powerful features for concurrent programming and multithreading, enabling applications to perform multiple tasks simultaneously. These capabilities are critical for modern applications to maximize CPU utilization, handle multiple user requests, or manage complex workflows.
+
+Key Concepts
+1. Multithreading
+Multithreading is the ability to execute multiple threads concurrently within a program.
+A thread is the smallest unit of execution in a program.
+In Java, threads are managed using the Thread class or the Runnable interface.
+
+2. Concurrency
+Concurrency deals with executing multiple tasks at the same time, but not necessarily simultaneously.
+It involves task coordination and management to ensure correct execution in multi-threaded environments.
+
+# Advantages of Multithreading
+Improved Performance: Utilizes multiple CPU cores.
+Responsive UI: Keeps applications responsive, especially in GUI programs.
+Efficient Resource Utilization: Allows background processing without blocking the main thread.
+Simplified Modeling: Simplifies programs that deal with asynchronous tasks.
+
+# Advantages of Concurrency
+Improved Resource Utilization: Makes better use of CPU, memory, and I/O resources.
+Faster Task Completion: Executes independent tasks in parallel to reduce overall execution time.
+Increased Throughput: Enables the execution of more tasks in a given time frame.
+Support for Asynchronous Programming: Handles tasks like I/O operations without blocking the main thread.
+Modular Design: Breaks complex problems into smaller, concurrent tasks for better organization.
+Real-Time Processing: Essential for systems that process multiple real-time events simultaneously.
+
+# Disadvantages of Concurrency
+Race Conditions : Multiple tasks can interfere with each other when accessing shared resources, leading to unpredictable outcomes.
+
+Deadlocks :Concurrent tasks waiting on each other for resources can lead to a state where none can proceed.
+
+Increased Complexity : Designing and managing concurrent code is challenging due to potential interactions between tasks.
+
+Synchronization Overhead : Adding synchronization mechanisms (e.g., locks) can degrade performance and introduce bottlenecks.
+
+Testing Challenges : Reproducing concurrency-related issues like race conditions is difficult, making testing harder.
+
+Fairness Issues : Some tasks might not get enough resources, leading to starvation or delayed execution.
+
+Scalability Bottlenecks : Poorly designed concurrent systems may not scale well if tasks contend excessively for resources.
+
+# Disadvantages of Multithreading
+
+Thread Overhead : Creating and managing threads consumes system resources like memory and CPU time.
+
+Context Switching :Frequent switching between threads incurs overhead, reducing overall performance.
+
+Deadlocks : Threads waiting for locks in a circular manner can cause the system to freeze.
+
+Data Corruption : Shared mutable data can be corrupted if threads access it without proper synchronization.
+
+Thread Interference : Threads might disrupt each other’s operations, leading to incorrect results.
+
+Development Complexity : Writing thread-safe code is more time-consuming and error-prone.
+
+Debugging Challenges : Issues like deadlocks and race conditions can be elusive and hard to debug in multithreaded programs.
+
+Platform Dependency : Thread behavior may vary across different platforms and operating systems.
+
+Starvation : Threads with lower priority may not get enough CPU time in systems with priority-based scheduling.
