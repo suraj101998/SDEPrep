@@ -61,26 +61,26 @@ Explanation 2:
  In the second example, we want to reverse the highlighted part of the given linked list : 1 -> 4 -> 3 -> 2 -> 5  
  Thus, the output is 5 -> 4 -> 3 -> 2 -> 1 
  */
-// class ListNode {
+// class Node {
 //      public int val;
-//      public ListNode next;
-//      ListNode(int x) { val = x; next = null; }
+//      public Node next;
+//      Node(int x) { val = x; next = null; }
 //  }
 public class reverseLinkedList2 {
-    public ListNode reverseBetween(ListNode A, int B, int C) {
+    public Node reverseBetween(Node A, int B, int C) {
         if (A == null || B == C) {
             return A;
         }
-        ListNode newNode = new ListNode(0);
+        Node newNode = new Node(0);
         newNode.next = A;
         // Step 1: Traverse to the node just before B
-        ListNode pre = newNode;
+        Node pre = newNode;
         for (int i = 1; i < B; i++) {
             pre = pre.next;
         }
         // Step 2: Reverse the sublist from B to C
-        ListNode start = pre.next;
-        ListNode then = start.next;
+        Node start = pre.next;
+        Node then = start.next;
         // Reverse the sublist between B and C
         for (int i = 0; i < C - B; i++) {
             start.next = then.next;

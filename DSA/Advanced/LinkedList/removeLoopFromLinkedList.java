@@ -40,20 +40,20 @@ Explanation 2:
 
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * class Node {
  *     public int val;
- *     public ListNode next;
- *     ListNode(int x) { val = x; next = null; }
+ *     public Node next;
+ *     Node(int x) { val = x; next = null; }
  * }
  */
 
 public class removeLoopFromLinkedList {
-    public ListNode solve(ListNode A) {
+    public Node solve(Node A) {
         detectAndRemoveLoop(A);
         return A;
     }
-    int detectAndRemoveLoop(ListNode node) {
-        ListNode slow = node, fast = node;
+    int detectAndRemoveLoop(Node node) {
+        Node slow = node, fast = node;
         while (slow != null && fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
@@ -64,9 +64,9 @@ public class removeLoopFromLinkedList {
         }
         return 0;
     }
-    void removeLoop(ListNode loop, ListNode curr) {
-        ListNode ptr1 = null;
-        ListNode ptr2 = null;
+    void removeLoop(Node loop, Node curr) {
+        Node ptr1 = null;
+        Node ptr2 = null;
         ptr1 = curr;
         while (1 == 1) {
             ptr2 = loop;

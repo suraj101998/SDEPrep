@@ -46,7 +46,7 @@ Explanation 2:
  In the second example, the nodes don't have the same values, thus we can return None/Null.
  */
 public class intersectionOfLinkedList {
-    public ListNode getIntersectionNode(ListNode A, ListNode B) {
+    public Node getIntersectionNode(Node A, Node B) {
         if (A == null || B == null) {
             return null;
         }
@@ -69,7 +69,7 @@ public class intersectionOfLinkedList {
         }
         return null;
     }
-    private int getLength(ListNode head) {
+    private int getLength(Node head) {
         int length = 0;
         while (head != null) {
             length++;

@@ -38,19 +38,19 @@ Explanation 2:
 
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * class Node {
  *     public int val;
- *     public ListNode next;
- *     ListNode(int x) { val = x; next = null; }
+ *     public Node next;
+ *     Node(int x) { val = x; next = null; }
  * }
  */
 
 public class merge2SortedLists {
-    public ListNode mergeTwoLists(ListNode A, ListNode B) {
+    public Node mergeTwoLists(Node A, Node B) {
         if (A == null) return B;
         if (B == null) return A;
-        ListNode temp = new ListNode(-1);
-        ListNode current = temp;
+        Node temp = new Node(-1);
+        Node current = temp;
         while (A != null && B != null) {
             if (A.val <= B.val) {
                 current.next = A;

@@ -34,12 +34,12 @@ Explanation 2:
  2 -> 1 -> 2 -> 1 -> 2 is largest palindromic sublist.
  */
 public class longestPalindromicList {
-    public int solve(ListNode A) {
-        ListNode dummy = new ListNode(-1);
-        ListNode cur = A, prev = dummy;
+    public int solve(Node A) {
+        Node dummy = new Node(-1);
+        Node cur = A, prev = dummy;
         int ans = 0;
         while (cur != null) {
-            ListNode prevItr = prev, nextItr = cur.next;
+            Node prevItr = prev, nextItr = cur.next;
             int l = 1;
             while (prevItr != null && nextItr != null) {
                 if (prevItr.val == nextItr.val) {
@@ -60,7 +60,7 @@ public class longestPalindromicList {
                 } else break;
             }
             ans = Math.max(2 * l, ans);
-            ListNode Next = cur.next;
+            Node Next = cur.next;
             cur.next = prev;
             prev = cur;
             cur = Next;

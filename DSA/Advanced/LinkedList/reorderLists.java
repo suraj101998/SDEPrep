@@ -35,37 +35,37 @@ Explanation 2:
  The array will be arranged to [A0, An, A1, An-1, A2].
  */
 public class reorderLists {
-    public ListNode reorderList(ListNode head) {
+    public Node reorderList(Node head) {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode slow = head;
-        ListNode fast = head;
+        Node slow = head;
+        Node fast = head;
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        ListNode secondHalf = reverseList(slow.next);
+        Node secondHalf = reverseList(slow.next);
         slow.next = null;
-        ListNode firstHalf = head;
+        Node firstHalf = head;
         mergeLists(firstHalf, secondHalf);
         return head;
     }
-    private ListNode reverseList(ListNode head) {
-        ListNode prev = null;
-        ListNode curr = head;
+    private Node reverseList(Node head) {
+        Node prev = null;
+        Node curr = head;
         while (curr != null) {
-            ListNode next = curr.next;
+            Node next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
         }
         return prev;
     }
-    private void mergeLists(ListNode first, ListNode second) {
+    private void mergeLists(Node first, Node second) {
         while (second != null) {
-            ListNode temp1 = first.next;
-            ListNode temp2 = second.next;
+            Node temp1 = first.next;
+            Node temp2 = second.next;
             first.next = second;
             second.next = temp1;
             first = temp1;

@@ -37,12 +37,12 @@ Explanation 2:
  [1, 1] are less than B wheread [2, 3, 3] are greater than or equal to B.
  */
 public class partitionList {
-    public ListNode partition(ListNode A, int B) {
-        ListNode lessHead = new ListNode(0);
-        ListNode greaterHead = new ListNode(0);
-        ListNode less = lessHead;
-        ListNode greater = greaterHead;
-        ListNode current = A;
+    public Node partition(Node A, int B) {
+        Node lessHead = new Node(0);
+        Node greaterHead = new Node(0);
+        Node less = lessHead;
+        Node greater = greaterHead;
+        Node current = A;
         while (current != null) {
             if (current.val < B) {
                 less.next = current;

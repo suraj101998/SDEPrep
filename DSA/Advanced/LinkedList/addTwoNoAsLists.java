@@ -39,9 +39,9 @@ Explanation 2:
  A = 99 and B = 1. A + B = 100.
  */
 public class addTwoNoAsLists {
-    public ListNode addTwoNumbers(ListNode A, ListNode B) {
-        ListNode temp = new ListNode(0);
-        ListNode current = temp;
+    public Node addTwoNumbers(Node A, Node B) {
+        Node temp = new Node(0);
+        Node current = temp;
         int carry = 0;
         while (A != null || B != null || carry != 0) {
             int valA;
@@ -59,7 +59,7 @@ public class addTwoNoAsLists {
             int sum = valA + valB + carry;
             carry = sum / 10;
             sum = sum % 10;
-            current.next = new ListNode(sum);
+            current.next = new Node(sum);
             current = current.next;
             if (A != null) A = A.next;
             if (B != null) B = B.next;

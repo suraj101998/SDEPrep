@@ -59,12 +59,12 @@ class ListNode {
 */
 
 public class deleteInLinkedList {
-    public ListNode solve(ListNode A, int B) {
+    public Node solve(Node A, int B) {
         // Case 1: If B is 0, delete the head node
         if (B == 0) {
             return A.next;
         }
-        ListNode temp = A;
+        Node temp = A;
         for (int i = 0; i < B - 1; i++) {
             temp = temp.next;
         }

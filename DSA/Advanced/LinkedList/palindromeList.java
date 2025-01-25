@@ -32,16 +32,16 @@ Explanation 2:
  The second linked list is not a palindrom as [1, 3, 2] is not equal to [2, 3, 1].
  */
 public class palindromeList {
-    public int lPalin(ListNode A) {
+    public int lPalin(Node A) {
         if (A == null || A.next == null) return 1;
-        ListNode slow = A, fast = A;
+        Node slow = A, fast = A;
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        ListNode secondHalf = reverseList(slow);
-        ListNode firstHalf = A;
-        ListNode temp = secondHalf;
+        Node secondHalf = reverseList(slow);
+        Node firstHalf = A;
+        Node temp = secondHalf;
         while (secondHalf != null) {
             if (firstHalf.val != secondHalf.val) {
                 reverseList(temp);
@@ -53,8 +53,8 @@ public class palindromeList {
         reverseList(temp);
         return 1;
     }
-    private ListNode reverseList(ListNode head) {
-        ListNode prev = null, next = null;
+    private Node reverseList(Node head) {
+        Node prev = null, next = null;
         while (head != null) {
             next = head.next;
             head.next = prev;

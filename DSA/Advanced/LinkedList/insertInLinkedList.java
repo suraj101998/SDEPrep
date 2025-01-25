@@ -64,9 +64,9 @@ The new node is added after the first node of the linked list
 //      ListNode(int x) { val = x; next = null; }
 //  }
 public class insertInLinkedList {
-    public ListNode solve(ListNode A, int B, int C) {
+    public Node solve(Node A, int B, int C) {
         // Create the new node with value B
-        ListNode newNode = new ListNode(B);
+        Node newNode = new Node(B);
         // Case 1: If the list is empty, return the new node as the head
         if (A == null) {
             return newNode;
@@ -77,7 +77,7 @@ public class insertInLinkedList {
             return newNode;
         }
         // Case 3: Traverse the list to find the insertion point
-        ListNode temp = A;
+        Node temp = A;
         int count = 0;
         while (temp != null && count < C - 1) {
             temp = temp.next;

@@ -33,35 +33,35 @@ Explanation 2:
 
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * class Node {
  *     public int val;
- *     public ListNode next;
- *     ListNode(int x) { val = x; next = null; }
+ *     public Node next;
+ *     Node(int x) { val = x; next = null; }
  * }
  */
 public class sortLists {
-    public ListNode sortList(ListNode head) {
+    public Node sortList(Node head) {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode middle = getMiddle(head);
-        ListNode nextOfMiddle = middle.next;
+        Node middle = getMiddle(head);
+        Node nextOfMiddle = middle.next;
         middle.next = null;
-        ListNode left = sortList(head);
-        ListNode right = sortList(nextOfMiddle);
+        Node left = sortList(head);
+        Node right = sortList(nextOfMiddle);
         return mergeTwoLists(left, right);
     }
-    private ListNode getMiddle(ListNode head) {
-        ListNode slow = head, fast = head.next;
+    private Node getMiddle(Node head) {
+        Node slow = head, fast = head.next;
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
         return slow;
     }
-    private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode dummy = new ListNode(0);
-        ListNode tail = dummy;
+    private Node mergeTwoLists(Node l1, Node l2) {
+        Node dummy = new Node(0);
+        Node tail = dummy;
 
         while (l1 != null && l2 != null) {
             if (l1.val <= l2.val) {

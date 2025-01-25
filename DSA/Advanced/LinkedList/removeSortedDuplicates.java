@@ -43,17 +43,17 @@ Explanation 1:
 
  Each element appear only once in 1->2.
  */
-// class ListNode {
+// class Node {
 //      public int val;
-//      public ListNode next;
-//      ListNode(int x) { val = x; next = null; }
+//      public Node next;
+//      Node(int x) { val = x; next = null; }
 //  }
 public class removeSortedDuplicates {
-    public ListNode deleteDuplicates(ListNode A) {
+    public Node deleteDuplicates(Node A) {
         if (A == null || A.next == null) {
             return A; // No need to process if the list is empty or has only one node
         }
-        ListNode current = A;
+        Node current = A;
         while (current != null && current.next != null) {
             if (current.val == current.next.val) {
                 // Skip the next node if it's a duplicate

@@ -34,24 +34,24 @@ Explanation 2:
 
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * class Node {
  *     public int val;
- *     public ListNode next;
- *     ListNode(int x) { val = x; next = null; }
+ *     public Node next;
+ *     Node(int x) { val = x; next = null; }
  * }
  */
 
-public class swapListNodesinPairs {
-    public ListNode swapPairs(ListNode A) {
+public class swapNodesinPairs {
+    public Node swapPairs(Node A) {
         if (A == null || A.next == null) {
             return A;
         }
-        ListNode dummy = new ListNode(0);
+        Node dummy = new Node(0);
         dummy.next = A;
-        ListNode prev = dummy;
+        Node prev = dummy;
         while (prev.next != null && prev.next.next != null) {
-            ListNode first = prev.next;
-            ListNode second = first.next;
+            Node first = prev.next;
+            Node second = first.next;
             first.next = second.next;
             second.next = first;
             prev.next = second;

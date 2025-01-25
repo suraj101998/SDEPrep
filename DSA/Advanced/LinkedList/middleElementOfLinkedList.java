@@ -34,20 +34,20 @@ Explanation 2:
 
 /**
  * Definition for singly-linked list.
- * class ListNode {
+ * class Node {
  *     public int val;
- *     public ListNode next;
- *     ListNode(int x) { val = x; next = null; }
+ *     public Node next;
+ *     Node(int x) { val = x; next = null; }
  * }
  */
 
 public class middleElementOfLinkedList {
-    public int solve(ListNode A) {
+    public int solve(Node A) {
         if (A == null) {
             return -1;
         }
-        ListNode slow = A;
-        ListNode fast = A;
+        Node slow = A;
+        Node fast = A;
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
