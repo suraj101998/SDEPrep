@@ -1,0 +1,80 @@
+consider the table:
+customerId     customerName    Address     Phone
+1               abc            hdaklald    43947321037
+2               abcd           ghdaklal    45947321037
+
+1. What could be a possible super key for this table? - CustomerID
+2. Which attribute(s) can uniquely identify each tuple in the table? - CustomerID
+3. Which attribute(s) should be included in a minimal super key for this table? - CustomerID
+4. Consider the table 'Students' with the following columns: 
+Student_ID, Student_Name, Course_ID, Course_Name and Grade. 
+Which of the following can be a Super Key? - StudentID, CourseID
+
+5. For the 'Employees' table having columns:
+ Employee_ID, First_Name, Last_Name, Department_ID, Job_ID and Salary. 
+ Which of the following sets cannot be a Super Key? - FirstName, LastName
+
+6. In a table 'Orders' with columns:
+ Order_ID, Product_ID, Customer_ID, Quantity and Order_Date.
+If any pair of columns out of Order_ID, Product_ID, and Customer_ID are unique, 
+then Super Key for the 'Orders' table would be? - OrderID, ProductID, Order_Date
+
+7. Consider a 'Voters' table with the following columns:
+Voter_ID, First_Name, Last_Name, Address, Voter_Registration_Number
+Among the following sets, which is the minimal super key for the 'Voters' table? - {Voter_ID}
+
+8. Consider a 'Voters' table with the following columns:
+Voter_ID, First_Name, Last_Name, Address, Voter_Registration_Number
+Identify the super key from the options provided for the 'Voters' table. - {VoterID, VoterRegistration_Number}
+
+9. Consider a 'Voters' table with the following columns:
+Voter_ID, First_Name, Last_Name, Address, Voter_Registration_Number
+Which of the following sets is NOT a super key for the 'Voters' table? - {Last_Name, Address}
+
+10. Consider a 'Courses' table with the following columns:
+Course_ID, Course_Name, Department, Instructor_ID
+Assume Multiple Instructors for each Course.
+Among the following sets, which is the minimal super key for the 'Courses' table? -{CourseID, InstructorID}
+
+11. Let’s say we have Students table with following attributes : 
+id, first_name, last_name, email_id and phone_number. 
+Which of the following isn’t a Super Key ? - firstname, lastname
+
+12. Given the table 'Cars' with the columns: VIN, Manufacturer, Model, Year, and Color. 
+Which of the following is NOT a Super Key?- Manufacturer, Model, Year
+
+13. Consider a 'Courses' table with the following columns:
+Course_ID, Course_Name, Department, Instructor_ID
+Assume Multiple Instructors for each Course.
+Identify the super key from the options provided for the 'Courses' table. - {CourseID, InstructorID,Department}
+
+14. Consider a 'Students' table with the following columns:
+Student_ID, First_Name, Last_Name, Date_of_Birth, and Major.
+Identify the super key from the options provided for the 'Students' table. - {Student_ID, Major}
+
+15. Consider a ‘Employees’ table with the following columns:
+Employee_ID, Employee_Name, Project_Name, Project_ID, Manager_ID
+Assume Multiple projects can be assigned to a single employee and each project has a unique Manager.
+Which of the following sets is NOT a super key for the 'Employees' table? - {ProjectID,EmployeeName}
+
+16. Consider a ‘Employees’ table with the following columns:
+Employee_ID, Employee_Name, Project_Name, Project_ID, Manager_ID
+Assume Multiple projects can be assigned to a single employee and each project has a unique Manager.
+Choose the minimal super key for the 'Employees' table. - {EmployeeID, ManagerID}
+
+17. Consider the ‘Sales’ table with columns:
+Order_ID, Product_ID, Customer_ID, Quantity_Sold, Sale_Date
+Among the following sets, which is a super key for the 'Sales' table? - {OrderID, CustomerID, Product_ID}
+
+18. Consider the ‘Sales’ table with columns:
+Order_ID, Product_ID, Customer_ID, Quantity_Sold, Sale_Date
+Which of the following sets is NOT a super key for the 'Sales' table? - {CustomerID, ProductID, Sale_Date}, {CustomerID, QuantitySold, Sale_Date}, {ProductID, CustomerID}
+
+19. Consider the ‘Sales’ table with columns:
+Order_ID, Product_ID, Customer_ID, Quantity_Sold, Sale_Date
+From the options, select the super key for the 'Sales' table. - {OrderID, ProductID, Quantity_Sold}
+
+20. Consider an 'Inventory' table with the following columns:
+Product_ID, Quantity, Warehouse_ID, Expiry_Date, Batch_Number
+Note: Batch_Number uniquely identifies a specific batch of a product stored in a warehouse
+Among the following sets, which is a super key for the 'Inventory' table? - {ProductID, WarehouseID, Batch_Number}
