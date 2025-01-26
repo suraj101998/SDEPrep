@@ -44,3 +44,184 @@ can be used alongwith class: cannot extend or inherit the class.
 can be used alongwith the variable: cannot change the value of the variable.
 
 10. what is static keyword in java:
+The static keyword in Java is used to define members (fields and methods) that belong to the class. These members are shared among all instances of the class and can be accessed without creating an object.
+Static Variables: Shared across all instances. They belong to the class, not individual objects.
+Static Methods: Can be called without creating an object. They can only access static data or call other static methods.
+Static Nested Class: A class defined within another class with the static keyword. It can be accessed without creating an instance of the enclosing class.
+
+11. What is concurrency in Java?
+ability of a program to execute multiple tasks simultaneously.It Provides:
+Multithreading: Running multiple threads in a single program.
+Synchronization: Mechanism to control the access of shared resources by multiple threads to avoid data inconsistency.
+Thread Safety: Ensuring that shared data is accessed safely by multiple threads.
+
+Java provides the java.util.concurrent package, which includes tools like ExecutorService, Semaphore, Lock, etc., to manage concurrency efficiently.
+
+12.  What are threads in Java?
+A thread in Java is a lightweight subprocess that enables parallel execution of tasks. Threads run within a single process and share the same memory space, allowing for efficient task management.
+How to Create Threads:
+By Extending the Thread Class.
+By Implementing the Runnable Interface.
+
+13. What are deadlocks in Java?
+A deadlock in Java occurs when two or more threads are waiting for each other to release a resource, but none of them can proceed because they are all holding the resources the others need.
+
+14. How to Achieve Deadlock in Concurrency?
+To intentionally create a deadlock in Java:
+Have two or more threads.
+Use two or more shared resources (locks).
+Ensure that one thread acquires one lock and waits for another lock, while the other thread does the opposite.
+
+15. what are optional classes?
+The Optional class in Java is a container that can hold either a value or null. part of the java.util package and is primarily used to represent optional (nullable) values in a more readable and safer way, reducing the chances of encountering NullPointerException.
+
+16. what are stream API in java
+provides a functional programming approach to process and manipulate collections of data in a declarative manner. It is a part of the java.util.stream package and is designed to work with data collections like lists, sets, or arrays. Streams make operations like filtering, mapping, and reducing data easier and more efficient.
+
+17. what are lambda expressions in java?
+ provide a concise way to represent a function or behavior as an argument. They enable functional programming by allowing you to write short, expressive code, particularly when working with functional interfaces.
+
+18. synchronized and volatile in Java Multithreading?
+# synchronized
+The synchronized keyword ensures that only one thread at a time can access a synchronized block or method. It provides mutual exclusion and helps avoid race conditions.
+Use Cases: To protect shared resources (like variables, objects, or blocks of code) from concurrent access.
+Types:
+Synchronized Method: Synchronizes the entire method.
+Synchronized Block: Synchronizes only a portion of the code.
+
+# volatile
+The volatile keyword ensures that the value of a variable is always read from and written to the main memory, not from a thread’s local cache. It ensures visibility of updates across threads.
+Use Cases: For variables that are shared across threads and subject to frequent updates.
+
+19. Types of Interfaces in Java?
+1. Functional Interface:
+Contains only one abstract method and can be implemented using lambda expressions.
+Example: Runnable, Comparator.
+
+2. Marker Interface:
+Does not have any methods and serves as a tag to convey metadata about a class.
+Example: Serializable, Cloneable.
+
+3. Normal Interface:
+Can have multiple abstract methods and is implemented by classes.
+Example: List, Map.
+
+4. Nested Interface:
+Defined inside another interface or class.
+Example: Map.Entry.
+
+5. SAM Interface (Single Abstract Method Interface):
+A type of functional interface with a single abstract method.
+Example: Callable, ActionListener.
+
+6. Annotated Interface:
+Defined with annotations like @FunctionalInterface to ensure it adheres to the functional interface contract.
+
+20. What is Authentication and Authorization?
+1. Authentication:
+1)It is the process of verifying the identity of a user or system.
+2)Ensures that the entity attempting to access the system is(authenticate or not) who they claim to be.
+3)Example: Username and password verification, OTP, biometric checks, etc.
+
+2. Authorization:
+1)It is the process of determining whether a user has permission to access a resource or perform a specific action.
+2)Happens after authentication.
+3)Example: Granting or denying access to a file, API endpoint, or functionality based on user roles.
+
+21. What is a JWT Token?
+JWT (JSON Web Token) is a compact, URL-safe means of representing claims to be transferred between two parties. It is widely used for secure communication between a client and a server, especially in authentication and authorization scenarios.
+
+Structure of JWT
+A JWT token consists of three parts, separated by dots (.):
+
+1. Header:
+Contains metadata about the token, including the signing algorithm used.
+Example:
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+2. Payload:
+Contains the claims or data you want to transmit. This can include user information, roles, or permissions.
+Example:
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "role": "admin",
+  "iat": 1516239022
+}
+
+3. Signature:
+A cryptographic signature ensures the token hasn’t been tampered with. It’s created using the header, payload, and a secret key.
+Example:
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret
+)
+
+Final Token:
+Header.Payload.Signature
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
+eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImFkbWluIn0.
+SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+22. Difference Between Comparable and Comparator in Java
+Both Comparable and Comparator are interfaces in Java used for sorting objects. 
+Difference:
+1. @Comparable
+1)define the natural ordering of objects.
+2)present in java.lang package.
+3)Sorting logic is defined in the class itself.
+4)method: compareTo(Object o)
+5)Only one sorting logic can be defined.
+6)syntax: class ClassName implements Comparable<ClassName>
+
+2. @Comparator
+1)define custom ordering of objects.
+2)present in java.util package.
+3)Sorting logic is defined in a separate class.
+4)method: compare(Object o1, Object o2)
+5)Multiple custom sorting logics can be defined.
+6)syntax: class ClassName implements Comparator<AnotherClass>
+
+23. what are Wrapper Classes in Java?
+Wrapper classes are object representations of primitive types. Each primitive type has a corresponding wrapper class in Java.
+Use Cases:
+1. Collections Framework: 
+Collections like ArrayList can only store objects, not primitives, so wrapper classes are needed.
+2. Conversion: 
+Convert between primitive types and objects 
+Parse strings into primitives
+
+24. Difference Between StringBuffer and StringBuilder?
+1. StringBuffer
+Mutability:  mutable (modifiable).
+Thread Safety: Thread-safe, as its methods are synchronized.
+Performance: Slower due to synchronization.
+Usage: Use when thread safety is required.
+2. StringBuilder
+Mutability:  mutable (modifiable).
+Thread Safety: Not thread-safe because it doesn’t synchronize methods.
+Performance: Faster as it is not synchronized.
+Usage: Use when thread safety is not needed.
+
+25. Difference Between Final() and Finally() ?
+1. final:
+A keyword used to define constants, restrict inheritance, and prevent method overriding or variable reassignment.
+Final Variable: Its value cannot be changed after initialization.
+Final Method: Cannot be overridden by subclasses.
+Final Class: Cannot be extended (subclassed).
+
+2. finally:
+A block used with a try-catch statement to ensure a block of code runs regardless of whether an exception is thrown or not.
+
+26. Access Modifiers in Java
+Access modifiers define the visibility or accessibility of classes, methods, and variables in Java.
+Types:
+public: Accessible from anywhere in the program.
+protected: Accessible within the same package and by subclasses (even in different packages).
+default (no modifier): Accessible only within the same package.
+private: Accessible only within the same class.
