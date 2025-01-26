@@ -43,11 +43,12 @@ Explanation 1:
 
  Each element appear only once in 1->2.
  */
-// class Node {
-//      public int val;
-//      public Node next;
-//      Node(int x) { val = x; next = null; }
-//  }
+/*class Node {
+     public int val;
+     public Node next;
+     Node(int x) { val = x; next = null; }
+ }
+*/
 public class removeSortedDuplicates {
     public Node deleteDuplicates(Node A) {
         if (A == null || A.next == null) {

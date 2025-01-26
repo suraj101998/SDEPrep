@@ -61,12 +61,13 @@ Explanation 2:
  In the second example, we want to reverse the highlighted part of the given linked list : 1 -> 4 -> 3 -> 2 -> 5  
  Thus, the output is 5 -> 4 -> 3 -> 2 -> 1 
  */
-// class Node {
-//      public int val;
-//      public Node next;
-//      Node(int x) { val = x; next = null; }
-//  }
-public class reverseLinkedList2 {
+/*class Node {
+     public int val;
+     public Node next;
+     Node(int x) { val = x; next = null; }
+ }
+ */
+public class reverseLinkedListinRange {
     public Node reverseBetween(Node A, int B, int C) {
         if (A == null || B == C) {
             return A;

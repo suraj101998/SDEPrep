@@ -51,7 +51,7 @@ TC = O(logN)
 SC = O(1)
 */
 public class peakElement {
-    public int solve(int[] A) {
+    public static int solve(int[] A) {
         int N = A.length;
         if(N==1){
             return A[0];
@@ -79,5 +79,10 @@ public class peakElement {
             }
         }
         return -1;
+    }
+    public static void main(String[] args){
+        int[] A = {1,2,3,1};
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }
 }

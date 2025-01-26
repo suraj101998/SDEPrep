@@ -21,14 +21,20 @@ haystack and needle consist of only lowercase English characters.
 
 
 public class indexOfFirstOccurance {
-    public int strStr(String haystack, String needle) {
-        int m = haystack.length();
-        int n = needle.length();
+    public static int presence(String a, String b) {
+        int m = a.length();
+        int n = b.length();
         for(int i=0; i<m-n+1;++i){
-            if (haystack.substring(i,i+n).equals(needle)){
+            if (a.substring(i,i+n).equals(b)){
                 return i;
             }
         }
         return -1;
+    }
+    public static void main(String[] args){
+        String a="leetcode";
+        String b="code";
+        int result = presence(a, b);
+        System.out.println("ans: "+result);
     }
 }
