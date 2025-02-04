@@ -44,7 +44,7 @@ Explanation 2:
  */
 
 public class maxSumWithoutAdjacentElement {
-    public int adjacent(int[][] A) {
+    public static int adjacent(int[][] A) {
         int n = A[0].length;
         // Handle base case where there's only one column
         if (n == 1) {
@@ -61,5 +61,13 @@ public class maxSumWithoutAdjacentElement {
         }
         // Return the result from prev2, which holds the maximum sum
         return prev2;
+    }
+    public static void main(String[] args){
+        int[][] A = {
+            {1, 2, 3, 4},
+            {2, 3, 4, 5}
+        };
+        int result = adjacent(A);
+        System.out.println("ans: "+result);   
     }    
 }

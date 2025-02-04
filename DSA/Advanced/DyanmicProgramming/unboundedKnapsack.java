@@ -70,7 +70,7 @@ Explanation 2:
 Take the second item twice.
  */
 public class unboundedKnapsack {
-    public int solve(int A, int[] B, int[] C) {
+    public static int solve(int A, int[] B, int[] C) {
         // DP array to store maximum values for each capacity
         int[] dp = new int[A + 1];
         
@@ -84,5 +84,12 @@ public class unboundedKnapsack {
         
         // Return the maximum value for capacity A
         return dp[A];
+    }
+    public static void main(String[] args){
+        int A = 10;
+        int[] B = {5};
+        int[] C = {10};
+        int result = solve(A, B, C);
+        System.out.println("ans: "+result);
     }    
 }

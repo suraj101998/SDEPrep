@@ -24,7 +24,7 @@ Constraints:
 import java.util.HashMap;
 
 public class arrayContainsDuplicate {
-        public boolean containsDuplicate(int[] nums) {
+        public static boolean containsDuplicate(int[] nums) {
         HashMap<Integer, Integer> myMap= new HashMap<>();
         for(int i = 0; i< nums.length; i++){
             if (myMap.containsKey(nums[i])){
@@ -33,5 +33,10 @@ public class arrayContainsDuplicate {
             myMap.put(nums[i],1);
         }
         return false;
+    }
+    public static void main(String[] args){
+        int[] nums = {1,2,3,1};
+        boolean result  = containsDuplicate(nums);
+        System.out.println("ans: "+result);
     }
 }

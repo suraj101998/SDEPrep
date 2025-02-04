@@ -71,7 +71,7 @@ Explanation 2:
  The length will be 3.
  */
 public class longestFiboSeqlength {
-    public int solve(int[] A) {
+    public static int solve(int[] A) {
         int n = A.length;
         if (n < 3) return 0;
         // Map to store the index of each value in A
@@ -99,5 +99,10 @@ public class longestFiboSeqlength {
             }
         }
         return maxLength >= 3 ? maxLength : 0; // Return maxLength if >= 3, else 0
+    }
+    public static void main(String[] args){
+        int[] A = {1, 3, 7, 11, 12, 14, 18};
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }    
 }

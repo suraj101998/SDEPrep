@@ -63,7 +63,7 @@ Explanation 2:
  As the max area rectangle is created by the 1x3 rectangle created by (1, 0), (1, 1) and (1, 2).
  */
 public class MaxRectangleBinaryMatrix {
-    public int maximalRectangle(int[][] A) {
+    public static int maximalRectangle(int[][] A) {
         if (A == null || A.length == 0 || A[0].length == 0) {
             return 0;
         }
@@ -86,7 +86,7 @@ public class MaxRectangleBinaryMatrix {
         return maxArea;
     }
 
-    private int largestRectangleInHistogram(int[] height) {
+    private static int largestRectangleInHistogram(int[] height) {
         int maxArea = 0;
         int n = height.length;
         int[] stack = new int[n + 1]; // Stack to store indices of the histogram bars
@@ -109,5 +109,15 @@ public class MaxRectangleBinaryMatrix {
             maxArea = Math.max(maxArea, h * width);
         }
         return maxArea;
+    }
+    public static void main(String[] args){
+        int[][] A = {
+            {1, 1, 1},
+            {0, 1, 1},
+            {1, 0, 0}
+        };
+        int result = maximalRectangle(A);
+        System.out.println("ans: "+result);
+             
     }    
 }

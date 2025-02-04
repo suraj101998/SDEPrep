@@ -46,8 +46,10 @@ Explanation 2:
 No operation can give us more than three 1s in final string. So, we return empty array [].
  */
 
+import java.util.Arrays;
+
 public class Flip {
-    public int[] flip(String A) {
+    public static int[] flip(String A) {
         int n = A.length();
         int maxDiff = 0;
         int currentDiff = 0;
@@ -79,5 +81,10 @@ public class Flip {
             return new int[]{};
         }
         return new int[]{startIndex + 1, endIndex + 1};
+    }
+    public static void main(String[] args){
+        String A = "010";
+        int[] result = flip(A);
+        System.out.println("ans: "+Arrays.toString(result));
     }
 }

@@ -58,7 +58,7 @@ Explanation 2:
  Cut the rod of length 5 into 3 rods of length (2, 2, 1) and sell them for (5 + 5 + 1) = 11.
  */
 public class cuttingARod {
-    public int solve(int[] A) {
+    public static int solve(int[] A) {
         int n = A.length;
         int[] dp = new int[n + 1];
         dp[0] = 0;
@@ -68,5 +68,10 @@ public class cuttingARod {
             }
         }
         return dp[n];
+    }
+    public static void main(String[] args){
+        int[] A= {3, 4, 1, 6, 2};
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }    
 }

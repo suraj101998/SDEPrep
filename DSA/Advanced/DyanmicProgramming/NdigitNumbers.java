@@ -41,7 +41,7 @@ Explanation 2:
  Only valid number is 3
  */
 public class NdigitNumbers {
-    public int solve(int A, int B) {
+    public static int solve(int A, int B) {
         int MOD = 1000000007;
         int[][] dp = new int[A + 1][B + 1];
         for (int i = 1; i <= 9; i++) {
@@ -60,5 +60,11 @@ public class NdigitNumbers {
             }
         }
         return dp[A][B];
+    }
+    public static void main(String[] args){
+        int A =1;
+        int B=3;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }    
 }

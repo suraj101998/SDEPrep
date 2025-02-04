@@ -2,6 +2,8 @@ package DSA.Advanced.DyanmicProgramming;
 
 import java.util.Arrays;
 
+import DSA.Advanced.BitManipulation.strangeEquality;
+
 /*
  * Problem Description
 
@@ -80,7 +82,7 @@ Explanation 2:
 Taking 10/19 the fourth item gives us the maximum value i.e. 21.0526. So we return 2105.
  */
 public class fractionalKnapsack {
-    public int solve(int[] A, int[] B, int C) {
+    public static int solve(int[] A, int[] B, int C) {
         int n = A.length;
 
         // Create an array to store value-to-weight ratios along with their index
@@ -116,5 +118,12 @@ public class fractionalKnapsack {
 
         // Return the floor of (totalValue * 100)
         return (int) Math.floor(totalValue * 100 + 1e-9); // Add small epsilon to handle precision errors
+    }
+    public static void main(String[] args){
+        int[] A = {10, 20, 30, 40};
+        int[] B = {12, 13, 15, 19};
+        int C = 10;
+        int result = solve(A, B, C);
+        System.out.println("ans: "+result);
     }    
 }

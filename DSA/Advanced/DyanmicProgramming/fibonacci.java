@@ -62,36 +62,27 @@ Explanation 2:
  6th term of Fibonacci series is 8.
  */
 public class fibonacci {
-    public static void main(String[] args) {
-        // YOUR CODE GOES HERE
-        // Please take input and print output to standard input/output (stdin/stdout)
-        // DO NOT USE ARGUMENTS FOR INPUTS
-        // E.g. 'Scanner' for input & 'System.out' for output
-        Scanner scanner = new Scanner(System.in);
-        int A = scanner.nextInt();
-        
+    public static int fibo(int A){
         // Base cases
         if (A == 0) {
-            System.out.println(0);
-            return;
+            return 0;
         }
         if (A == 1) {
-            System.out.println(1);
-            return;
+            return 1;
         }
-        
         // Variables to store the previous two Fibonacci numbers
         int prev2 = 0, prev1 = 1;
-        
         // Calculating Fibonacci number iteratively
         for (int i = 2; i <= A; i++) {
             int current = prev1 + prev2;
             prev2 = prev1;
             prev1 = current;
         }
-        
-        // Output the result
-        System.out.println(prev1);
-        
+        return prev1;
+    }
+    public static void main(String[] args) {
+        int A = 8;
+        int result = fibo(A);
+        System.out.println("ans: "+result);
     }    
 }

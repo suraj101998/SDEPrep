@@ -29,7 +29,7 @@ Constraints:
 
 
 public class arraySortedAndRotated {
-    public boolean check(int[] nums) {
+    public static boolean check(int[] nums) {
         // Variable to keep track of the number of times a pair is out of order.
         int countOutOfOrder = 0;
       
@@ -46,5 +46,10 @@ public class arraySortedAndRotated {
         }
         // The array is non-decreasing if there is at most one out-of-order pair.
         return countOutOfOrder <= 1;
+    }
+    public static void main(String[] args){
+        int[] nums = {3,4,5,1,2};
+        boolean result =check(nums);
+        System.out.println("ans: "+result);
     }
 }

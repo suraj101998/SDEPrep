@@ -75,7 +75,7 @@ Explanation 2:
 Only way is to take 2 dishes of cost 2, hence 4.
  */
 public class tusharBirthdayParty {
-    public int solve(final int[] A, final int[] B, final int[] C) {
+    public static int solve(final int[] A, final int[] B, final int[] C) {
         int maxCapacity = 0;
         for (int capacity : A) {
             maxCapacity = Math.max(maxCapacity, capacity);
@@ -104,5 +104,12 @@ public class tusharBirthdayParty {
         }
 
         return totalCost;
+    }
+    public static void main(String[] args){
+        int[] A = {2, 4, 6};
+        int[] B = {2, 1, 3};
+        int[] C = {2, 5, 3};
+        int result = solve(A, B, C);
+        System.out.println("ans: "+result);
     }    
 }

@@ -64,7 +64,7 @@ Explanation 2:
  Number of ways they can party are: 26.
  */
 public class letsParty {
-    public int solve(int A) {
+    public static int solve(int A) {
         int MOD = 10003;
         if (A == 1) return 1;
         if (A == 2) return 2;
@@ -75,5 +75,10 @@ public class letsParty {
             dp[i] = (dp[i - 1] + (i - 1) * dp[i - 2]) % MOD;
         }
         return dp[A];
+    }
+    public static void main(String[] args){
+        int A =5;
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }    
 }

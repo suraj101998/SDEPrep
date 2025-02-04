@@ -48,7 +48,7 @@ Approach:
 */
 
 public class removeDuplicatesFromArray {
-    public int removeDuplicates(int[] nums) {
+    public static int removeDuplicates(int[] nums) {
         int n = nums.length, k=0;
         for (int i=0; i<n; i++){
             int j= i;
@@ -59,5 +59,10 @@ public class removeDuplicatesFromArray {
             i=j-1;
         }
         return k;
+    }
+    public static void main(String[] args){
+        int[] nums = {0,0,1,1,1,2,2,3,3,4};
+        int result = removeDuplicates(nums);
+        System.out.println("ans: "+result);
     }
 }

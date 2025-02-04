@@ -68,7 +68,7 @@ Input 2:
  The path will be: 1 -> -3 -> 5 -> -5 -> 1.
  */
 public class MinSumPathMatrix {
-    public int minPathSum(int[][] A) {
+    public static int minPathSum(int[][] A) {
         int M = A.length;
         int N = A[0].length;
         int[][] dp = new int[M][N];
@@ -85,5 +85,15 @@ public class MinSumPathMatrix {
             }
         }
         return dp[M - 1][N - 1];
-    }    
+    } 
+    public static void main(String[] args){
+        int[][] A = {
+            {1, -3, 2},
+            {2, 5, 10},
+            {5, -5, 1}
+        };
+        int result = minPathSum(A);
+        System.out.println("ans: "+result);
+
+    }   
 }

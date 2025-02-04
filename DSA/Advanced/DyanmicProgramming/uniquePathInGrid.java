@@ -69,7 +69,7 @@ Explanation 2:
  It is not possible to reach (n, m) from (1, 1). So, ans is 0.
  */
 public class uniquePathInGrid {
-    public int uniquePathsWithObstacles(int[][] A) {
+    public static int uniquePathsWithObstacles(int[][] A) {
         int n = A.length;
         int m = A[0].length;
         // Create a DP array to store the number of ways to reach each cell
@@ -94,5 +94,16 @@ public class uniquePathInGrid {
             }
         }
         return dp[n-1][m-1];
+    }
+    public static void main(String[] args){
+        int[][]  A = {
+            {0, 0, 0},
+            {0, 1, 0},
+            {0, 0, 0}
+        };
+        int result = uniquePathsWithObstacles(A);
+        System.out.println("ans: "+result);
+
+
     }    
 }

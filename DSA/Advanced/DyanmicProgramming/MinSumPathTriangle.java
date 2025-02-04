@@ -79,7 +79,7 @@ Explanation 2:
  Only 2 can be collected.
  */
 public class MinSumPathTriangle {
-    public int minimumTotal(ArrayList<ArrayList<Integer>> a) {
+    public static int minimumTotal(ArrayList<ArrayList<Integer>> a) {
         int n = a.size();
         for (int row = n - 2; row >= 0; row--) {
             for (int col = 0; col <= row; col++) {
@@ -88,5 +88,24 @@ public class MinSumPathTriangle {
             }
         }
         return a.get(0).get(0);
+    }
+    public static void main(String[] args){
+      int[][]  A = {
+        {2},
+        {3, 4},
+       {6, 5, 7},
+      {4, 1, 8, 3}
+      };
+      ArrayList<ArrayList<Integer>> triangle = new ArrayList<>();
+        for (int[] row : A) {
+            ArrayList<Integer> list = new ArrayList<>();
+            for (int num : row) {
+                list.add(num);
+            }
+            triangle.add(list);
+        }
+        int result = minimumTotal(triangle);
+        System.out.println("ans: " + result); 
+
     }    
 }

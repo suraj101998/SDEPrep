@@ -64,7 +64,7 @@ Explanation 2:
  ON OFF ON
  */
 public class signalSendingWays {
-    public int solve(int A) {
+    public static int solve(int A) {
         int MOD = 1000000007;
         // Base cases
         if (A == 1) return 2; // "ON", "OFF"
@@ -79,5 +79,10 @@ public class signalSendingWays {
             prev1 = current;
         }
         return prev1;
+    }
+    public static void main(String[] args){
+        int A = 2;
+        int result= solve(A);
+        System.out.println("ans: "+result);
     }    
 }

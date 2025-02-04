@@ -32,7 +32,7 @@ Explanation 2:
  2 trees are possible, one rooted at 1 and other rooted at 2.
  */
 public class uniqueBST2 {
-    public int numTrees(int A) {
+    public static int numTrees(int A) {
         int[] dp = new int[A + 1];
         dp[0] = 1;  // There's 1 BST with 0 nodes (empty tree)
         dp[1] = 1;  // There's 1 BST with 1 node (single node tree)
@@ -42,5 +42,10 @@ public class uniqueBST2 {
             }
         }
         return dp[A];
+    }
+    public static void main(String[] args){
+        int A = 2;
+        int result = numTrees(A);
+        System.out.println("ans: "+result);
     }    
 }

@@ -55,7 +55,7 @@ Explanation 2:
  We can represent 5 using only 2 numbers i.e. 12 + 22 = 5
  */
 public class minimumNoOfSquares {
-    public int countMinSquares(int A) {
+    public static int countMinSquares(int A) {
         int[] dp = new int[A + 1];
         for (int i = 1; i <= A; i++) {
             dp[i] = Integer.MAX_VALUE;
@@ -67,5 +67,10 @@ public class minimumNoOfSquares {
             }
         }
         return dp[A];
+    }
+    public static void main(String[] args){
+        int A= 6;
+        int result = countMinSquares(A);
+        System.out.println("ans: "+result);
     }    
 }

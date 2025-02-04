@@ -50,7 +50,7 @@ Explanation 1:
  A[1]*B + A[3]*C + A[3]*D = (3*1) + (-10*1) + (3*1) = 3 - 10 + 3 = -4
  */
 public class maximumValueSum {
-    public int solve(int[] A, int B, int C, int D) {
+    public static int solve(int[] A, int B, int C, int D) {
         int N = A.length;
         // Initialize the maximum values for the three terms
         int max1 = Integer.MIN_VALUE;  // Represents the maximum of A[i] * B
@@ -64,5 +64,13 @@ public class maximumValueSum {
         }
         // The result is stored in max3 which considers all i <= j <= k
         return max3;
+    }
+    public static void main(String[] args){
+        int[] A = {1, 5, -3, 4, -2};
+        int B = 2;
+        int C = 1;
+        int D = -1;
+        int result = solve(A, B, C, D);
+        System.out.println("ans: "+result);
     }    
 }

@@ -67,7 +67,7 @@ Explanation 2:
  There is only 1 way to make sum 10.
  */
 public class coinSumInfinite {
-    public int coinchange2(int[] A, int B) {
+    public static int coinchange2(int[] A, int B) {
         int mod = 1000007;
         int[] dp = new int[B + 1];
         dp[0] = 1;
@@ -77,5 +77,11 @@ public class coinSumInfinite {
             }
         }
         return dp[B];
+    }
+    public static void main(String[] args){
+        int[] A= {1, 2, 3};
+        int B = 4;
+        int result = coinchange2(A, B);
+        System.out.println("ans: "+result);
     }    
 }

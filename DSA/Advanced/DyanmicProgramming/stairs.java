@@ -59,7 +59,7 @@ Explanation 2:
  Distinct ways to reach top: [1 1 1], [1 2], [2 1].
  */
 public class stairs {
-    public int climbStairs(int A) {
+    public static int climbStairs(int A) {
         int MOD = 1000000007;
         if (A == 1) return 1;
         int prev1 = 1;  // dp[1]
@@ -70,5 +70,10 @@ public class stairs {
             prev1 = current;
         }
         return prev1;
+    }
+    public static void main(String[] args){
+        int A =2;
+        int result = climbStairs(A);
+        System.out.println("ans: "+result);
     }    
 }

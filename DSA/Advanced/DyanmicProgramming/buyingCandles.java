@@ -71,7 +71,7 @@ Explanation 2:
  Buy 9 Packet of kind 1. 18 Candy each of 5 Sweetness = 90 Sweetness
  */
 public class buyingCandles {
-    public int solve(int[] A, int[] B, int[] C, int D) {
+    public static int solve(int[] A, int[] B, int[] C, int D) {
         // DP array to store maximum sweetness for each nibble count
         int[] dp = new int[D + 1];
         
@@ -88,5 +88,13 @@ public class buyingCandles {
         
         // Return the maximum sweetness achievable with D nibbles
         return dp[D];
+    }
+    public static void main(String[] args){
+       int[] A = {1, 2, 3};
+       int[] B = {2, 2, 10};
+       int[] C = {2, 3, 9};
+       int D = 8;
+       int result = solve(A, B, C, D);
+       System.out.println("ans: "+result);
     }    
 }

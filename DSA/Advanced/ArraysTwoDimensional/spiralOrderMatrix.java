@@ -2,6 +2,8 @@ package DSA.Advanced.ArraysTwoDimensional;
 // Problem Description
 // Given an integer A, generate a square matrix filled with elements from 1 to A2 in spiral order and return the generated square matrix.
 
+import java.util.Arrays;
+
 // Problem Constraints
 // 1 <= A <= 1000
 
@@ -52,7 +54,7 @@ package DSA.Advanced.ArraysTwoDimensional;
 // 4<--- 3
 
 public class spiralOrderMatrix {
-    public int[][] generateMatrix(int A) {
+    public static int[][] generateMatrix(int A) {
         int[][] matrix = new int[A][A];
         int top = 0, bottom = A - 1;
         int left = 0, right = A - 1;
@@ -84,5 +86,10 @@ public class spiralOrderMatrix {
             }
         }   
         return matrix;
+    }
+    public static void main(String[] args){
+        int A = 5;
+        int[][] result = generateMatrix(A);
+        System.out.println("ans: "+Arrays.deepToString(result));
     }
 }

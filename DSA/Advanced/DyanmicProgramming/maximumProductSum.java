@@ -61,7 +61,7 @@ Explanation 2:
  */
 public class maximumProductSum {
     // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
-    public int maxProduct(final int[] A) {
+    public static int maxProduct(final int[] A) {
         int max_ending_here = A[0];
         int min_ending_here = A[0];
         int max_so_far = A[0];
@@ -78,5 +78,10 @@ public class maximumProductSum {
             max_so_far = Math.max(max_so_far, max_ending_here);
         }
         return max_so_far;
+    }
+    public static void main(String[] args){
+        int[] A = {4, 2, -5, 1};
+        int result = maxProduct(A);
+        System.out.println("ans: "+result);
     }    
 }

@@ -110,8 +110,11 @@ Explanation 2:
     Nodes for level 0 is 1 having value 7.
     Answer = 7.   
  */
+
+
 public class maximumDepth {
-    public int[] solve(int A, int[] B, int[] C, int[] D, int[] E, int[] F) {
+
+    public static int[] solve(int A, int[] B, int[] C, int[] D, int[] E, int[] F) {
         // Step 1: Build the graph
         List<Integer>[] graph = new ArrayList[A + 1];
         for (int i = 0; i <= A; i++) {
@@ -146,7 +149,7 @@ public class maximumDepth {
     }
     
     // DFS function to calculate the levels of the nodes
-    private void dfs(int node, int currentLevel, List<Integer>[] graph, int[] level, List<Integer>[] levelNodes, boolean[] visited, int[] D) {
+    private static  void dfs(int node, int currentLevel, List<Integer>[] graph, int[] level, List<Integer>[] levelNodes, boolean[] visited, int[] D) {
         visited[node] = true;
         level[node] = currentLevel;
         levelNodes[currentLevel].add(D[node - 1]);
@@ -159,7 +162,7 @@ public class maximumDepth {
     }
     
     // Function to find the smallest value greater than or equal to X
-    private int findSmallestGreaterThanEqual(List<Integer> levelNodes, int minValue) {
+    private static int findSmallestGreaterThanEqual(List<Integer> levelNodes, int minValue) {
         int left = 0;
         int right = levelNodes.size() - 1;
         int result = -1;
@@ -173,5 +176,17 @@ public class maximumDepth {
             }
         }
         return result;
-    }    
+    }
+    
+    public static void main(String[] args){
+        int A = 5;
+        int[] B = {1, 4, 3, 1};
+        int[] C = {5, 2, 4, 4};
+        int[] D = {7, 38, 27, 37, 1};
+        int[] E = {1, 1, 2};
+        int[] F = {32, 18, 26};
+        int[] result = solve(A, B, C, D, E, F);
+        System.out.println("ans: "+Arrays.toString(result));
+
+    }
 }

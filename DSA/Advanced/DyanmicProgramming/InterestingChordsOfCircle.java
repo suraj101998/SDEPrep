@@ -58,7 +58,7 @@ Explanation 2:
  So, we return 2.
  */
 public class InterestingChordsOfCircle {
-    public int chordCnt(int A) {
+    public static int chordCnt(int A) {
         int MOD = 1000000007;
         long[] dp = new long[A + 1];
         dp[0] = 1;
@@ -69,5 +69,10 @@ public class InterestingChordsOfCircle {
             }
         }
         return (int) dp[A];
-    }    
+    }
+    public static void main(String[] args){
+        int A = 2;
+        int result = chordCnt(A);
+        System.out.println("ans: "+result);
+    }
 }

@@ -79,12 +79,12 @@ public class URLShroteningService {
         urlMap.put(shortURL, longURL);
         reverseMap.put(longURL, shortURL);
         idCounter++;
-        return "https://short.ly/" + shortURL;
+        return "https://bit.ly/" + shortURL;
     }
 
     // Retrieve the long URL from a short URL
     public static String resolveURL(String shortURL) {
-        String key = shortURL.replace("https://short.ly/", "");
+        String key = shortURL.replace("https://bit.ly/", "");
         return urlMap.getOrDefault(key, "URL not found");
     }
 
@@ -100,7 +100,7 @@ public class URLShroteningService {
 
     public static void main(String[] args) {
         // Example Usage
-        String longURL1 = "https://www.google.com/articles/2024/december/java-basics";
+        String longURL1 = "https://www.google.com/articles/2014/december/python-basics";
         String shortURL1 = shortenURL(longURL1);
         System.out.println("Short URL for " + longURL1 + ": " + shortURL1);
         System.out.println("Long URL for " + shortURL1 + ": " + resolveURL(shortURL1));

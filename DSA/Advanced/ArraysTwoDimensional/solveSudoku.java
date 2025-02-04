@@ -73,10 +73,10 @@ Return Result: If none of the conditions in the loop are met (i.e., num is not a
 
 */
 public class solveSudoku {
-    public void solveSudokuPattern(char[][] board) {
+    public static void solveSudokuPattern(char[][] board) {
         solve(board);
     }
-    private boolean solve (char[][] board){
+    private static boolean solve (char[][] board){
         for(int row=0; row<9; row++){
             for (int col=0; col<9; col++){
                 if (board[row][col]=='.'){
@@ -97,7 +97,7 @@ public class solveSudoku {
         return true;  // All cells are filled
     }
 
-    private boolean isValid(char[][] board, int row, int col, char num){
+    private static boolean isValid(char[][] board, int row, int col, char num){
         //check if num is not already present in the current row, col and sub-box
        for (int i =0; i<9; i++){
         if(board[row][i]== num || board [i][col]== num || board [3* (row / 3) + i / 3][3 * (col / 3) + i % 3] == num){
@@ -105,5 +105,31 @@ public class solveSudoku {
         }
        }
        return true;
-    } 
+    }
+    private static void printBoard(char[][] board) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        char[][] board = {
+            {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+            {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+            {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+            {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+            {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+            {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+            {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+            {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+            {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
+        };
+
+        solveSudokuPattern(board);
+        System.out.println("Solved Sudoku:");
+        printBoard(board);
+    }
 }
