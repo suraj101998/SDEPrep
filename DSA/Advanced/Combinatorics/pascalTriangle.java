@@ -1,4 +1,7 @@
 package DSA.Advanced.Combinatorics;
+
+import java.util.Arrays;
+
 /*
  * Problem Description
 Write a program to print the pascal triangle up to A rows.
@@ -36,7 +39,7 @@ Row 2 = 1C0 1C1 0 = 1 1 0
 Row 3 = 2C0 2C1 2C2 = 1 2 1
  */
 public class pascalTriangle {
-    public int[][] solve(int A) {
+    public static int[][] solve(int A) {
         int[][] triangle = new int[A][A];
         for (int i = 0; i < A; i++) {
             triangle[i][0] = 1;
@@ -45,5 +48,10 @@ public class pascalTriangle {
             }
         }
         return triangle;
+    }
+    public static void main(String[] args){
+        int A = 5;
+        int[][] result = solve(A);
+        System.out.println("ans: "+Arrays.deepToString(result));
     }
 }

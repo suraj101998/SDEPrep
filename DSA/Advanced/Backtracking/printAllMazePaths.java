@@ -1,6 +1,8 @@
 package DSA.Advanced.Backtracking;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -47,14 +49,14 @@ You are currently standing at (0, 0), the possible paths to bottom right cell (0
 This is the only possible path.
  */
 public class printAllMazePaths {
-    public String[] PrintAllPaths(int A, int B) {
+    public static String[] PrintAllPaths(int A, int B) {
         List<String> result = new ArrayList<>();
         StringBuilder path = new StringBuilder();
         backtrack(0, 0, A, B, path, result);
         String[] paths = result.toArray(new String[0]);
         return paths;
     }
-    private void backtrack(int row, int col, int A, int B, StringBuilder path, List<String> result) {
+    private static void backtrack(int row, int col, int A, int B, StringBuilder path, List<String> result) {
         if (row == A - 1 && col == B - 1) {
             result.add(path.toString());
             return;
@@ -69,5 +71,11 @@ public class printAllMazePaths {
             backtrack(row, col + 1, A, B, path, result);
             path.deleteCharAt(path.length() - 1);
         }
+    }
+    public static void main(String[] args){
+        int A= 3;
+        int B = 2;
+        String[] result = PrintAllPaths(A, B);
+        System.out.println("ans: "+Arrays.toString(result));
     }
 }

@@ -67,7 +67,7 @@ TC= O(logN)
 SC= O(1)
  */
 public class rotatedSortedArray {
-    public int search(final int[] A, int B) {
+    public static int search(final int[] A, int B) {
         int l = 0, r = A.length - 1;
         while (l <= r) {
             int mid = (l + r) / 2;
@@ -89,5 +89,11 @@ public class rotatedSortedArray {
             }
         }
         return -1;
+    }
+    public static void main(String[] args){
+        int[] A = {9, 10, 3, 5, 6, 8};
+        int B = 5;
+        int result = search(A, B);
+        System.out.println("ans: "+result);
     }
 }

@@ -45,7 +45,7 @@ Constraints are satisfied for maximal value of 3.
 
 public class specialInteger {
        //Binary search
-       public int solve(int[] A, int B) {
+    public static int solve(int[] A, int B) {
         int n = A.length;
         int l =1, r=n, ans=0;
         while(l<=r){
@@ -61,7 +61,7 @@ public class specialInteger {
         return ans;
     }
     //sliding window
-    private boolean isValidK(int[] A, int B, int K){
+    private static boolean isValidK(int[] A, int B, int K){
         int n = A.length;
         long currentSum = 0;
         for(int i=0; i<K; i++){
@@ -77,5 +77,11 @@ public class specialInteger {
             }
         }
         return true;
+    }
+    public static void main(String[] args){
+        int[] A = {5, 17, 100, 11};
+        int B = 130;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     } 
 }

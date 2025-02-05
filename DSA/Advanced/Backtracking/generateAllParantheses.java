@@ -1,6 +1,7 @@
 package DSA.Advanced.Backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -35,12 +36,12 @@ Explanation 2:
  All paranthesis are given in the output list.
  */
 public class generateAllParantheses {
-    public String[] generateParenthesis(int A) {
+    public static String[] generateParenthesis(int A) {
         List<String> result = new ArrayList<>();
         generateCombinations(result, "", 0, 0, A);
         return result.toArray(new String[0]);
     }
-    private void generateCombinations(List<String> result, String current, int open, int close, int max) {
+    private static void generateCombinations(List<String> result, String current, int open, int close, int max) {
         if (current.length() == 2 * max) {
             result.add(current);
             return;
@@ -51,5 +52,10 @@ public class generateAllParantheses {
         if (close < open) {
             generateCombinations(result, current + ")", open, close + 1, max);
         }
+    }
+    public static void main(String[] args){
+        int A = 3;
+        String[] result = generateParenthesis(A);
+        System.out.println("ans: "+Arrays.toString(result));
     }
 }

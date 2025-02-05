@@ -42,6 +42,8 @@ Explanation 2:
  There is no occurrence of 3 in the array.
 */
 
+import java.util.Arrays;
+
 /*
  * Approach:
 1. Initialize Result Array:
@@ -63,13 +65,13 @@ TC= O(logN)
 SC= O(1)
  */
 public class searchInARange {
-    public int[] searchRange(final int[] A, int B) {
+    public static int[] searchRange(final int[] A, int B) {
         int[] ans = new int[2];
         ans[0] = firstOccurance(A, B);
         ans[1] = lastOccurance(A, B);
         return ans;
     }
-    private int firstOccurance(int[] A, int B){
+    private static int firstOccurance(int[] A, int B){
         int N = A.length;
         int l =0, r = N-1;
         int firstIndex = -1;
@@ -88,7 +90,7 @@ public class searchInARange {
         }
         return firstIndex;
     }
-    private int lastOccurance(int[] A, int B){
+    private static int lastOccurance(int[] A, int B){
         int N = A.length;
         int l =0, r = N-1;
         int lastIndex = -1;
@@ -106,5 +108,11 @@ public class searchInARange {
             }
         }
         return lastIndex;
+    }
+    public static void main(String[] args){
+        int[] A = {5, 7, 7, 8, 8, 10};
+        int B = 8;
+        int[] result= searchRange(A, B);
+        System.out.println("ans: "+Arrays.toString(result)); 
     }
 }

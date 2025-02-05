@@ -47,17 +47,25 @@ Explanation:
 You can see that these are all possible subsets.
  */
 public class generateSubsets {
-    public ArrayList<ArrayList<Integer>> subsets(ArrayList<Integer> A) {
+    public static ArrayList<ArrayList<Integer>> subsets(ArrayList<Integer> A) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
         generateAllSubsets(0, A, new ArrayList<>(), result);
         return result;
     }
-    private void generateAllSubsets(int index, ArrayList<Integer> A, ArrayList<Integer> current, ArrayList<ArrayList<Integer>> result) {
+    private static void generateAllSubsets(int index, ArrayList<Integer> A, ArrayList<Integer> current, ArrayList<ArrayList<Integer>> result) {
         result.add(new ArrayList<>(current));
         for (int i = index; i < A.size(); i++) {
             current.add(A.get(i));
             generateAllSubsets(i + 1, A, current, result);
             current.remove(current.size() - 1);
         }
+    }
+    public static void main(String[] args){
+        ArrayList<Integer> A = new ArrayList<>();
+        A.add(1);
+        A.add(2);
+        A.add(3);
+        ArrayList<ArrayList<Integer>> result = subsets(A);
+        System.out.println("ans: "+result);
     }
 }

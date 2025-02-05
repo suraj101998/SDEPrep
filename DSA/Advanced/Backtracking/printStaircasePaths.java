@@ -1,7 +1,10 @@
 package DSA.Advanced.Backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import DSA.Advanced.QuickSortAndComparator.waveArray;
 
 /*
  * Problem Description
@@ -39,7 +42,7 @@ Explanation 1:
  Distinct ways to reach top: 1 + 1 + 1, 1 + 2, 2 + 1.
  */
 public class printStaircasePaths {
-    public int[][] WaysToClimb(int A) {
+    public static int[][] WaysToClimb(int A) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> currentPath = new ArrayList<>();
         backtrack(A, currentPath, result);
@@ -50,7 +53,7 @@ public class printStaircasePaths {
         }
         return paths;
     }
-    private void backtrack(int remainingSteps, List<Integer> currentPath, List<List<Integer>> result) {
+    private static void backtrack(int remainingSteps, List<Integer> currentPath, List<List<Integer>> result) {
         if (remainingSteps == 0) {
             result.add(new ArrayList<>(currentPath));
             return;
@@ -65,5 +68,10 @@ public class printStaircasePaths {
             backtrack(remainingSteps - 2, currentPath, result);
             currentPath.remove(currentPath.size() - 1); // Backtrack
         }
+    }
+    public static void main(String[] args){
+        int A = 3;
+        int[][] result = WaysToClimb(A);
+        System.out.println("ans: "+Arrays.deepToString(result));
     }
 }

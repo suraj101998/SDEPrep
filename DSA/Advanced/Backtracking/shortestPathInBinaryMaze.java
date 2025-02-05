@@ -69,7 +69,7 @@ No path exists so we return -1
 public class shortestPathInBinaryMaze {
     private static final int[] rowDirection = {-1, 1, 0, 0};
     private static final int[] colDirection = {0, 0, -1, 1};
-    public int FindShortestPath(int[][] A, int B, int C, int D, int E) {
+    public static int FindShortestPath(int[][] A, int B, int C, int D, int E) {
         int rows = A.length;
         int cols = A[0].length;
         if (A[B][C] == 0 || A[D][E] == 0) {
@@ -101,7 +101,7 @@ public class shortestPathInBinaryMaze {
         }
         return -1;
     }
-    private boolean isValidCell(int row, int col, int rows, int cols, int[][] A, boolean[][] visited) {
+    private static boolean isValidCell(int row, int col, int rows, int cols, int[][] A, boolean[][] visited) {
         if (row < 0 || row >= rows) {
             return false;
         }
@@ -115,5 +115,16 @@ public class shortestPathInBinaryMaze {
             return false;
         }
         return true;
+    }
+    public static void main(String[] main){
+        int[][] A = {   {1, 1, 0, 0},
+                {0, 1, 1, 0},
+                {0, 0, 1, 1},
+                {0, 0, 0, 1}
+        };
+       int B = 0; int C = 0;
+        int D = 3; int E = 3;
+        int result = FindShortestPath(A, B, C, D, E);
+        System.out.println("ans: "+result);
     }   
 }

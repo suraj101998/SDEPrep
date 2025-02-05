@@ -45,7 +45,7 @@ The target value should be inserted at index 1.
  */
 
 public class sortedInsertPosition {
-    public int searchInsert(int[] A, int B) {
+    public static int searchInsert(int[] A, int B) {
         int N= A.length;
         int l=0, r= N-1;
         while(l<=r){
@@ -61,5 +61,11 @@ public class sortedInsertPosition {
             }
         }
         return l;
+    }
+    public static void main(String[] args){
+        int[] A= {1, 3, 5, 6};
+        int B = 5;
+        int result = searchInsert(A, B);
+        System.out.println("ans: "+result);
     }
 }

@@ -50,7 +50,7 @@ TC = O(logN)
 SC = O(1)
  */
 public class singleElementInSortedArray {
-    public int solve(int[] A) {
+    public static int solve(int[] A) {
         int N = A.length;
         //only single element is present in the array
         if(N==1){
@@ -83,5 +83,10 @@ public class singleElementInSortedArray {
             }
         }
         return -1;
+    }
+    public static void main(String[] args){
+        int[] A = {1, 1, 7};
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }
 }

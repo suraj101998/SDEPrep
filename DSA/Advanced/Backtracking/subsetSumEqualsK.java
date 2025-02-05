@@ -40,14 +40,14 @@ Explanation 2:
  There is no subset that add up to -20.
  */
 public class subsetSumEqualsK {
-    public int SubsetSum(int[] A, int B) {
+    public static int SubsetSum(int[] A, int B) {
         if (subsetSumHelper(A, B, 0, 0)) {
             return 1;
         } else {
             return 0;
         }
     }
-    private boolean subsetSumHelper(int[] A, int target, int index, int currentSum) {
+    private static boolean subsetSumHelper(int[] A, int target, int index, int currentSum) {
         if (currentSum == target) {
             return true;
         }
@@ -57,5 +57,11 @@ public class subsetSumEqualsK {
         boolean include = subsetSumHelper(A, target, index + 1, currentSum + A[index]);
         boolean exclude = subsetSumHelper(A, target, index + 1, currentSum);
         return include || exclude;
+    }
+    public static void main(String[] args){
+        int[] A = {3, 34, -3, 12, 5, 2};
+        int B = 9;
+        int result = SubsetSum(A, B);
+        System.out.println("ans: "+result);
     }
 }

@@ -43,10 +43,10 @@ Explanation 2:
  Row 4: 01101001
  */
 public class kthSymbol {
-    public int solve(int A, int B) {
+    public static int solve(int A, int B) {
         return kthSymbols(A, B);
     }
-    private int kthSymbols(int row, int index) {
+    private static int kthSymbols(int row, int index) {
         if (row == 1) {
             return 0;
         }
@@ -56,5 +56,11 @@ public class kthSymbol {
         } else {
             return 1 - kthSymbols(row - 1, index - mid);
         }
+    }
+    public static void main(String[] args){
+        int A = 4;
+        int B = 4;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }
 }

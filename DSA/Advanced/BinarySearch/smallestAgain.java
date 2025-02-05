@@ -60,7 +60,7 @@ SC= O(B)
 
 import java.util.PriorityQueue;
 public class smallestAgain {
-    public int solve(int[] A, int B) {
+    public static int solve(int[] A, int B) {
         int n = A.length;
         PriorityQueue<Integer> triplet = new PriorityQueue<>((a, b) -> b - a); // Max-heap by negating values
         // Generate all triplet sums
@@ -79,5 +79,11 @@ public class smallestAgain {
         }
         // The root of the heap is the Bth smallest element
         return triplet.peek();
+    }
+    public static void main(String[] args){
+        int[] A = {2, 4, 3, 2};
+        int B = 3;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }
 }

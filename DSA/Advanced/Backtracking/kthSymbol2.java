@@ -42,7 +42,10 @@ Explanation 2:
  Row 4: 01101001
  */
 public class kthSymbol2 {
-    public int find(int n, long k){
+    public static int solve(int A, long B) {
+        return find(A, B);
+    }
+    public static int find(int n, long k){
         if(k==0){
            return 0;
         }
@@ -52,7 +55,10 @@ public class kthSymbol2 {
        }
        return 1 - val;
    }
-   public int solve(int A, long B) {
-       return find(A, B);
+   public static void main(String[] args){
+    int A = 4;
+    long B = 4;
+    int result = solve(A, B);
+    System.out.println("ans: "+result);
    }
 }

@@ -1,6 +1,7 @@
 package DSA.Advanced.Backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -38,7 +39,7 @@ Example Explanation
 All the possible permutation of array [1, 2, 3].
  */
 public class permutations {
-    public int[][] permute(int[] A) {
+    public static int[][] permute(int[] A) {
         List<List<Integer>> result = new ArrayList<>();
         generatePermutations(A, 0, result);
         // Convert List<List<Integer>> to int[][]
@@ -50,7 +51,7 @@ public class permutations {
         }
         return permutations;
     }
-    private void generatePermutations(int[] A, int index, List<List<Integer>> result) {
+    private static void generatePermutations(int[] A, int index, List<List<Integer>> result) {
         if (index == A.length) {
             List<Integer> currentPermutation = new ArrayList<>();
             for (int num : A) {
@@ -65,9 +66,14 @@ public class permutations {
             swap(A, index, i);  // Backtrack (undo the swap)
         }
     }
-    private void swap(int[] A, int i, int j) {
+    private static void swap(int[] A, int i, int j) {
         int temp = A[i];
         A[i] = A[j];
         A[j] = temp;
+    }
+    public static void main(String[] args){
+        int[] A = {1, 2, 3};
+        int[][] result = permute(A);
+        System.out.println("ans: "+Arrays.deepToString(result));
     }
 }

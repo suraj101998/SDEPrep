@@ -81,7 +81,7 @@ TC= O(Nlog(totalBoardLength))
 SC= O(1)
  */
 public class paintersPartition {
-    public int paint(int A, int B, int[] C) {
+    public static int paint(int A, int B, int[] C) {
         int MOD = 10000003;
         int longestBoard = 0;
         long totalBoardLength = 0;
@@ -112,7 +112,7 @@ public class paintersPartition {
     }
 
     // check if it is feasible to paint all boards within maxAllowedTime
-    private boolean isPossible(long maxAllowedTime, int A, int[] C) {
+    private static boolean isPossible(long maxAllowedTime, int A, int[] C) {
         int numberOfPaintersUsed = 1;
         long timeSpentByCurrentPainter = 0;
 
@@ -130,5 +130,12 @@ public class paintersPartition {
             }
         }
         return true;
+    }
+    public static void main(String[] args){
+        int A = 10;
+        int B = 1;
+        int[] C = {1, 8, 11, 3};
+        int result = paint(A, B, C);
+        System.out.println("ans: "+result);
     }
 }

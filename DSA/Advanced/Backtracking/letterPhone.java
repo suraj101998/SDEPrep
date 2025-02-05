@@ -1,6 +1,7 @@
 package DSA.Advanced.Backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -43,13 +44,13 @@ public class letterPhone {
         "0", "1", "abc", "def", "ghi", "jkl", 
         "mno", "pqrs", "tuv", "wxyz"
     };
-    public String[] letterCombinations(String A) {
+    public static String[] letterCombinations(String A) {
         List<String> result = new ArrayList<>();
         if (A == null || A.length() == 0) return result.toArray(new String[0]);
         backtrack(0, A, new StringBuilder(), result);
         return result.toArray(new String[0]);
     }
-    private void backtrack(int index, String A, StringBuilder current, List<String> result) {
+    private static void backtrack(int index, String A, StringBuilder current, List<String> result) {
         if (index == A.length()) {
             result.add(current.toString());
             return;
@@ -60,5 +61,10 @@ public class letterPhone {
             backtrack(index + 1, A, current, result);
             current.deleteCharAt(current.length() - 1);
         }
+    }
+    public static void main(String[] args){
+        String A = "23";
+        String[] result  = letterCombinations(A);
+        System.out.println("ans: "+Arrays.toString(result));
     }
 }

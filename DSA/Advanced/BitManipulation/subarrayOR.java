@@ -67,7 +67,7 @@ package DSA.Advanced.BitManipulation;
 //  Sum of value of all subarray is 110.
 
 public class subarrayOR {
-    public int solve(int[] A) {
+    public static int solve(int[] A) {
         int MOD = 1000000007;
         int n = A.length;
         long totalSum = 0;
@@ -97,5 +97,10 @@ public class subarrayOR {
         // Convert the totalSum from long to int
         int result = (int) totalSum;
         return result;
+    }
+    public static void main(String[] args){
+        int[] A = {7, 8, 9, 10};
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }
 }
