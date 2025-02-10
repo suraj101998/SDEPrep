@@ -1,6 +1,7 @@
 package DSA.Advanced.Greedy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
  * Problem Description
@@ -45,7 +46,7 @@ Explanation 1:
  Candies given = [1, 3, 2, 1]
  */
 public class distributeCandy {
-    public int candy(ArrayList<Integer> A) {
+    public static int candy(ArrayList<Integer> A) {
         int n = A.size();
         if (n == 1) return 1;
         int[] candies = new int[n];
@@ -67,5 +68,10 @@ public class distributeCandy {
             totalCandies += candy;
         }
         return totalCandies;
+    }
+    public static void main(String[] args){
+        ArrayList<Integer> A = new ArrayList<>(Arrays.asList(1, 5, 2, 1));
+        int result = candy(A);
+        System.out.println("ans: "+result);
     }    
 }

@@ -1,8 +1,11 @@
 package DSA.Advanced.Greedy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 /*
  * Problem Description
@@ -47,7 +50,7 @@ Explanation 2:
  Since all three jobs collide with each other. We can do only 1 job.
  */
 public class finishMaxJobs {
-    public int solve(ArrayList<Integer> A, ArrayList<Integer> B) {
+    public static int solve(ArrayList<Integer> A, ArrayList<Integer> B) {
         int n = A.size();
         ArrayList<int[]> jobs = new ArrayList<>();
         for (int i = 0; i < n; i++) {
@@ -63,5 +66,11 @@ public class finishMaxJobs {
             }
         }
         return count;
+    }
+    public static void main(String[] args){
+        ArrayList<Integer> A = new ArrayList<>(Arrays.asList(3, 2, 6));
+        ArrayList<Integer> B = new ArrayList<>(Arrays.asList(9, 8, 9));
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }    
 }

@@ -39,7 +39,7 @@ Explanation 2:
  Representation of 5 coins will be : (1 + 1 + 1 + 1 + 5).
  */
 public class anotherCoinProblem {
-    public int solve(int A) {
+    public static int solve(int A) {
         ArrayList<Integer> coins = new ArrayList<>();
         long value = 1;
         while (value <= A) {
@@ -58,5 +58,10 @@ public class anotherCoinProblem {
             }
         }        
         return numCoins;
+    }
+    public static void main(String[] args){
+        int A = 9;
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }    
 }

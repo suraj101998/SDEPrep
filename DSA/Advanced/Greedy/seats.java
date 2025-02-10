@@ -54,7 +54,7 @@ Explanation 2:
  */
 
 public class seats {
-    public int seat(String A) {
+    public static int seat(String A) {
         ArrayList<Integer> occupiedSeats = new ArrayList<>();
         for (int i = 0; i < A.length(); i++) {
             if (A.charAt(i) == 'x') {
@@ -73,5 +73,10 @@ public class seats {
             jumps = (jumps + Math.abs(occupiedSeats.get(i) - targetPosition)) % mod;
         }
         return jumps;
+    }
+    public static void main(String[] args){
+        String A = "....x..xx...x..";
+        int result = seat(A);
+        System.out.println("ans: "+result);
     }    
 }

@@ -1,7 +1,10 @@
 package DSA.Advanced.Greedy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+
+import DSA.Advanced.LinkedList.removeSortedDuplicates;
 
 /*
  * Problem Description
@@ -49,7 +52,7 @@ Explanation 2:
  So, the time taken will be 4.
  */
 public class assignMiceToHoles {
-    public int mice(ArrayList<Integer> A, ArrayList<Integer> B) {
+    public static int mice(ArrayList<Integer> A, ArrayList<Integer> B) {
         Collections.sort(A);
         Collections.sort(B);
         int maxTime = 0;
@@ -58,5 +61,11 @@ public class assignMiceToHoles {
             maxTime = Math.max(maxTime, time);
         }
         return maxTime;
+    }
+    public static void main(String[] args){
+        ArrayList<Integer> A = new ArrayList<>(Arrays.asList(-4, 2, 3));
+        ArrayList<Integer> B = new ArrayList<>(Arrays.asList(0, -2, 4));
+        int result = mice(A, B);
+        System.out.println("ans: "+result);
     }    
 }

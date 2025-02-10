@@ -61,7 +61,7 @@ Explanation 2:
  */
 
 public class FlipkartInventoryManagement {
-    public int solve(ArrayList<Integer> A, ArrayList<Integer> B) {
+    public static int solve(ArrayList<Integer> A, ArrayList<Integer> B) {
         int MOD = 1000000007;
         int n = A.size();
         int[][] items = new int[n][2];
@@ -86,5 +86,11 @@ public class FlipkartInventoryManagement {
             totalProfit %= MOD;
         }
         return (int) totalProfit;
+    }
+    public static void main(String[] args){
+        ArrayList<Integer> A = new ArrayList<>(Arrays.asList(1, 3, 2, 3, 3));
+        ArrayList<Integer> B = new ArrayList<>(Arrays.asList(5, 6, 1, 3, 9));
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }    
 }

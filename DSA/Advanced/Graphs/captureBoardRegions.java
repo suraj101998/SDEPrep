@@ -1,59 +1,42 @@
 package DSA.Advanced.Graphs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 /*
  * Problem Description
-
 Given a 2-D board A of size N x M containing 'X' and 'O', capture all regions surrounded by 'X'.
-
 A region is captured by flipping all 'O's into 'X's in that surrounded region.
 
-
-
 Problem Constraints
-
 1 <= N, M <= 1000
 
-
-
 Input Format
-
 First and only argument is a N x M character matrix A.
 
-
-
 Output Format
-
 Return nothing. Make changes to the the input only as matrix is passed by reference.
 
-
-
 Example Input
-
 Input 1:
-
  A = [ 
        [X, X, X, X],
        [X, O, O, X],
        [X, X, O, X],
        [X, O, X, X] 
      ]
-Input 2:
 
+Input 2:
  A = [
        [X, O, O],
        [X, O, X],
        [O, O, O]
      ]
 
-
 Example Output
-
 Output 1:
-
  After running your function, the board should be:
  A = [
        [X, X, X, X],
@@ -61,8 +44,8 @@ Output 1:
        [X, X, X, X],
        [X, O, X, X]
      ]
-Output 2:
 
+Output 2:
  After running your function, the board should be:
  A = [
        [X, O, O],
@@ -70,18 +53,16 @@ Output 2:
        [O, O, O]
      ]
 
-
 Example Explanation
-
 Explanation 1:
-
  O in (4,2) is not surrounded by X from below.
-Explanation 2:
 
+ Explanation 2:
  No O's are surrounded.
  */
+
 public class captureBoardRegions {
-    public void solve(ArrayList<ArrayList<Character>> board) {
+    public static void solve(ArrayList<ArrayList<Character>> board) {
         if (board == null || board.size() == 0 || board.get(0).size() == 0) {
             return;
         }
@@ -119,7 +100,7 @@ public class captureBoardRegions {
         }
     }
 
-    private void markBoundaryConnected(ArrayList<ArrayList<Character>> board, int x, int y, int[] dx, int[] dy) {
+    private static void markBoundaryConnected(ArrayList<ArrayList<Character>> board, int x, int y, int[] dx, int[] dy) {
         int rows = board.size();
         int cols = board.get(0).size();
         Queue<int[]> queue = new LinkedList<>();
@@ -138,5 +119,30 @@ public class captureBoardRegions {
                 }
             }
         }
-    }    
+    }
+    public static void printBoard(ArrayList<ArrayList<Character>> board) {
+        for (ArrayList<Character> row : board) {
+            for (char cell : row) {
+                System.out.print(cell + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Character>> board = new ArrayList<>();
+        board.add(new ArrayList<>(Arrays.asList('X', 'X', 'X', 'X')));
+        board.add(new ArrayList<>(Arrays.asList('X', 'O', 'O', 'X')));
+        board.add(new ArrayList<>(Arrays.asList('X', 'X', 'O', 'X')));
+        board.add(new ArrayList<>(Arrays.asList('X', 'O', 'X', 'X')));
+
+        System.out.println("Before:");
+        printBoard(board);
+
+        solve(board);
+
+        System.out.println("After:");
+        printBoard(board);
+    }
 }
