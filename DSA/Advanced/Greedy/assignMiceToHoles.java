@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import DSA.Advanced.LinkedList.removeSortedDuplicates;
-
 /*
  * Problem Description
 N Mice and N holes are placed in a straight line. Each hole can accommodate only one mouse.

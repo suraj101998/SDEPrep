@@ -1,5 +1,6 @@
 package DSA.Advanced.Heaps;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
@@ -54,7 +55,7 @@ Explanation 2:
  [5, 17, 100, 11]     11 
  */
 public class runningMedian {
-    public int[] solve(int[] A) {
+    public static int[] solve(int[] A) {
         int n = A.length;
         int[] result = new int[n];
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
@@ -78,5 +79,11 @@ public class runningMedian {
             }
         }
         return result;
-    }    
+    }
+    
+    public static void main(String[] args){
+        int[] A = {5, 17, 100, 11};
+        int[] result = solve(A);
+        System.out.println("ans: "+Arrays.toString(result));
+    }
 }

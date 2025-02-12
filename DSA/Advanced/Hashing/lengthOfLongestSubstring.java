@@ -33,7 +33,7 @@ s consists of English letters, digits, symbols and spaces.
 
 import java.util.*;
 class lengthOfLongestSubstring {
-    public int lengthOfLongestSubstring(String s) {
+    public static int lengthOfLongestSubstring(String s) {
         int result = 0;
         Map<Character, Integer> hash_map = new HashMap<>();
         int i = 0;
@@ -48,5 +48,10 @@ class lengthOfLongestSubstring {
             j++;
         }
         return result;
+    }
+    public static void main(String[] args){
+        String s = "abcabcbb";
+        int result = lengthOfLongestSubstring(s);
+        System.out.println("ans: "+result);
     }
 }

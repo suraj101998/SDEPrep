@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-import javax.swing.plaf.synth.SynthLookAndFeel;
-
 /*
  * Problem Description
 There are N jobs to be done, but you can do only one job at a time.

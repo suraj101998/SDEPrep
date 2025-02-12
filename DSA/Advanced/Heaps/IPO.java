@@ -34,7 +34,7 @@ n == capital.length
 import java.util.PriorityQueue;
 
 public class IPO {
-     public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+     public static int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
         int n = capital.length;
         PriorityQueue<int[]> q1 = new PriorityQueue<> ((a,b) -> a[0]-b[0]);
         for(int i =0; i<n; ++i){
@@ -51,5 +51,11 @@ public class IPO {
             w +=q2.poll();
         }
         return w;
+    }
+    public static void main(String[] args){
+        int k = 2, w = 0; 
+        int[] profits = {1,2,3}, capital = {0,1,1};
+        int result = findMaximizedCapital(k, w, profits, capital);
+        System.out.println("ans: "+result);
     }    
 }

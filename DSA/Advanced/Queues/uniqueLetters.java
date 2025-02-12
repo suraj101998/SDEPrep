@@ -18,52 +18,39 @@ A student says "b". All letters so far are repeated. You add "#". It becomes "aa
 A student says "c". "c" is unique. You add "c". The final is "aab#c".
 Your task? Given the sequence the students call out A, determine the string on the board.
 
-
-
 Problem Constraints
 1 <= |A| <= 100000
-
-
 
 Input Format
 The only argument given is string A.
 
-
-
 Output Format
 Return a string after processing the stream of lowercase alphabets A.
 
-
-
 Example Input
 Input 1:
-
  A = "abadbc"
+
 Input 2:
-
  A = "abcabc"
-
 
 Example Output
 Output 1:
-
 "aabbdd"
+
 Output 2:
-
 "aaabc#"
-
 
 Example Explanation
 Explanation 1:
-
 "a"      -   first non repeating character 'a'
 "ab"     -   first non repeating character 'a'
 "aba"    -   first non repeating character 'b'
 "abad"   -   first non repeating character 'b'
 "abadb"  -   first non repeating character 'd'
 "abadbc" -   first non repeating character 'd'
-Explanation 2:
 
+Explanation 2:
 "a"      -   first non repeating character 'a'
 "ab"     -   first non repeating character 'a'
 "abc"    -   first non repeating character 'a'
@@ -71,8 +58,9 @@ Explanation 2:
 "abcab"  -   first non repeating character 'c'
 "abcabc" -   no non repeating character so '#'
  */
+
 public class uniqueLetters {
-        public String solve(String A) {
+    public static String solve(String A) {
         // To store the frequency of each character
         int[] freq = new int[26];
         Queue<Character> queue = new LinkedList<>();
@@ -95,5 +83,10 @@ public class uniqueLetters {
             }
         }
         return result.toString();
+    }
+    public static void main(String[] args){
+        String A = "abadbc";
+        String result = solve(A);
+        System.out.println("ans: "+result);
     }
 }

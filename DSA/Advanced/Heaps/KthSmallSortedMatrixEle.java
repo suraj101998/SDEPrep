@@ -1,4 +1,7 @@
 package DSA.Advanced.Heaps;
+
+import javax.swing.plaf.synth.SynthStyle;
+
 /*
  * Problem Description
 Given a sorted matrix of integers A of size N x M and an integer B.
@@ -47,16 +50,14 @@ Explanation 2:
  12th smallest element in the sorted matrix is 16.
  */
 public class KthSmallSortedMatrixEle {
-    public int solve(int[][] A, int B) {
+    public static int solve(int[][] A, int B) {
         int N = A.length;
         int M = A[0].length;
         int low = A[0][0];
         int high = A[N - 1][M - 1];
-
         while (low < high) {
             int mid = low + (high - low) / 2;
             int count = countLessEqual(A, mid, N, M);
-
             if (count < B) {
                 low = mid + 1;
             } else {
@@ -66,11 +67,10 @@ public class KthSmallSortedMatrixEle {
         return low;
     }
 
-    private int countLessEqual(int[][] A, int x, int N, int M) {
+    private static int countLessEqual(int[][] A, int x, int N, int M) {
         int count = 0;
         int row = N - 1;
         int col = 0;
-
         while (row >= 0 && col < M) {
             if (A[row][col] <= x) {
                 count += (row + 1);
@@ -78,8 +78,14 @@ public class KthSmallSortedMatrixEle {
             } else {
                 row--;
             }
-        }
-        
+        } 
         return count;
-    }    
+    }
+    
+    public static void main(String[] args){
+        int[][] A = {{9, 11, 15},{10, 15, 17}};
+        int B = 6;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
+    }
 }

@@ -1,4 +1,7 @@
 package DSA.Advanced.Heaps;
+
+import java.util.Arrays;
+
 /*
  * Problem Description
 Given an integer array A of size N.
@@ -46,7 +49,7 @@ Explanation 2:
  So, the output is [-1, -1, 260, 520].
  */
 public class productOf3 {
-    public int[] solve(int[] A) {
+    public static int[] solve(int[] A) {
         int N = A.length;
         int[] B = new int[N];
 
@@ -73,5 +76,11 @@ public class productOf3 {
             }
         }
         return B;
-    }    
+    }
+    
+    public static void main(String[] main){
+        int[] A= {10, 2, 13, 4};
+        int result[] = solve(A);
+        System.out.println("ans: "+Arrays.toString(result));
+    }
 }

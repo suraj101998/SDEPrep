@@ -54,7 +54,7 @@ Explanation 2:
  Minimum possible largest element after 5 operations is 5.
  */
 public class minLargestElement {
-    public int solve(int[] A, int B) {
+    public static int solve(int[] A, int B) {
         
         PriorityQueue < Pair > pq = new PriorityQueue(new CustomComp());
         int s = A.length;
@@ -84,6 +84,12 @@ public class minLargestElement {
         int mx = state[0];
         for (int i = 0; i < s; i++) mx = Math.max(mx, state[i]);
         return mx;
+    }
+    public static void main(String[] args){
+        int[] A = {1, 2, 3, 4};
+        int B = 3;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }
 }
 class Pair {

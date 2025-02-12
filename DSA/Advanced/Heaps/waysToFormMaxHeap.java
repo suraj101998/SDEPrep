@@ -52,7 +52,7 @@ public class waysToFormMaxHeap {
     private static int[][] comb;
     private static int[] log2;
 
-    public int solve(int A) {
+    public static int solve(int A) {
         if (A <= 1) return 1;
         dp = new int[A + 1];
         Arrays.fill(dp, -1);
@@ -66,7 +66,7 @@ public class waysToFormMaxHeap {
         return countMaxHeaps(A);
     }
     
-    private void computeCombinations(int n) {
+    private static void computeCombinations(int n) {
         for (int i = 0; i <= n; i++) {
             comb[i][0] = comb[i][i] = 1;
             for (int j = 1; j < i; j++) {
@@ -75,19 +75,25 @@ public class waysToFormMaxHeap {
         }
     }
     
-    private int countMaxHeaps(int n) {
+    private static int countMaxHeaps(int n) {
         if (dp[n] != -1) return dp[n];
         int left = getLeft(n);
         dp[n] = (int) ((comb[n - 1][left] * (long) countMaxHeaps(left) % MOD) * countMaxHeaps(n - 1 - left) % MOD);
         return dp[n];
     }
     
-    private int getLeft(int n) {
+    private static int getLeft(int n) {
         if (n == 1) return 0;
         int h = log2[n];
         int maxNodesAtH = 1 << h;
         int actualNodesAtH = n - ((1 << h) - 1);
         if (actualNodesAtH >= maxNodesAtH / 2) return (1 << h) - 1;
         return (1 << h) - 1 - (maxNodesAtH / 2 - actualNodesAtH);
+    }
+    public static void main(String[] args){
+        int A = 10;
+        int result = solve(A);
+        System.out.println("ans: "+result);
+
     }    
 }

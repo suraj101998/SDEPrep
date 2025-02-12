@@ -1,7 +1,10 @@
 package DSA.Advanced.Heaps;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 /*
  * Problem Description
@@ -51,7 +54,7 @@ Explanation 2:
  Final array after B modifications = [57, -3, 14, 87, 42, 38, 31, 7, 28, 61]
  */
 public class MaxSumAfterBNegotiation {
-    public int solve(ArrayList<Integer> A, int B) {
+    public static int solve(ArrayList<Integer> A, int B) {
         Collections.sort(A);
         for (int i = 0; i < A.size() && B > 0; i++) {
             if (A.get(i) < 0) {
@@ -70,5 +73,11 @@ public class MaxSumAfterBNegotiation {
             sum += num;
         }
         return sum;
+    }
+    public static void main(String[] args){
+        ArrayList<Integer> A = new ArrayList<>(Arrays.asList(24, -68, -29, -9, 84));
+        int B = 4;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }    
 }

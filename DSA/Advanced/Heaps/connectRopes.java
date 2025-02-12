@@ -1,6 +1,9 @@
 package DSA.Advanced.Heaps;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
+
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 /*
  * Problem Description
@@ -52,7 +55,7 @@ Explanation 1:
  So, total cost  to connect the ropes into one is 16 + 33 + 133 = 182.
  */
 public class connectRopes {
-    public int solve(ArrayList<Integer> A) {
+    public static int solve(ArrayList<Integer> A) {
         PriorityQueue<Integer> map = new PriorityQueue<>(A);
         int totalCost = 0;
         while(map.size() > 1){
@@ -63,5 +66,10 @@ public class connectRopes {
             map.add(currentCost);
         }
         return totalCost;
+    }
+    public static void main(String[] args){
+        ArrayList<Integer> A = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        int result = solve(A);
+        System.out.println("ans: "+result);
     }    
 }

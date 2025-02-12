@@ -51,7 +51,7 @@ Explanation 2:
  So the number of candies Misha eat is 1.
  */
 public class mishaAndCandies {
-    public int solve(int[] A, int B) {
+    public static int solve(int[] A, int B) {
         int candies_ate = 0;
         // create a priority_queue to get box with minimum candies in O(1);
         PriorityQueue < Integer > pq = new PriorityQueue();
@@ -72,5 +72,11 @@ public class mishaAndCandies {
         }
         // return candies she can eat.
         return candies_ate;
+    }
+    public static void main(String[] args){
+        int[] A = {3, 2, 3};
+        int B = 3;
+        int result = solve(A, B);
+        System.out.println("ans: "+result);
     }    
 }

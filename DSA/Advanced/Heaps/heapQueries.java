@@ -1,6 +1,7 @@
 package DSA.Advanced.Heaps;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 /*
@@ -43,7 +44,7 @@ Explanation 2:
 The heap contains the elements 5, 3 and 1. The first extract min operation gets the element 1 and the second operation gets the element 3.
  */
 public class heapQueries {
-    public int[] solve(int[][] A) {
+    public static int[] solve(int[][] A) {
         PriorityQueue<Integer> map = new PriorityQueue<>();
         ArrayList<Integer> result = new ArrayList<>();
         for(int[] query : A){
@@ -66,5 +67,10 @@ public class heapQueries {
             ans[i]= result.get(i);
         }
         return ans;
+    }
+    public static void main(String[] args){
+        int[][] A = {{1, -1}, {2, 2}, {2, 1}, {1, -1}};
+        int[] result = solve(A);
+        System.out.println("ans: "+Arrays.toString(result));
     }    
 }
