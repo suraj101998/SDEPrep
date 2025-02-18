@@ -1,0 +1,45 @@
+1. Which of the following statements is true about the synchronized keyword?- It can be applied to both instance methods and static methods
+2. Which of the following is true regarding the differences between Hashtable and ConcurrentHashMap in Java?- ConcurrentHashMap allows multiple threads to access different parts of the map at the same time, while Hashtable does not.
+3. What is the name of the algorithm used by Atomic Data types for thread-safety?- Compare and Swap
+4. Consider the following code
+    public class A {
+    synchronized static void fun1(){
+    }
+    synchronized  void fun2(){
+    }
+    void fun3(){
+    }
+    }
+    And the following code
+    public class Client {
+    public static void main(String[] args) {
+        A obj1 = new A();
+        A obj2 = new A();
+    }
+    }
+    Which of the following can’t execute concurrently on two separate threads? - obj1.fun1 and obj2.fun1
+
+5. Which of the following statements about synchronization differences between Hashtable and HashMap, and StringBuilder and StringBuffer is true?- Hashtable is thread-safe because its methods are synchronized, while HashMap is not thread-safe by default.
+6. Consider the following code:
+    public class A {
+        synchronized void fun1(){
+
+        }
+        synchronized  void fun2(){
+
+        }
+        void fun3(){
+
+        }
+    }
+    And the following code:
+    public class Client {
+        public static void main(String[] args) {
+            A obj1 = new A();
+            A obj2 = new A();
+
+        }
+    }
+    Which of the following can execute concurrently on two separate threads? - B = obj1.fun1 and obj2.fun1 , C = obj2.fun2 and obj2.fun3
+
+7. Which of the following statements about mutex locks in Java is true?- Mutex locks are used to protect critical sections of code from concurrent access.

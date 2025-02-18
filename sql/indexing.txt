@@ -1,0 +1,9 @@
+1. In a B-Tree index structure, what does the 'B' stand for?- Balanced
+2. In which of the following scenarios is a Hash Index most beneficial?- When you need to perform exact match queries
+3. How is the Full-Text Index in MySQL different from other indexes?- It is optimized for matching exact phrases, It is optimized for searching large text fields
+4. Which of the following statements is true about indexes in MySQL?- Indexes slow down UPDATE and INSERT operations but speed up SELECT queries
+5. In MySQL, what does the keyword "EXPLAIN" do before a SELECT query?- It provides information about the query execution plan, including how indexes are used
+6. If you have an index on a single column "age," which of the following types of queries would benefit the most from using this index?- Queries filtering by age ranges.
+7. Suppose you have a table with a multi-column index on columns (country, city). Which of the following query scenarios is likely to benefit the most from this index?- Queries filtering by both "country" and "city."
+8. Consider a database table "Orders" with columns: "OrderID," "CustomerName," "ProductID," and "OrderDate." An index is created on the columns "CustomerName" and "ProductID" in that order. In which scenario would a query involving "CustomerName" and "ProductID" not receive significant benefits from this index?- When searching for orders placed for a specific product, regardless of the customer.
+9. Why is indexing a long text field, such as a product description, not always the best choice?- Indexing long text fields requires additional storage.

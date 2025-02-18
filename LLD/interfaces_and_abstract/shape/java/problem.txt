@@ -1,0 +1,22 @@
+Shape Class (Assignment)
+Problem Statement
+
+You are required to implement a Shape class hierarchy for a graphic design toolbox in an application similar to Photoshop. There are three types of shapes: Rectangle, Circle, and Triangle. Each shape has common properties such as positionX, positionY, fillColor, and borderColor, all of which should be declared private, along with methods to calculate area and perimeter for each shape.
+The Shape class should be the superclass containing common properties and methods shared by all shapes, with all data members declared private.
+The Rectangle class should inherit from Shape and should include additional properties such as width and height, which should also be declared private.
+The Circle class should inherit from Shape and should include an additional property radius, which should be declared private.
+The Triangle class should inherit from Shape and should include additional properties such as side1, side2, and side3, all of which should be declared private.
+Ensure that the constructors initialize all properties correctly, including setting private data members. Use ‘super’ to call the constructor of the shape class and initialize properties - positionX, positionY, fillColor, and borderColor from the child classes.
+Implement the getter methods for each attribute in each class including the shape class. The method name should follow as convention like for the width property in rectangle, the method name should be “getWidth()”.
+Implement the calculateArea() and calculatePerimeter() methods in each subclass to compute the area and perimeter of the respective shapes. The methods should be declared as abstract inside the shape class.
+The shape class should be declared abstract as well.
+
+Instructions
+
+Implement the classes Shape, Rectangle, Circle, and Triangle as described in the problem statement.
+Ensure proper initialization of properties using the constructor and super keyword, including private data members.
+Implement getter methods following the naming convention.
+Declare the calculateArea() and calculatePerimeter() methods as abstract in the Shape class.
+
+Hint
+The code for triangle class is already written for your reference.

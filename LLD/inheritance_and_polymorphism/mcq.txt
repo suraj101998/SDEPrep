@@ -1,0 +1,199 @@
+1. class P {
+   protected int d1 = 10;
+   protected int d = 100;
+
+   protected void fun1(){
+       System.out.println("P's fun1");
+   }
+
+   protected void fun(){
+       System.out.println("P's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("P's sfun");
+   }
+}
+class C extends P{
+   protected int d2 = 20;
+   protected int d = 200;
+
+   protected void fun2(){
+       System.out.println("C's fun2");
+   }
+
+   protected void fun(){
+       System.out.println("C's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("C's sfun");
+   }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        P obj = new P();
+        System.out.println(obj.d1);
+        System.out.println(obj.d);
+        obj.fun1();
+        obj.fun();
+        obj.sfun();
+    }
+}
+
+What is the output?- 10 100 P's fun1 P's fun P's sfun
+
+2. public class P {
+   protected int d1 = 10;
+   protected int d = 100;
+
+   protected void fun1(){
+       System.out.println("P's fun1");
+   }
+
+   protected void fun(){
+       System.out.println("P's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("P's sfun");
+   }
+}
+
+public class C extends P{
+   protected int d2 = 20;
+   protected int d = 200;
+
+   protected void fun2(){
+       System.out.println("C's fun2");
+   }
+
+   protected void fun(){
+       System.out.println("C's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("C's sfun");
+   }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        P obj = new C();
+        System.out.println(obj.d1);
+        System.out.println(obj.d);
+        obj.fun1();
+        obj.fun();
+        obj.sfun();
+    }
+}
+
+What is the output?- 10 100 P's fun1 C's fun P's sfun
+
+3. P class
+
+public class P {
+   protected int d1 = 10;
+   protected int d = 100;
+
+   protected void fun1(){
+       System.out.println("P's fun1");
+   }
+
+   protected void fun(){
+       System.out.println("P's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("P's sfun");
+   }
+}
+C class
+
+public class C extends P{
+   protected int d2 = 20;
+   protected int d = 200;
+
+   protected void fun2(){
+       System.out.println("C's fun2");
+   }
+
+   protected void fun(){
+       System.out.println("C's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("C's sfun");
+   }
+}
+Client class
+
+public class Client {
+    public static void main(String[] args) {
+        C obj = new P();
+        System.out.println(obj.d1);
+        System.out.println(obj.d);
+        obj.fun1();
+        obj.fun();
+        obj.sfun();
+    }
+}
+What is the output?- Compile Time Error
+
+4. public class P {
+   protected int d1 = 10;
+   protected int d = 100;
+
+   protected void fun1(){
+       System.out.println("P's fun1");
+   }
+
+   protected void fun(){
+       System.out.println("P's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("P's sfun");
+   }
+}
+
+public class C extends P{
+   protected int d2 = 20;
+   protected int d = 200;
+
+   protected void fun2(){
+       System.out.println("C's fun2");
+   }
+
+   protected void fun(){
+       System.out.println("C's fun");
+   }
+
+   static protected void sfun(){
+       System.out.println("C's sfun");
+   }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        C obj = new C();
+        System.out.println(obj.d1);
+        System.out.println(obj.d);
+        obj.fun1();
+        obj.fun();
+        obj.sfun();
+    }
+}
+
+What is the output?- 10 200 P's fun 1C's fun C's sfun
+
+5. Which of the following does Java not support- Operator overloading
+6. What is true about static methods?
+    i. They can be overloaded
+    ii. They can be overridden
+    Which of the following is correct? - i is correct, ii is incorrect
+7. Consider the following statements
+    i. Calling of overloaded methods is decided at compile time
+    ii. Calling of overridden methods is decided at runtime.
+    Which of the following is correct? - Both are correct

@@ -1,0 +1,63 @@
+Authors table with fields: AuthorID, FirstName, LastName and DOB.
+Books table with fields: BookID, Title, PublicationDate and AuthorID.
+
+1. Which attribute is the primary key in the Authors table? - AuthorID
+2. In the Books table, what role does the AuthorID play? - It serves as the foreign key linking to the Authors table.
+3. If we try to delete a record from the Authors table where the AuthorID matches with AuthorID in the Books table, what will happen? - The deletion will be rejected.
+4. In the context of relational databases, what is the primary function of a primary key? - To uniquely identify each record in a table
+5. Which of the following statements about foreign keys is true? - A foreign key is a column or set of columns in one table that references the primary key or a unique key in another table.
+
+
+Consider three tables in a database:
+Student table with fields: StudentID (primary key), FirstName, LastName and DOB
+Courses table with fields: CourseID (primary key), CourseName and CreditHours
+Enrollment table with fields: EnrollmentID (primary key), StudentID, CourseID and EnrollmentDate
+
+6. In the Enrollment table, which specific field serves as a foreign key and establishes a relationship with another table by referencing its primary key?
+ - StudentID and CourseID
+
+Orders(OrderID, CustomerID, EmployeeID, OrderDate, ShipperID)
+
+7. If the OrderID is a primary key, which of the following is true? - OrderID must be unique and not null.
+8. If both OrderID and CustomerID together can be used to uniquely identify a record in the Orders table, this combination of keys is known as: - Composite Key
+
+Employees table has fields: EmpID (primary key), FirstName, LastName, Email, Phone, DOB and Address.
+
+9. Is it possible for two employees to share the same Email in the Employees table, if Email is a candidate key? - NO
+10. If there is another table Payroll with a field EmpID which refers to EmpID in Employees, what kind of key is EmpID in the Payroll table? - Foreign Key
+
+Consider the following scenario
+Students Table {id, student_name, branch_id}
+Branch Table {branch_id, branch_name}
+
+11. If a foreign key is set with the ON DELETE CASCADE option, what happens when a branch with branch_id 10 is deleted from the "Branch" table?- All Students with branch_id 10 will be deleted from the "Students" table.
+12. If a foreign key is set with the ON UPDATE SET NULL option, what happens when a branch with branch_id 13 is updated from the “Branch” table?- All Students with branchid 13 will have their branchid set to NULL.
+13. What is the default action taken by the MySQL database when a foreign key is defined without any explicit ON DELETE or ON UPDATE options? - The update or deletion of the department will not affect the "Students" table.
+14. The ON DELETE SET DEFAULT option is only functional under which circumstances?- When the branchid of the "Branch" table is deleted, employees with matching branchid will be set to their default branch_id.
+
+15. Consider the following statements regarding keys:
+
+A super key is an attribute or combination of attributes that uniquely identifies records in an RDBMS table.
+A candidate key is a subset of a super key.
+All super keys are candidate keys but vice-versa is not true - 1 and 2 are true
+
+16. In a 'Hospital' database, the 'Patients' table has attributes
+{Patient_ID, Patient_Name, Date_Admitted}, and
+
+the 'Doctors' table has attributes
+{Doctor_ID, Doctor_Name, Specialty}.
+
+To establish a relationship between the 'Patients' and 'Doctors' tables, which attribute could be used as a Foreign Key in the 'Patients' table?- {Doctor_ID}
+
+17. In a 'Library Management' database, there are tables for 'Books,' 'Authors,' and 'Book_Authors.' The 'Books' table has attributes {Book_ID, Title, Genre}, the 'Authors' table has attributes {Author_ID, Author_Name, Nationality}, and the 'Book_Authors' table has attributes {Book_ID, Author_ID}.
+Define a Composite Primary Key for the 'Book_Authors' table that maintains the relationship between books and authors.- {BookID, AuthorID}
+
+18. Consider an 'E-commerce' database with tables for 'Products,' 'Orders,' and 'Customers.' The 'Products' table has attributes {Product_ID, Product_Name, Price}, the 'Orders' table has attributes {Order_ID, Order_Date, Customer_ID}, and the 'Customers' table has attributes {Customer_ID, Customer_Name, Email}.
+Design a Foreign Key in the 'Orders' table that establishes a connection between orders and products.- {Product_ID}
+
+19. In a quaint town, there was a popular bookstore named "Readers' Haven." The store was known for its vast collection of books, and they decided to organize their inventory using a database management system.
+Which of the following attributes is most likely to be used as a primary key in the "Books" table of the "Readers' Haven" bookstore database?- ISBN (International Standard Book Number)
+
+20. In a quaint town, there was a popular bookstore named "Readers' Haven." The store was known for its vast collection of books, and they decided to organize their inventory using a database management system.
+
+The bookstore manager wants to ensure that no two books in the "Books" table have the same ISBN. Which type of key constraint should be applied to the ISBN attribute?- PRIMARY KEY constraint

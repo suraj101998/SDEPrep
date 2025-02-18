@@ -1,0 +1,12 @@
+1. Consider the following two statements
+
+Abstract classes should necessarily have abstract methods
+Classes having abstract methods should be abstract
+Which of the following is true? - i is incorrect, ii is correct
+
+2. Which keyword is used to make a non-inheritable class in Java?- final
+3. Consider the following about interface data-members
+    They are final
+    They are static
+    
+    Which of the following is true? - Both are correct

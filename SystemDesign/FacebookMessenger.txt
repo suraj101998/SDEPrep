@@ -1,0 +1,235 @@
+Design Facebook Messenger
+This section covers the detailed LLD with workflows for all functions, including one-on-one chat, group messaging, message statuses, online status, push notifications, media sharing, search, and multi-device sync.
+
+1. System Components and Classes
+1.1 Key Classes
+User: Represents a user in the system.
+Message: Represents a message.
+ChatService: Handles message sending, receiving, and storage.
+GroupChatService: Handles group messages.
+PresenceService: Tracks online/offline status.
+NotificationService: Manages push notifications.
+MediaService: Handles media storage.
+SearchService: Enables message search.
+SyncService: Ensures multi-device message synchronization.
+
+2. Class Diagrams & Implementation
+2.1 User Class
+
+class User {
+    private String userId;
+    private String name;
+    private String email;
+    private boolean isOnline;
+    private List<String> devices;  // List of devices the user is logged in from
+}
+Represents a registered user.
+The devices field helps with multi-device sync.
+2.2 Message Class
+
+class Message {
+    private String messageId;
+    private String senderId;
+    private String receiverId;
+    private String groupId;  // Null for one-on-one chats
+    private String text;
+    private String mediaUrl;
+    private MessageStatus status;
+    private LocalDateTime timestamp;
+}
+Stores text messages and media messages.
+MessageStatus helps track sent, delivered, and seen messages.
+
+enum MessageStatus {
+    SENT, DELIVERED, SEEN
+}
+2.3 Chat Service (One-on-One Messaging)
+
+class ChatService {
+    private Map<String, List<Message>> chatStore = new HashMap<>();
+
+    public void sendMessage(Message message) {
+        chatStore.putIfAbsent(message.getReceiverId(), new ArrayList<>());
+        chatStore.get(message.getReceiverId()).add(message);
+
+        // Notify WebSocket server for real-time delivery
+        WebSocketHandler.sendToUser(message.getReceiverId(), message);
+        
+        // Store in database asynchronously
+        MessageRepository.save(message);
+    }
+
+    public List<Message> fetchMessages(String userId, String otherUserId, int limit) {
+        return chatStore.getOrDefault(userId, new ArrayList<>())
+                        .stream()
+                        .filter(msg -> msg.getReceiverId().equals(otherUserId) || msg.getSenderId().equals(otherUserId))
+                        .limit(limit)
+                        .collect(Collectors.toList());
+    }
+}
+sendMessage() stores the message and notifies the recipient in real time.
+fetchMessages() retrieves past messages for a conversation.
+2.4 Group Messaging
+
+class GroupChatService {
+    private Map<String, List<Message>> groupChats = new HashMap<>();
+
+    public void sendGroupMessage(Message message, List<String> recipients) {
+        for (String userId : recipients) {
+            chatStore.putIfAbsent(userId, new ArrayList<>());
+            chatStore.get(userId).add(message);
+
+            // Notify recipients
+            WebSocketHandler.sendToUser(userId, message);
+        }
+
+        // Store in database asynchronously
+        MessageRepository.save(message);
+    }
+}
+sendGroupMessage() sends a message to all group members.
+2.5 Message Status Updates
+
+class MessageStatusService {
+    private Map<String, MessageStatus> messageStatusMap = new HashMap<>();
+
+    public void updateStatus(String messageId, MessageStatus status) {
+        messageStatusMap.put(messageId, status);
+        
+        // Update database
+        MessageRepository.updateStatus(messageId, status);
+
+        // Notify sender about status change
+        WebSocketHandler.notifySender(messageId, status);
+    }
+}
+Tracks message statuses (SENT, DELIVERED, SEEN).
+Notifies sender when status updates.
+2.6 Online/Offline Status (Presence Service)
+
+class PresenceService {
+    private Map<String, Boolean> onlineUsers = new ConcurrentHashMap<>();
+
+    public void setUserOnline(String userId) {
+        onlineUsers.put(userId, true);
+        RedisClient.set("user:" + userId + ":status", "online", 300);
+    }
+
+    public void setUserOffline(String userId) {
+        onlineUsers.remove(userId);
+        RedisClient.set("user:" + userId + ":status", "offline");
+    }
+
+    public boolean isUserOnline(String userId) {
+        return onlineUsers.containsKey(userId);
+    }
+}
+Uses Redis for fast access to online status.
+2.7 Push Notifications
+
+class NotificationService {
+    public void sendPushNotification(String userId, String message) {
+        if (!PresenceService.isUserOnline(userId)) {
+            PushNotificationClient.send(userId, message);
+        }
+    }
+}
+Push notifications are sent only if the user is offline.
+2.8 Media Sharing
+
+class MediaService {
+    public String uploadMedia(byte[] mediaData) {
+        String mediaUrl = S3Storage.upload(mediaData);
+        return mediaUrl;
+    }
+}
+Stores media in Amazon S3 or a distributed storage system.
+2.9 Message Search
+
+class SearchService {
+    public List<Message> searchMessages(String userId, String keyword) {
+        return ElasticsearchClient.search("messages", userId, keyword);
+    }
+}
+Uses Elasticsearch for fast message searching.
+2.10 Multi-Device Sync
+
+class SyncService {
+    public void syncMessagesAcrossDevices(String userId) {
+        List<String> devices = UserService.getDevices(userId);
+        List<Message> messages = MessageRepository.getUnreadMessages(userId);
+
+        for (String device : devices) {
+            WebSocketHandler.sendToDevice(device, messages);
+        }
+    }
+}
+Ensures messages sync across all logged-in devices.
+
+3. Workflow for Each Function
+3.1 One-on-One Messaging
+User A sends a message to User B.
+ChatService.sendMessage() stores the message and notifies User B’s WebSocket.
+If User B is online, message is delivered in real-time.
+If User B is offline, a push notification is sent.
+When User B reads the message, MessageStatusService.updateStatus() updates it to SEEN.
+
+3.2 Group Messaging
+User A sends a message to a group.
+GroupChatService.sendGroupMessage() stores the message and notifies all recipients.
+Online users get real-time messages, and offline users receive push notifications.
+
+3.3 Message Status Update
+When User B receives a message, status changes to DELIVERED.
+When User B reads the message, status changes to SEEN.
+Sender is notified via WebSocket.
+
+3.4 Online/Offline Status
+When User logs in, PresenceService.setUserOnline() updates status.
+When User logs out, PresenceService.setUserOffline() updates status.
+
+3.5 Push Notifications
+If a recipient is offline, NotificationService.sendPushNotification() sends a push alert.
+
+3.6 Media Sharing
+User uploads an image/video.
+MediaService.uploadMedia() stores it in S3 and returns a URL.
+URL is sent in a message to the recipient.
+
+3.7 Message Search
+User enters a keyword.
+SearchService.searchMessages() queries Elasticsearch for matching messages.
+
+3.8 Multi-Device Sync
+When a user logs in from a new device, SyncService.syncMessagesAcrossDevices() syncs all unread messages.
+
+4. Scaling Considerations
+To handle millions of users, we use:
+
+Horizontal Scaling
+Deploy multiple WebSocket servers with load balancing using Nginx.
+Use Kafka to queue messages.
+Sharding & Replication
+NoSQL DBs like Cassandra are sharded by user ID.
+Replication ensures fault tolerance.
+Load Balancing
+Nginx or AWS ALB to distribute load.
+Edge Caching & CDN
+Stores static content like images/videos in CDN for fast access.
+
+5. Security Considerations
+End-to-End Encryption – Uses Signal Protocol for chat encryption.
+Authentication – Uses OAuth 2.0 + JWT for user authentication.
+Rate Limiting – Prevents spam attacks with API rate limiting.
+Data Privacy – Ensures GDPR compliance for message retention.
+
+6. Failure Handling & Fault Tolerance
+Message Queues (Kafka/RabbitMQ)
+Ensures no message loss if a WebSocket server crashes.
+Database Replication
+Cassandra supports multi-region replication.
+Retry Mechanism
+If a message fails, Kafka retries delivery.
+
+7. Conclusion
+This Design ensures efficient real-time messaging, message tracking, media sharing, and multi-device synchronization. It follows scalable and fault-tolerant principles using WebSockets, Redis, Kafka, and NoSQL databases.

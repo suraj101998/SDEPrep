@@ -1,0 +1,31 @@
+Scaler Learning Platform
+Problem Statement
+You are tasked with implementing a basic user management system for a learning platform called Scaler. The system should allow the creation of users, both students and employees, and provide methods to display their information.
+
+Objectives
+Implement a User Class: Create a User class encapsulating common attributes and behaviors for all users. This class should include:
+
+username: A string representing the user's username.
+email: A string representing the user's email address.
+A constructor to initialize the username and email properties.
+A displayInfo() method to print out the user's information.
+Getter methods for each property, following Java naming conventions (e.g., getUsername() for the username property).
+Implement a Student Subclass: Develop a Student class that extends the User class, adding specific properties and functionalities for student users. This class should include:
+
+studentId: An integer representing the unique identifier of the student.
+course: A string representing the course in which the student is enrolled.
+A constructor to initialize both the inherited properties from User and the new properties specific to Student.
+Overridden displayInfo() method that calls super.displayInfo() to reuse the parent class's display logic and adds student-specific information.
+Getter methods for the new properties.
+Implement an Employee Subclass: Create an Employee class that also extends the User class, tailored for employee users. This class should include:
+
+employeeId: An integer representing the unique identifier of the employee.
+department: A string representing the department in which the employee works.
+A constructor to initialize both the inherited properties from User and the new properties specific to Employee.
+Overridden displayInfo() method that calls super.displayInfo() to reuse the parent class's display logic and adds employee-specific information.
+Getter methods for the new properties.
+Instructions
+Ensure that each class's constructor correctly initializes all relevant properties.
+The displayInfo() method in each class should print all properties of the user to the console, in the order specified in the class descriptions
+Follow Java's naming conventions for the getter methods, ensuring they accurately reflect the properties they are accessing.
+Implement the system in a way that allows for easy expansion and addition of new user types or properties in the future.

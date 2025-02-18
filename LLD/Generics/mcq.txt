@@ -1,0 +1,33 @@
+1. Generics, consider the following code
+    class Pair {
+    private K first;
+    private V second;
+    public Pair(K first, V second) {
+        this.first = first;
+        this.second = second;
+    }
+    public K getFirst() {
+        return first;
+    }
+    public V getSecond() {
+        return second;
+    }
+    }
+    public class GenericPair{
+    public static void main(String[] args) {
+        Pair<String, Integer> pair = new Pair<>("One", 1);
+        System.out.println(pair.getFirst() + ", " + pair.getSecond()); // Output: ?
+    }
+    }
+    Predict the output: Compile Error
+
+2. What does the "extends" keyword signify in the context of Java generics?- It denotes an upper bound for a type parameter.
+3. How does a wildcard "?" behave in Java generics?- It represents an unknown type.
+4. What does T denote in the following code.
+    public class Box<T> {
+        // class implementation
+    } - Type parameter
+5. What is the purpose of using bounded wildcards in Java generics?- To restrict the type of objects that can be used
+6. Suppose you are writing a generic method to return the first element of a list. What will be the correct method declaration.- public static T getFirstElement(List list)
+7. When is it appropriate to use wildcards with an upper bound in Java generics?- When the method should work with specific subclasses
+8. Which of the following is a benefit of using generics in Java?- Type safety
