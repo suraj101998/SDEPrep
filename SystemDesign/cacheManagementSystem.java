@@ -1,4 +1,4 @@
-package LLD;
+package SystemDesign;
 /*
  * Design A cache management system. 
  * Define requirement and Constraints of the service. 

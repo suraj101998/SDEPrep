@@ -24,8 +24,8 @@ Integral part of code and provides with certain method such as equals(), wait(),
 At a time a class can extend only one class.
 
 6. Difference between Immutable and mutable objects in java:
-mutable: can modify the value once created.
-Immutable: cannot modify the value once created. eg: strings. However StringBuilders are mutable in java.
+mutable: can modify the value once created. eg: StringBuilders
+Immutable: cannot modify the value once created. eg: strings
 
 7. what is HQL:
 hibernate query language used to interact with database using hibernate queries. 
@@ -225,3 +225,228 @@ public: Accessible from anywhere in the program.
 protected: Accessible within the same package and by subclasses (even in different packages).
 default (no modifier): Accessible only within the same package.
 private: Accessible only within the same class.
+
+27. what is OOPS in java?
+OOP (Object-Oriented Programming) is a paradigm that uses objects and classes to design and develop applications. It makes code modular, reusable, and scalable by implementing core principles like encapsulation, inheritance, polymorphism, and abstraction.
+
+Key OOP Concepts in Java
+1. Class and Object:
+Class: A blueprint for creating objects.
+Object: An instance of a class with attributes and behaviors.
+2. Encapsulation (Data Hiding)
+Restrict direct access to class fields using private modifiers. achieved by Declaring the class variables as private and use public getters and setters to access/modify only the required private data.
+3. Inheritance (Code Reusability)
+Allows one class (child) to inherit properties of another class (parent).
+    Types of Inheritance in Java:
+    Single: A → B
+    Multilevel: A → B → C
+    Hierarchical: A → {B, C}
+    Java does not support multiple inheritance using classes (avoids ambiguity).
+4. Polymorphism (Many Forms)
+
+        1. Method Overloading (Compile-time Polymorphism)
+        Multiple methods with the same name but different parameters.
+
+        class MathOperations {  
+            int add(int a, int b) { return a + b; }  
+            double add(double a, double b) { return a + b; }  
+        }  
+        public class Main {  
+            public static void main(String[] args) {  
+                MathOperations obj = new MathOperations();  
+                System.out.println(obj.add(5, 10));  
+                System.out.println(obj.add(5.5, 2.5));  
+            }  
+        }
+
+        2. Method Overriding (Runtime Polymorphism)
+        Child class redefines the method of the parent class.
+        class Parent {  
+          void show() {  
+              System.out.println("Parent class");  
+          }  
+        }  
+        class Child extends Parent {  
+            void show() {  
+                System.out.println("Child class");  
+            }  
+        }  
+        public class Main {  
+            public static void main(String[] args) {  
+                Parent obj = new Child();  
+                obj.show();  // Calls Child's show() due to runtime polymorphism  
+            }  
+        }
+
+5. Abstraction (Hiding Implementation)
+# Abstract Class: Cannot be instantiated, but can have abstract and non-abstract methods.
+abstract class Vehicle {  
+    abstract void start();  
+    void display() {  
+        System.out.println("Vehicle running");  
+    }  
+}  
+
+class Car extends Vehicle {  
+    void start() {  
+        System.out.println("Car starts with a key");  
+    }  
+}  
+
+public class Main {  
+    public static void main(String[] args) {  
+        Vehicle v = new Car();  
+        v.start();  
+        v.display();  
+    }  
+}
+
+# Interface: Achieves full abstraction (100%), supports multiple inheritance.
+interface Animal {  
+    void sound();  
+}  
+
+class Dog implements Animal {  
+    public void sound() {  
+        System.out.println("Dog barks");  
+    }  
+}  
+
+public class Main {  
+    public static void main(String[] args) {  
+        Animal obj = new Dog();  
+        obj.sound();  
+    }  
+}
+
+28. what is "Has-A" Relationship vs. "Is-A" Relationship in Java?
+The two main types of relationships between classes define how objects interact are:
+
+# "Has-A" Relationship (Composition or Aggregation)-  relationship where one class contains another class as a member.
+Implemented using: Instance variables (composition or aggregation). Example: A Car has an Engine.
+
+// Engine class (Used in Car)
+class Engine {
+    void start() {
+        System.out.println("Engine is starting...");
+    }
+}
+
+// Car class (Has an Engine)
+class Car {
+    private Engine engine; // Car "has-a" Engine
+    public Car() {
+        engine = new Engine();
+    }
+    void startCar() {
+        engine.start(); // Using Engine's method
+        System.out.println("Car is starting...");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.startCar();
+    }
+}
+
+
+# "Is-A" Relationship (Inheritance)- relationship where one class inherits the properties and behavior of another class.
+Implemented using: extends (for class inheritance) or implements (for interfaces). Example: A Dog is a Animal.
+
+// Parent Class
+class Animal {
+    void makeSound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+// Child Class (inherits from Animal)
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.makeSound(); // Inherited method
+        d.bark(); // Child class method
+    }
+}
+
+29. What is SOLID Principles in Java?
+
+help software developers create maintainable, scalable, and robust object-oriented systems.
+
+S – Single Responsibility Principle (SRP)- class should have only one reason to change (i.e., one responsibility).
+O – Open/Closed Principle (OCP)- class should be open for extension but closed for modification.
+L – Liskov Substitution Principle (LSP)- subclass should be replaceable for its parent class without affecting the program's behavior.
+I – Interface Segregation Principle (ISP)- No class should be forced to implement methods it does not use.
+D – Dependency Inversion Principle (DIP)- High-level modules should not depend on low-level modules. Both should depend on abstractions (interfaces).
+
+30. What is Garbage Collector?
+is an automatic memory management process that removes objects that are no longer referenced to free up memory.
+
+# importance:
+Prevents memory leaks
+Improves application performance
+Eliminates the need for manual memory management
+
+# working:
+Java objects are stored in Heap Memory.
+GC automatically detects unreachable objects.
+GC removes these objects and reclaims memory.
+The freed memory is reused for new object allocations.
+
+# Phases:
+Mark-	Identifies all objects that are reachable from active references.
+Sweep-	Deletes unreferenced objects from heap memory.
+Compact-	Rearranges remaining objects to optimize memory usage.
+
+# Types of Garbage Collectors in Java
+Serial GC:	Uses a single thread for GC	(Best for small applications (e.g., desktop apps)) : Mark-Sweep-Compact Algorithm Used
+Parallel GC: Uses multiple threads for GC (Best for high-throughput applications) : Parallel Mark-Sweep Algorithm Used
+CMS (Concurrent Mark-Sweep) GC:	Performs GC with minimal pause times (Best for low-latency applications) : Concurrent Mark-Sweep Algorithm Used
+G1 (Garbage First) GC:	Divides heap into regions and cleans selectively (Best for large heaps (4GB+ memory)) : Region-based marking Algorithm Used
+ZGC & Shenandoah GC:	Advanced low-latency GCs for large applications (Best for real-time applications) : Region-based concurrent Algorithm Used
+
+31. what is Difference Between Heap and Stack Memory in Java?
+# Stack:
+Storage Type: Stores method calls, local variables, references
+Allocation: Automatically allocated and deallocated
+Speed: Faster(LIFO structure)	
+Scope: Variables exist only within a method
+Size Limit: Smaller size (fixed per thread)
+Access: Direct access (stored in order)
+Usage: Used for method execution
+Stack memory is full: StackOverflowError
+
+# Heap:
+Storage Type:	Stores objects and instance variables
+Allocation: Requires manual memory management (Garbage Collector)
+Speed: Slower(Dynamic allocation)
+Scope: Objects exist until GC removes them
+Size Limit:	Larger size (can grow dynamically)
+Access:	Accessed via object references
+Usage:	Used for storing objects
+Heap memory is full: OutOfMemoryError (OOM)
+
+32. what is Diamond Thread proble in Java?  (related to multiple inheritance in OOP)
+Diamond Problem occurs when multiple inheritance creates ambiguity in method resolution.
+Java does not support multiple inheritance with classes to avoid this issue use interfaces.
+   A
+  / \
+ B   C
+  \ /
+   D
+Class B and Class C inherit from Class A.
+Class D inherits from both B and C.
+If A has a method, and B & C don’t override it, D gets two copies of the same method.
+This creates ambiguity about which method should be called.
+
+33. what is transient Keyword in Java?
+used to prevent a field from being serialized when an object is written to a file or transmitted over a network. Prevents sensitive data (passwords, security tokens) from being stored.
+

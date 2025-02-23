@@ -1,0 +1,26 @@
+1. Which of the following classes doesn’t implement the List interface (directly or indirectly)- PriorityQueue
+
+2. Consider the following two statements about Vector, ArrayList and LinkedList
+    Both vector and arraylist are dynamic arrays but the vector is thread-safe while arraylist is not
+    Both arraylist and linkedlist can grow dynamically but memory in an arraylist is contiguous while not so in linkedlist
+    Which of the following is correct?
+    - Both 1 and 2 are true
+
+3. Which of the following is thread-safe?- Hashtable
+
+4. Which of the following require the elements passed to implement Comparable interface?- TreeSet
+
+5. What should go inside <> if you want to write a generic compare method?
+public static <_____> int compare(T a, T b) {
+   return a.compareTo(b);
+}
+Options 
+- T extends Comparable
+
+6. Consider the following two statements about HashSet and TreeSet
+The underlying data structure for a HashSet is hashtable
+The underlying data structure for a TreeSet is Red-Black Tree
+Which of the following is correct? 
+- Both 1 and 2 are true
+
+7. What is the loading factor in a HashSet?- Average number of elements per bucket in underlying data structure

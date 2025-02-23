@@ -1,4 +1,4 @@
-package LLD;
+package SystemDesign;
 /*
  * Design a URL shortening Service. Define requirement and Constraints of the service. 
  * Choose appropriate data storage and retrival mechanisms. 

@@ -1,4 +1,4 @@
-package LLD;
+package SystemDesign;
 
 /*implement a mutex lock using semaphores
  * A mutex lock can be implemented using semaphores by ensuring that a single thread can acquire the lock at a time. 

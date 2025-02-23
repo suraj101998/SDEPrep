@@ -1,0 +1,154 @@
+1. Which of the following is a terminal function in streams api?- foreach
+2. Which of the following stream methods return a boolean?- allMatch
+3. Which of the following is not a way of creating a stream - stream.collect()
+4. import java.util.Arrays;
+    import java.util.List;
+
+    public class LambdaStreamQuestion1 {
+        public static void main(String[] args) {
+            List<String> words = Arrays.asList("apple", "banana", "orange", "grape", "kiwi");
+
+            // What does the following code snippet do?
+            long count = words.stream()
+                    .filter(w -> w.length() > 5)
+                    .count();
+
+            System.out.println("Count: " + count);
+        }
+    }
+    Options:
+    - Counts the number of words with a length greater than 5
+
+5. import java.util.Arrays;
+    import java.util.Arrays;
+    import java.util.List;
+
+    public class LambdaStreamQuestion4 {
+        public static void main(String[] args) {
+            List<String> words = Arrays.asList("apple", "banana", "orange", "grape", "kiwi");
+
+            // What does the following code snippet do?
+            boolean anyMatch = words.stream()
+                    .anyMatch(w -> w.startsWith("b"));
+
+            System.out.println("Any match: " + anyMatch);
+        }
+    }
+    Predict the output of above code:
+    - Checks if any word starts with "b".
+
+6. import java.util.Arrays;
+    import java.util.List;
+
+    public class LambdaStreamQuestion2 {
+        public static void main(String[] args) {
+            List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+
+            // What does the following code snippet do?
+            int sum = numbers.stream()
+                    .map(n -> n * n)
+                    .reduce(0, Integer::sum);
+
+            System.out.println("Sum: " + sum);
+        }
+    }
+    Options:
+    - Calculates the sum of the squares of numbers.
+
+7. Which of the following comparators will sort a list of strings in descending order according to length?
+- Comparator comparator = (s1, s2) -> Integer.compare(s2.length(), s1.length());
+Comparator comparator = (s1, s2) -> s2.length() - s1.length();
+Comparator comparator = Comparator.comparingInt(String::length).reversed();
+
+8. import java.util.Arrays;
+    import java.util.List;
+    import java.util.stream.Collectors;
+
+    public class CollectMethodQuestion1 {
+        public static void main(String[] args) {
+            List<String> fruits = Arrays.asList("apple", "banana", "orange", "grape", "kiwi");
+
+            // What does the following code snippet do?
+            String result = fruits.stream()
+                    .collect(Collectors.joining(", "));
+
+            System.out.println("Result: " + result);
+        }
+    }
+    - Concatenates all fruits into a single string.
+
+9. import java.util.Arrays;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.stream.Collectors;
+
+    public class CollectMethodQuestion2 {
+        public static void main(String[] args) {
+            List<String> fruits = Arrays.asList("apple", "banana", "orange", "grape", "kiwi");
+
+            // What does the following code snippet do?
+            Map<Integer, List<String>> groupedByLength = fruits.stream()
+                    .collect(Collectors.groupingBy(String::length));
+
+            System.out.println("Result: " + groupedByLength);
+        }
+    }
+    - Creates a map where keys are fruit lengths and values are fruit names.
+
+10. import java.util.Arrays;
+    import java.util.List;
+    import java.util.Set;
+    import java.util.stream.Collectors;
+
+    public class CollectMethodQuestion3 {
+        public static void main(String[] args) {
+            List<String> fruits = Arrays.asList("apple", "banana", "orange", "grape", "kiwi");
+
+            // What does the following code snippet do?
+            Set<String> uniqueFruits = fruits.stream()
+                    .collect(Collectors.toSet());
+
+            System.out.println("Result: " + uniqueFruits);
+        }
+    }
+    - Creates a set of all fruit names.
+
+11. import java.util.Arrays;
+    import java.util.List;
+
+    public class ParallelStreamQuestion2 {
+        public static void main(String[] args) {
+            List<String> words = Arrays.asList("apple", "banana", "orange", "grape", "kiwi");
+
+            // What does the following code snippet do?
+            boolean allMatch = words.parallelStream()
+                    .allMatch(w -> w.length() > 3);
+
+            System.out.println("All match: " + allMatch);
+        }
+    }
+    Options: - Checks if all words have a length greater than 3.
+
+12. public class LambdaExample {
+   public static void main(String[] args) {
+       IntFunction<Integer> square = x -> x * x;
+       System.out.println(square.apply(5)); // Output: ?
+       BinaryOperator<Integer> addition = (x, y) -> x + y;
+       System.out.println(addition.apply(10, 20)); // Output: ?
+       Function<Integer, Integer> increment = x -> x + 1;
+       System.out.println(increment.apply(7)); // Output: ?
+   }
+}
+Output of above code: - 25 30 8
+
+13. public class LambdaExample {
+   public static void main(String[] args) {
+       IntFunction<Integer> square = x -> x * x;
+       System.out.println(square.apply(5)); // Output: ?
+       BinaryOperator<Integer> addition = (x, y) -> x + y;
+       System.out.println(addition.apply(10, 20)); // Output: ?
+       Function<Integer, Integer> increment = x -> x + 1;
+       System.out.println(increment.apply(7)); // Output: ?
+   }
+}
+In the above code Function, BinaryOperator, IntFunction are types of - Functional Interfaces
