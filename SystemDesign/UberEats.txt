@@ -1,0 +1,193 @@
+Uber Eats - Low-Level Design (LLD)
+
+1. Core Requirements
+Functional Requirements:
+
+User Registration & Authentication: Users can sign up, log in, and manage their profiles.
+Restaurant Listings: Users can browse restaurants based on location, ratings, and cuisine type.
+Menu Management: Restaurants can add, update, and manage their menus.
+Search & Filters: Users can search for restaurants and dishes using keywords, filters, and categories.
+Order Placement: Users can place orders, customize items, and select delivery options.
+Order Tracking: Users can track their orders in real time.
+Payment Processing: Secure payments using credit/debit cards, wallets, and UPI.
+Reviews & Ratings: Users can rate and review restaurants and delivery partners.
+Promotions & Discounts: Users can avail of promo codes and discounts on orders.
+Delivery Partner Assignment: Orders are assigned to nearby delivery partners.
+Customer Support: Users can contact support for issues related to orders and deliveries.
+Message Reactions: Users can react to messages with emojis.
+Message Deletion: Users can delete sent messages.
+
+Non-Functional Requirements:
+
+Scalability: System should handle millions of concurrent users.
+Security: Secure authentication, payment processing, and data encryption.
+Fault Tolerance: No single point of failure; ensure order and payment reliability.
+Low Latency: Fast responses for searches, order processing, and tracking.
+Availability: 99.99% uptime to support a global user base.
+
+2. System Components and Classes
+
+2.1 Key Classes
+User: Represents a customer, restaurant owner, or delivery partner.
+Restaurant: Stores restaurant details like name, location, and menu.
+MenuItem: Represents a food item offered by a restaurant.
+Order: Represents an order placed by a user.
+OrderService: Manages order placement, status, and tracking.
+PaymentService: Handles payment processing and refunds.
+DeliveryService: Assigns delivery partners and tracks order delivery.
+ReviewService: Manages user ratings and feedback.
+NotificationService: Sends order updates and promotions.
+MessageService: Manages user messages, reactions, and deletions.
+
+
+3. Class Diagrams
+
++----------------+
+|      User      |
++----------------+
+| - userId      |
+| - name        |
+| - email       |
+| - address     |
+| - userType    |
++----------------+
+       |
+       |
++----------------+
+|   Restaurant   |
++----------------+
+| - restaurantId |
+| - name         |
+| - location     |
+| - menuItems[]  |
++----------------+
+       |
+       |
++----------------+
+|   MenuItem     |
++----------------+
+| - itemId       |
+| - name         |
+| - price        |
+| - category     |
++----------------+
+       |
+       |
++----------------+
+|     Order      |
++----------------+
+| - orderId      |
+| - userId       |
+| - restaurantId |
+| - items[]      |
+| - status       |
+| - timestamp    |
++----------------+
+
+4. Implementation
+
+4.1 User Class
+class User {
+    private String userId;
+    private String name;
+    private String email;
+    private String address;
+    private UserType userType;  // CUSTOMER, RESTAURANT_OWNER, DELIVERY_PARTNER
+}
+
+4.2 Order Class
+class Order {
+    private String orderId;
+    private String userId;
+    private String restaurantId;
+    private List<MenuItem> items;
+    private OrderStatus status;
+    private LocalDateTime timestamp;
+}
+enum OrderStatus {
+    PLACED, CONFIRMED, PREPARING, OUT_FOR_DELIVERY, DELIVERED, CANCELLED
+}
+
+4.3 Order Service
+class OrderService {
+    private Map<String, Order> orderStore = new HashMap<>();
+
+    public void placeOrder(Order order) {
+        orderStore.put(order.getOrderId(), order);
+        NotificationService.sendNotification(order.getUserId(), "Your order has been placed.");
+    }
+
+    public Order getOrderDetails(String orderId) {
+        return orderStore.get(orderId);
+    }
+}
+
+4.4 Message Service
+class MessageService {
+    private Map<String, List<Message>> userMessages = new HashMap<>();
+
+    public void sendMessage(String userId, Message message) {
+        userMessages.computeIfAbsent(userId, k -> new ArrayList<>()).add(message);
+    }
+
+    public void reactToMessage(String userId, String messageId, String reaction) {
+        List<Message> messages = userMessages.getOrDefault(userId, new ArrayList<>());
+        for (Message msg : messages) {
+            if (msg.getMessageId().equals(messageId)) {
+                msg.addReaction(reaction);
+                break;
+            }
+        }
+    }
+
+    public void deleteMessage(String userId, String messageId) {
+        List<Message> messages = userMessages.getOrDefault(userId, new ArrayList<>());
+        messages.removeIf(msg -> msg.getMessageId().equals(messageId));
+    }
+}
+
+5. Workflow for Each Function
+
+5.1 Order Placement
+User selects restaurant and adds items to cart.
+OrderService.placeOrder() saves the order and updates status.
+Payment is processed through PaymentService.
+Restaurant receives notification to prepare food.
+Delivery partner is assigned and notified.
+User receives real-time order tracking updates.
+
+5.2 Message Reactions
+User selects a message and chooses an emoji reaction.
+MessageService.reactToMessage() updates the message with the reaction.
+The sender gets a notification about the reaction.
+
+5.3 Message Deletion
+User selects a message to delete.
+MessageService.deleteMessage() removes the message from storage.
+The deleted message is no longer visible to other users.
+
+6. Scaling Considerations
+
+Microservices Architecture: Separate services for orders, payments, delivery, messaging, etc.
+Database Sharding: Partitioning user and order data for scalability.
+Caching: Redis for storing frequently accessed data like restaurant menus.
+Load Balancing: AWS ALB or Nginx to distribute traffic.
+Event-Driven Processing: Kafka for handling high-throughput order events.
+
+7. Security Considerations
+
+Authentication: OAuth 2.0 + JWT for secure user sessions.
+Data Encryption: TLS encryption for sensitive data.
+Fraud Prevention: AI-based anomaly detection for suspicious activities.
+Secure Payments: PCI DSS compliance for payment transactions.
+
+8. Failure Handling & Fault Tolerance
+Retry Mechanism: Automatic retries for failed payments and orders.
+Database Replication: Ensuring data availability across multiple regions.
+Message Queues: Kafka to handle asynchronous order processing.
+Circuit Breaker Pattern: Prevent cascading failures in microservices.
+
+9. Conclusion
+
+This design ensures efficient food ordering, restaurant management, real-time tracking, secure payments, 
+and robust messaging features. It follows scalable, fault-tolerant, and high-availability principles.

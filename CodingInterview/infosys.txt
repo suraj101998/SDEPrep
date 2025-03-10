@@ -1,0 +1,128 @@
+@RestController
+@RequestMapping("/upi")
+public class RestController{
+
+    @GetMapping("/{id}")
+    public String getHbt(@pathVariable Long id){
+        User user = userservice.findByID(id);
+    }
+}
+
+//GET url: http:localhost:8080/upi/1
+
+
+
+public class Person {
+
+    private String name;
+
+    private int age;
+
+    private String city;
+
+//normal constructor 
+    public Person(String name, int age, String city) {
+
+        this.name = name;
+
+        this.age = age;
+
+        this.city = city;
+
+    }
+ //copy constructor
+
+ public Person(Person other){
+    this.name = other.name;
+    this.age = other.age;
+    this.city = other.city;
+
+ }
+    // getters and setters
+
+    public String getName() {
+
+        return name;
+
+    }
+ 
+    public int getAge() {
+
+        return age;
+
+    }
+ 
+    public String getCity() {
+
+        return city;
+
+    }
+
+}
+
+
+
+
+import java.util.Comparator;
+import java.util.List;
+
+public class Person {
+
+    private String name;
+
+    private int age;
+
+    private String city;
+ 
+    public Person(String name, int age, String city) {
+
+        this.name = name;
+
+        this.age = age;
+
+        this.city = city;
+
+    }
+ 
+    // getters and setters
+
+    public String getName() {
+
+        return name;
+
+    }
+ 
+    public int getAge() {
+
+        return age;
+
+    }
+ 
+    public String getCity() {
+
+        return city;
+
+    }
+
+}
+public class OldestPerson{
+    public static Person findOlderstPerson(List<Person> people){
+        return people.stream().max(Comparator.comparing(Person::getAge)).orElse(null);
+    }
+}
+ 
+List<Person> people = Arrays.asList(
+
+            new Person("John", 20, "New York"),
+
+            new Person("Jane", 30, "London"),
+
+            new Person("Jim", 17, "Paris"),
+
+            new Person("Jill", 25, "New York"),
+
+            new Person("Joe", 35, "London")
+
+        );
+
+ 

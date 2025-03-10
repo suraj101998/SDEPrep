@@ -1,9 +1,8 @@
-# Spring Boot Main Annotations:
-@SpringBootApplication: A composite annotation that combines @Configuration, @EnableAutoConfiguration, and @ComponentScan for a Spring Boot application’s main entry point or main class.
-@ComponentScan: Scans for Spring managed beans in the specified package and its sub-packages.
-@EnableAutoConfiguration: Enables Spring Boot to automatically configure beans based on the application's classpath dependencies.
-@Configuration: Indicates a class as a source of bean definitions for the application context.
-
+1. Spring Boot Main Annotaions:
+    1. @SpringBootApplication: A composite annotation that combines @Configuration, @EnableAutoConfiguration, and @ComponentScan for a Spring Boot application’s main entry point or main class.
+    2. @ComponentScan: Scans for Spring managed beans in the specified package and its sub-packages.
+    3. @EnableAutoConfiguration: Enables Spring Boot to automatically configure beans based on the application classpath dependencies.
+    4. @Configuration: Indicates a class as a source of bean definitions for the application context.
 
 # Stereotype Annotations:
 

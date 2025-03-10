@@ -1,7 +1,58 @@
 Design Facebook Messenger
 This section covers the detailed LLD with workflows for all functions, including one-on-one chat, group messaging, message statuses, online status, push notifications, media sharing, search, and multi-device sync.
 
-1. System Components and Classes
+1. Core Requirements
+Functional Requirements:
+One-on-One Chat: Users can send and receive messages in real time.
+Group Messaging: Users can create and participate in group chats.
+Message Status Tracking: Messages can be marked as Sent, Delivered, or Seen.
+Online Status: Users can see if their contacts are online or offline.
+Push Notifications: Users receive notifications when a new message arrives.
+Media Sharing: Users can share images, videos, and files.
+Message Search: Users can search past messages by keywords.
+Multi-Device Sync: Messages sync across multiple logged-in devices.
+
+Non-Functional Requirements:
+Real-Time Communication: Messages should be delivered instantly.
+Scalability: The system should handle millions of concurrent users.
+Security & Privacy: Messages should be end-to-end encrypted.
+Fault Tolerance: Ensure no message loss even if a server crashes.
+Low Latency: Users should experience minimal delay in messaging.
+
++-----------------+
+|      User       |
++-----------------+
+| - userId       |
+| - name         |
+| - email        |
+| - isOnline     |
+| - devices[]    |
++-----------------+
+       |
+       |
++------------------+
+|     Message     |
++------------------+
+| - messageId     |
+| - senderId      |
+| - receiverId    |
+| - groupId       |
+| - text          |
+| - mediaUrl      |
+| - status        |
+| - timestamp     |
++------------------+
+       |
+       |
++-------------------+
+|    ChatService   |
++-------------------+
+| - chatStore      |
+| + sendMessage()  |
+| + fetchMessages()|
++-------------------+
+
+2. System Components and Classes
 1.1 Key Classes
 User: Represents a user in the system.
 Message: Represents a message.
@@ -13,8 +64,8 @@ MediaService: Handles media storage.
 SearchService: Enables message search.
 SyncService: Ensures multi-device message synchronization.
 
-2. Class Diagrams & Implementation
-2.1 User Class
+3. Class Diagrams & Implementation
+3.1 User Class
 
 class User {
     private String userId;
@@ -25,7 +76,7 @@ class User {
 }
 Represents a registered user.
 The devices field helps with multi-device sync.
-2.2 Message Class
+3.2 Message Class
 
 class Message {
     private String messageId;
@@ -43,7 +94,7 @@ MessageStatus helps track sent, delivered, and seen messages.
 enum MessageStatus {
     SENT, DELIVERED, SEEN
 }
-2.3 Chat Service (One-on-One Messaging)
+3.3 Chat Service (One-on-One Messaging)
 
 class ChatService {
     private Map<String, List<Message>> chatStore = new HashMap<>();
@@ -69,7 +120,7 @@ class ChatService {
 }
 sendMessage() stores the message and notifies the recipient in real time.
 fetchMessages() retrieves past messages for a conversation.
-2.4 Group Messaging
+3.4 Group Messaging
 
 class GroupChatService {
     private Map<String, List<Message>> groupChats = new HashMap<>();
@@ -88,7 +139,7 @@ class GroupChatService {
     }
 }
 sendGroupMessage() sends a message to all group members.
-2.5 Message Status Updates
+3.5 Message Status Updates
 
 class MessageStatusService {
     private Map<String, MessageStatus> messageStatusMap = new HashMap<>();
@@ -105,7 +156,7 @@ class MessageStatusService {
 }
 Tracks message statuses (SENT, DELIVERED, SEEN).
 Notifies sender when status updates.
-2.6 Online/Offline Status (Presence Service)
+3.6 Online/Offline Status (Presence Service)
 
 class PresenceService {
     private Map<String, Boolean> onlineUsers = new ConcurrentHashMap<>();
@@ -125,7 +176,7 @@ class PresenceService {
     }
 }
 Uses Redis for fast access to online status.
-2.7 Push Notifications
+3.7 Push Notifications
 
 class NotificationService {
     public void sendPushNotification(String userId, String message) {
@@ -135,7 +186,7 @@ class NotificationService {
     }
 }
 Push notifications are sent only if the user is offline.
-2.8 Media Sharing
+3.8 Media Sharing
 
 class MediaService {
     public String uploadMedia(byte[] mediaData) {
@@ -144,7 +195,7 @@ class MediaService {
     }
 }
 Stores media in Amazon S3 or a distributed storage system.
-2.9 Message Search
+3.9 Message Search
 
 class SearchService {
     public List<Message> searchMessages(String userId, String keyword) {
@@ -152,7 +203,7 @@ class SearchService {
     }
 }
 Uses Elasticsearch for fast message searching.
-2.10 Multi-Device Sync
+3.10 Multi-Device Sync
 
 class SyncService {
     public void syncMessagesAcrossDevices(String userId) {
@@ -166,44 +217,44 @@ class SyncService {
 }
 Ensures messages sync across all logged-in devices.
 
-3. Workflow for Each Function
-3.1 One-on-One Messaging
+4. Workflow for Each Function
+4.1 One-on-One Messaging
 User A sends a message to User B.
 ChatService.sendMessage() stores the message and notifies User B’s WebSocket.
 If User B is online, message is delivered in real-time.
 If User B is offline, a push notification is sent.
 When User B reads the message, MessageStatusService.updateStatus() updates it to SEEN.
 
-3.2 Group Messaging
+4.2 Group Messaging
 User A sends a message to a group.
 GroupChatService.sendGroupMessage() stores the message and notifies all recipients.
 Online users get real-time messages, and offline users receive push notifications.
 
-3.3 Message Status Update
+4.3 Message Status Update
 When User B receives a message, status changes to DELIVERED.
 When User B reads the message, status changes to SEEN.
 Sender is notified via WebSocket.
 
-3.4 Online/Offline Status
+4.4 Online/Offline Status
 When User logs in, PresenceService.setUserOnline() updates status.
 When User logs out, PresenceService.setUserOffline() updates status.
 
-3.5 Push Notifications
+4.5 Push Notifications
 If a recipient is offline, NotificationService.sendPushNotification() sends a push alert.
 
-3.6 Media Sharing
+4.6 Media Sharing
 User uploads an image/video.
 MediaService.uploadMedia() stores it in S3 and returns a URL.
 URL is sent in a message to the recipient.
 
-3.7 Message Search
+4.7 Message Search
 User enters a keyword.
 SearchService.searchMessages() queries Elasticsearch for matching messages.
 
-3.8 Multi-Device Sync
+4.8 Multi-Device Sync
 When a user logs in from a new device, SyncService.syncMessagesAcrossDevices() syncs all unread messages.
 
-4. Scaling Considerations
+5. Scaling Considerations
 To handle millions of users, we use:
 
 Horizontal Scaling
@@ -217,13 +268,13 @@ Nginx or AWS ALB to distribute load.
 Edge Caching & CDN
 Stores static content like images/videos in CDN for fast access.
 
-5. Security Considerations
+6. Security Considerations
 End-to-End Encryption – Uses Signal Protocol for chat encryption.
 Authentication – Uses OAuth 2.0 + JWT for user authentication.
 Rate Limiting – Prevents spam attacks with API rate limiting.
 Data Privacy – Ensures GDPR compliance for message retention.
 
-6. Failure Handling & Fault Tolerance
+7. Failure Handling & Fault Tolerance
 Message Queues (Kafka/RabbitMQ)
 Ensures no message loss if a WebSocket server crashes.
 Database Replication
@@ -231,5 +282,5 @@ Cassandra supports multi-region replication.
 Retry Mechanism
 If a message fails, Kafka retries delivery.
 
-7. Conclusion
+8. Conclusion
 This Design ensures efficient real-time messaging, message tracking, media sharing, and multi-device synchronization. It follows scalable and fault-tolerant principles using WebSockets, Redis, Kafka, and NoSQL databases.
