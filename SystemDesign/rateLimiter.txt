@@ -1,0 +1,150 @@
+Design a Rate Limiter
+
+System Design: Rate Limiter
+1. What is a Rate Limiter?
+A Rate Limiter is used to control the number of requests a user or system can make within a specified time period. It helps prevent abuse, ensures fair usage, and protects systems from DoS (Denial-of-Service) attacks.
+
+2. Types of Rate Limiting Algorithms
+🔹 Token Bucket – Tokens are added at a fixed rate; each request consumes a token.
+🔹 Leaky Bucket – Requests are processed at a fixed rate; excess requests are queued.
+🔹 Fixed Window Counter – Requests are counted in fixed time intervals (e.g., per second).
+🔹 Sliding Window Log – Keeps a log of requests and removes expired ones dynamically.
+🔹 Sliding Window Counter – A hybrid of Fixed Window and Sliding Log.
+
+3. Choosing the Right Algorithm
+Token Bucket (Best for API request limiting with bursts allowed)
+Fixed Window Counter (Good for consistent rate limiting)
+Sliding Window Log (Best for precise request tracking but high memory usage)
+We'll implement Token Bucket as it is widely used.
+
+4. Class Diagram
++-----------------------+
+|   RateLimiter        |
+|-----------------------|
+| - capacity: int      |
+| - tokens: int        |
+| - refillRate: int    |
+| - lastRefillTime: long |
+|-----------------------|
+| + allowRequest(): boolean |
++-----------------------+
+
+5. Java Implementation (Token Bucket Algorithm)
+package com.ratelimiter;
+
+import java.util.concurrent.TimeUnit;
+
+public class RateLimiter {
+    private final int capacity; // Maximum tokens allowed
+    private int tokens; // Available tokens
+    private final int refillRate; // Tokens added per second
+    private long lastRefillTime; // Timestamp of last refill
+
+    public RateLimiter(int capacity, int refillRate) {
+        this.capacity = capacity;
+        this.refillRate = refillRate;
+        this.tokens = capacity;
+        this.lastRefillTime = System.nanoTime();
+    }
+
+    private void refill() {
+        long now = System.nanoTime();
+        long elapsedTime = TimeUnit.NANOSECONDS.toSeconds(now - lastRefillTime);
+        int newTokens = (int) (elapsedTime * refillRate);
+
+        if (newTokens > 0) {
+            tokens = Math.min(capacity, tokens + newTokens);
+            lastRefillTime = now;
+        }
+    }
+
+    public synchronized boolean allowRequest() {
+        refill();
+
+        if (tokens > 0) {
+            tokens--;
+            return true;
+        }
+        return false; // Rate limit exceeded
+    }
+}
+
+6. Using the Rate Limiter
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        RateLimiter rateLimiter = new RateLimiter(5, 1); // 5 requests max, refill 1/sec
+
+        for (int i = 0; i < 10; i++) {
+            if (rateLimiter.allowRequest()) {
+                System.out.println("Request " + (i + 1) + " Allowed ✅");
+            } else {
+                System.out.println("Request " + (i + 1) + " Blocked ❌");
+            }
+            Thread.sleep(500); // Simulate request interval
+        }
+    }
+}
+
+
+7. Sample Output
+Request 1 Allowed ✅
+Request 2 Allowed ✅
+Request 3 Allowed ✅
+Request 4 Allowed ✅
+Request 5 Allowed ✅
+Request 6 Blocked ❌
+Request 7 Blocked ❌
+Request 8 Blocked ❌
+Request 9 Allowed ✅ (after refill)
+Request 10 Allowed ✅ (after refill)
+
+8. Distributed Rate Limiter (Redis)
+For multi-instance applications, we need a centralized rate limiter. Redis is ideal for this because: ✅ Fast In-memory Store
+✅ Atomic Operations (INCR, EXPIRE)
+✅ Distributed Access Support
+
+Implementation with Redis
+import redis.clients.jedis.Jedis;
+
+public class RedisRateLimiter {
+    private final String key;
+    private final int maxRequests;
+    private final int timeWindow; // in seconds
+    private final Jedis jedis;
+
+    public RedisRateLimiter(String userId, int maxRequests, int timeWindow) {
+        this.key = "rate_limit:" + userId;
+        this.maxRequests = maxRequests;
+        this.timeWindow = timeWindow;
+        this.jedis = new Jedis("localhost", 6379);
+    }
+
+    public boolean allowRequest() {
+        long count = jedis.incr(key);
+        if (count == 1) {
+            jedis.expire(key, timeWindow);
+        }
+        return count <= maxRequests;
+    }
+}
+
+9. API Integration in Spring Boot
+@RestController
+@RequestMapping("/api")
+public class ApiController {
+    private final RateLimiter rateLimiter = new RateLimiter(5, 1);
+
+    @GetMapping("/data")
+    public ResponseEntity<String> fetchData() {
+        if (!rateLimiter.allowRequest()) {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Rate limit exceeded!");
+        }
+        return ResponseEntity.ok("Data fetched successfully!");
+    }
+}
+
+10. Key Takeaways
+✅ Prevents API abuse and improves system stability
+✅ Token Bucket allows bursts while keeping an average limit
+✅ Distributed systems use Redis for consistency
+✅ Can be extended to IP-based or user-based rate limiting

@@ -1,0 +1,211 @@
+Design Amazon
+System Design of Amazon (E-commerce Platform)
+Designing Amazon requires handling multiple functionalities like product browsing, order management, payments, inventory tracking, and user recommendations. 
+Below is a high-level design breakdown of Amazon.
+
+1. Core Requirements
+Functional Requirements
+✅ User authentication (Login, Register)
+✅ Product browsing (Search, Categories, Filters)
+✅ Product details (Reviews, Ratings, Seller info)
+✅ Shopping cart & Checkout
+✅ Order management (Order tracking, Order history)
+✅ Payment processing (Credit Card, UPI, PayPal)
+✅ Inventory management (Stock updates, Warehouse sync)
+✅ Recommendation system (Personalized suggestions)
+✅ Customer service (Returns, Refunds, Chat support)
+
+Non-Functional Requirements
+✅ Scalability – Handle millions of users simultaneously
+✅ Availability – Ensure high uptime with failover mechanisms
+✅ Low Latency – Fast response times for product searches
+✅ Security – Secure payments, user data, and API authentication
+✅ Data Consistency – Ensure accurate stock levels across warehouses
+
+2. High-Level Architecture
+
+                     +--------------------+
+                     |   Load Balancer    |
+                     +--------------------+
+                              |
+              +------------------------------+
+              | API Gateway (Rate Limiting,  |
+              | Authentication, Routing)     |
+              +------------------------------+
+                 |            |            |
+       +--------+  +---------+  +---------+
+       | Search |  | Product |  | Payment |
+       |Service |  |Service  |  |Service  |
+       +--------+  +---------+  +---------+
+            |        |            |
+        +--------+  +---------+  +---------+
+        | Cache  |  | MySQL   |  | Stripe  |
+        | (Redis)|  | (RDBMS) |  | PayPal  |
+        +--------+  +---------+  +---------+
+
+
+3. Class Diagram for Amazon E-commerce
+
++----------------------+
+|        User         |
++----------------------+
+       | 1
+       |
+       | * (one user can place multiple orders)
+       |
++----------------------+
+|       Order         |
++----------------------+
+       | 1
+       |
+       | * (one order has multiple order items)
+       |
++----------------------+
+|     OrderItem      |
++----------------------+
+       | 1
+       |
+       | * (one item is linked to one product)
+       |
++----------------------+
+|      Product        |
++----------------------+
+       | 1
+       |
+       | * (one product belongs to a category)
+       |
++----------------------+
+|    Category         |
++----------------------+
+
+
+4. Implementation in Spring Boot
+(1) User Authentication (Login & Register)
+package com.amazon.auth;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    @PostMapping("/register")
+    public String register(@RequestBody User user) {
+        // Save user to database
+        return "User registered successfully!";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest request) {
+        // Validate user credentials
+        return "User logged in successfully!";
+    }
+}
+
+(2) Product Service (Fetching Products)
+package com.amazon.product;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/products")
+public class ProductController {
+
+    private List<Product> products = Arrays.asList(
+        new Product(1, "iPhone 14", "Electronics", 799.99),
+        new Product(2, "Nike Shoes", "Fashion", 120.00)
+    );
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable int id) {
+        return products.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+    }
+}
+
+(3) Order Management (Placing Orders)
+package com.amazon.order;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/orders")
+public class OrderController {
+
+    private List<Order> orders = new ArrayList<>();
+
+    @PostMapping("/place")
+    public String placeOrder(@RequestBody Order order) {
+        orders.add(order);
+        return "Order placed successfully!";
+    }
+
+    @GetMapping("/{userId}")
+    public List<Order> getUserOrders(@PathVariable int userId) {
+        return orders.stream().filter(o -> o.getUserId() == userId).toList();
+    }
+}
+
+(4) Payment Processing (Stripe/PayPal)
+package com.amazon.payment;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/payment")
+public class PaymentController {
+
+    @PostMapping("/checkout")
+    public String processPayment(@RequestBody PaymentRequest request) {
+        // Call Stripe API for payment processing
+        return "Payment successful!";
+    }
+}
+
+5. Scaling & Fault Tolerance
+✅ Load Balancer – Distribute traffic among multiple servers
+✅ Microservices Architecture – Independent services for products, orders, payments
+✅ Caching with Redis – Speed up product search results
+✅ Database Replication – Avoid single point of failure
+✅ Queueing System (RabbitMQ/Kafka) – For order processing
+
+6. API Testing
+(1) Register User
+POST /users/register
+Content-Type: application/json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepass"
+}
+
+(2) Fetch Product
+GET /products/1
+
+Response:
+{
+  "id": 1,
+  "name": "iPhone 14",
+  "category": "Electronics",
+  "price": 799.99
+}
+
+(3) Place Order
+POST /orders/place
+Content-Type: application/json
+{
+  "userId": 1,
+  "items": [
+    { "productId": 1, "quantity": 1 },
+    { "productId": 2, "quantity": 2 }
+  ]
+}
+
+7. Summary
+✅ User Authentication (Register/Login)
+✅ Product Browsing (Search, Filters, Categories)
+✅ Order Management (Cart, Checkout, History)
+✅ Payment Integration (Stripe, PayPal, UPI)
+✅ Scalable with Microservices & Caching
+

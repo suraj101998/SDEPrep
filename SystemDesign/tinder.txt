@@ -1,0 +1,430 @@
+Design Tinder
+Designing Tinder (Matchmaking System)
+We need to design a system similar to Tinder, a dating app that allows users to swipe left (dislike) or swipe right (like) on profiles and matches them based on mutual interest.
+
+1. Core Features of Tinder
+User Management – Users can register, log in, and update their profiles.
+Profile Discovery (Swiping) – Users can view nearby profiles and swipe left or right.
+Matching System – If two users like each other, they get matched.
+Messaging – Matched users can chat.
+Geolocation-Based Matching – Users see profiles within a certain distance.
+Super Like – Special swipe to notify someone of strong interest.
+Subscription & Premium Features – Features like unlimited swipes, rewind, and boost.
+
+2. System Components
+A. Microservices Architecture
+User Service – Handles user registration, login, and profile data.
+Swipe Service – Records user swipes and determines matches.
+Matchmaking Service – Finds mutual likes and creates matches.
+Chat Service – Enables messaging between matched users.
+Geolocation Service – Determines nearby users based on location.
+Notification Service – Sends push notifications for matches and messages.
+Subscription Service – Manages payments and premium features.
+
+3. Class Diagram
+Main Classes & Relationships
+
++------------------+
+|      User       |
++------------------+
+| id              |
+| name            |
+| age             |
+| gender         |
+| location        |
+| preferences     |
+| bio             |
++------------------+
+        |
+        | 1:N (User has many swipes)
+        |
++------------------+
+|     Swipe       |
++------------------+
+| id              |
+| userId          |
+| targetUserId    |
+| isLiked         |
+| timestamp       |
++------------------+
+        |
+        | If mutual like, create a match
+        |
++------------------+
+|     Match       |
++------------------+
+| id              |
+| user1Id        |
+| user2Id        |
+| matchTime      |
++------------------+
+        |
+        | 1:N (Match has multiple messages)
+        |
++------------------+
+|    Message      |
++------------------+
+| id              |
+| senderId        |
+| receiverId      |
+| matchId         |
+| content        |
+| timestamp       |
++------------------+
+
+4. Workflow for Core Features
+A. User Registration & Login
+User registers with email/phone.
+System stores details in User Service.
+User logs in → Generates JWT Token for authentication.
+
+B. Swiping Logic
+User sees profiles based on Geolocation Service.
+Swipes right (like) or left (dislike).
+Swipe Service records swipes.
+If both users like each other → Matchmaking Service creates a match.
+
+C. Matchmaking
+Matchmaking Service checks if mutual swipes exist.
+If yes → Adds match to the Match Service.
+Notifies both users using Notification Service.
+
+D. Messaging
+Only matched users can send messages.
+Chat Service stores messages.
+Real-time messages are handled using WebSockets.
+
+5. Database Design
+User Table
+CREATE TABLE User (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    age INT,
+    gender ENUM('Male', 'Female', 'Other'),
+    location POINT,
+    bio TEXT
+);
+
+Swipe Table
+CREATE TABLE Swipe (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    userId BIGINT REFERENCES User(id),
+    targetUserId BIGINT REFERENCES User(id),
+    isLiked BOOLEAN,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Match Table
+CREATE TABLE Match (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user1Id BIGINT REFERENCES User(id),
+    user2Id BIGINT REFERENCES User(id),
+    matchTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Message Table
+CREATE TABLE Message (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    senderId BIGINT REFERENCES User(id),
+    receiverId BIGINT REFERENCES User(id),
+    matchId BIGINT REFERENCES Match(id),
+    content TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ Setting Up Spring Boot Application
+We'll create a Spring Boot project with the following dependencies:
+Spring Web – For REST APIs
+Spring Data JPA – For database interactions
+Spring Boot Starter Security – For authentication (optional)
+H2 Database / PostgreSQL – For persistent storage
+
+2. Entity Classes
+User Entity
+package com.tinder.model;
+
+import jakarta.persistence.*;
+import java.util.*;
+
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private int age;
+    private String gender;
+    private String bio;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Swipe> swipes = new ArrayList<>();
+
+    public User() {}
+
+    public User(String name, int age, String gender, String bio) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.bio = bio;
+    }
+
+    // Getters and Setters
+}
+
+
+Swipe Entity
+package com.tinder.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "swipes")
+public class Swipe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "target_user_id")
+    private User targetUser;
+
+    private boolean liked;
+    private LocalDateTime timestamp;
+
+    public Swipe() {}
+
+    public Swipe(User user, User targetUser, boolean liked) {
+        this.user = user;
+        this.targetUser = targetUser;
+        this.liked = liked;
+        this.timestamp = LocalDateTime.now();
+    }
+
+    // Getters and Setters
+}
+
+Match Entity
+package com.tinder.model;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "matches")
+public class Match {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user1_id")
+    private User user1;
+
+    @ManyToOne
+    @JoinColumn(name = "user2_id")
+    private User user2;
+
+    private LocalDateTime matchTime;
+
+    public Match() {}
+
+    public Match(User user1, User user2) {
+        this.user1 = user1;
+        this.user2 = user2;
+        this.matchTime = LocalDateTime.now();
+    }
+
+    // Getters and Setters
+}
+
+3. Repository Interfaces
+User Repository
+package com.tinder.repository;
+
+import com.tinder.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}
+
+Swipe Repository
+package com.tinder.repository;
+
+import com.tinder.model.Swipe;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SwipeRepository extends JpaRepository<Swipe, Long> {
+}
+
+Match Repository
+package com.tinder.repository;
+
+import com.tinder.model.Match;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MatchRepository extends JpaRepository<Match, Long> {
+}
+
+4. Service Layer
+User Service
+package com.tinder.service;
+
+import com.tinder.model.User;
+import com.tinder.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+}
+
+Swipe & Matchmaking Service
+package com.tinder.service;
+
+import com.tinder.model.*;
+import com.tinder.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+@Service
+public class SwipeService {
+    @Autowired
+    private SwipeRepository swipeRepository;
+    
+    @Autowired
+    private MatchRepository matchRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
+
+    public String swipe(Long userId, Long targetUserId, boolean liked) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<User> targetUserOpt = userRepository.findById(targetUserId);
+
+        if (userOpt.isEmpty() || targetUserOpt.isEmpty()) {
+            return "User not found!";
+        }
+
+        User user = userOpt.get();
+        User targetUser = targetUserOpt.get();
+
+        // Save the swipe
+        Swipe swipe = new Swipe(user, targetUser, liked);
+        swipeRepository.save(swipe);
+
+        // Check if target user also liked the user
+        Optional<Swipe> mutualSwipe = swipeRepository.findByUserAndTargetUserAndLiked(targetUser, user, true);
+
+        if (liked && mutualSwipe.isPresent()) {
+            Match match = new Match(user, targetUser);
+            matchRepository.save(match);
+            return "It's a match!";
+        }
+
+        return "Swipe recorded!";
+    }
+}
+
+5. Controller Layer
+User Controller
+package com.tinder.controller;
+
+import com.tinder.model.User;
+import com.tinder.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/register")
+    public User registerUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
+
+    @GetMapping("/all")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+}
+
+Swipe Controller
+package com.tinder.controller;
+
+import com.tinder.service.SwipeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/swipes")
+public class SwipeController {
+    @Autowired
+    private SwipeService swipeService;
+
+    @PostMapping("/{userId}/swipe/{targetUserId}")
+    public String swipe(@PathVariable Long userId, @PathVariable Long targetUserId, @RequestParam boolean liked) {
+        return swipeService.swipe(userId, targetUserId, liked);
+    }
+}
+
+6. Testing the API (Sample Requests)
+Register a New User
+Request:
+POST /users/register
+Content-Type: application/json
+{
+    "name": "John Doe",
+    "age": 28,
+    "gender": "Male",
+    "bio": "Adventurer & Foodie"
+}
+
+Swipe Right on Another User
+Request:
+POST /swipes/1/swipe/2?liked=true
+
+If user 2 also swiped right on user 1, response:
+"It's a match!"
+
+6. High-Level System Design
+Tech Stack:
+Backend: Spring Boot (Java), Node.js (for WebSockets)
+Database: PostgreSQL (for relational data), Redis (for caching matches)
+Geolocation: Google Maps API, H3 Geospatial Indexing
+Messaging: WebSockets, Kafka for event-driven notifications
+Deployment: AWS (ECS, Lambda, RDS, S3)
+
+7. Scaling & Fault Tolerance
+Sharding – Distribute users across multiple databases based on geolocation.
+Load Balancing – Use Nginx and AWS Load Balancer for handling requests.
+Caching – Store recent swipes in Redis for fast retrieval.
+Replication – Use Master-Slave Replication for the database to prevent data loss.
+
+8. Security Considerations
+JWT Authentication for securing API requests.
+Rate Limiting to prevent bot swiping.
+Encryption for user data at rest and in transit.

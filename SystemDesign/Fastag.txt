@@ -1,0 +1,192 @@
+FASTag is an automated toll collection system that uses RFID (Radio Frequency Identification) 
+to deduct toll charges directly from a prepaid wallet or linked bank account.
+
+1️⃣ Core Requirements
+Functional Requirements
+✅ Vehicle owners can register and get a FASTag.
+✅ Vehicles can pass through toll plazas, and charges are deducted automatically.
+✅ Users can recharge their FASTag wallet.
+✅ FASTag is linked to a vehicle and an account.
+✅ Real-time notifications are sent for transactions.
+✅ Toll operators can query for payments.
+
+Non-Functional Requirements
+✅ High availability & low latency (< 100ms transaction time).
+✅ Secure authentication and fraud prevention.
+✅ Scalable system for millions of transactions daily.
+
+2️⃣ Class Diagram
++---------------------+
+| Vehicle            |
++---------------------+
+| - vehicleNumber    |
+| - ownerName        |
+| - fastag           |
++---------------------+
+| + getFastag()      |
+| + setFastag()      |
++---------------------+
+
++---------------------+
+| Fastag             |
++---------------------+
+| - tagId            |
+| - balance          |
+| - linkedAccount    |
++---------------------+
+| + recharge(amount) |
+| + deduct(amount)   |
++---------------------+
+
++---------------------+
+| Transaction        |
++---------------------+
+| - transactionId    |
+| - timestamp        |
+| - amount          |
+| - vehicle         |
+| - tollPlaza       |
++---------------------+
+| + processPayment() |
++---------------------+
+
++---------------------+
+| TollPlaza          |
++---------------------+
+| - plazaId          |
+| - name            |
+| - location        |
++---------------------+
+| + chargeVehicle()  |
++---------------------+
+
+3️⃣ Java Implementation
+✅ FASTag Class
+class Fastag {
+    private String tagId;
+    private double balance;
+    private String linkedAccount;
+
+    public Fastag(String tagId, double initialBalance, String linkedAccount) {
+        this.tagId = tagId;
+        this.balance = initialBalance;
+        this.linkedAccount = linkedAccount;
+    }
+
+    public void recharge(double amount) {
+        balance += amount;
+        System.out.println("FASTag recharged. New balance: " + balance);
+    }
+
+    public boolean deduct(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            System.out.println("Toll deducted. Remaining balance: " + balance);
+            return true;
+        } else {
+            System.out.println("Insufficient balance!");
+            return false;
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getTagId() {
+        return tagId;
+    }
+}
+
+✅ Vehicle Class
+class Vehicle {
+    private String vehicleNumber;
+    private String ownerName;
+    private Fastag fastag;
+
+    public Vehicle(String vehicleNumber, String ownerName, Fastag fastag) {
+        this.vehicleNumber = vehicleNumber;
+        this.ownerName = ownerName;
+        this.fastag = fastag;
+    }
+
+    public Fastag getFastag() {
+        return fastag;
+    }
+}
+
+✅ Toll Plaza & Transaction
+class TollPlaza {
+    private String plazaId;
+    private String name;
+    private String location;
+
+    public TollPlaza(String plazaId, String name, String location) {
+        this.plazaId = plazaId;
+        this.name = name;
+        this.location = location;
+    }
+
+    public void chargeVehicle(Vehicle vehicle, double tollAmount) {
+        Fastag fastag = vehicle.getFastag();
+        if (fastag != null && fastag.deduct(tollAmount)) {
+            Transaction txn = new Transaction(vehicle, this, tollAmount);
+            txn.processPayment();
+        } else {
+            System.out.println("Payment failed for vehicle: " + vehicle);
+        }
+    }
+}
+
+class Transaction {
+    private static int idCounter = 1000;
+    private int transactionId;
+    private long timestamp;
+    private double amount;
+    private Vehicle vehicle;
+    private TollPlaza tollPlaza;
+
+    public Transaction(Vehicle vehicle, TollPlaza tollPlaza, double amount) {
+        this.transactionId = idCounter++;
+        this.timestamp = System.currentTimeMillis();
+        this.amount = amount;
+        this.vehicle = vehicle;
+        this.tollPlaza = tollPlaza;
+    }
+
+    public void processPayment() {
+        System.out.println("Transaction " + transactionId + " processed: " +
+                "Vehicle " + vehicle + " charged " + amount);
+    }
+}
+
+public class FastagSystem {
+    public static void main(String[] args) {
+        Fastag fastag = new Fastag("TAG123", 500, "BankXYZ");
+        Vehicle vehicle = new Vehicle("KA01AB1234", "Suraj", fastag);
+        TollPlaza tollPlaza = new TollPlaza("TP01", "Mumbai-Pune Toll", "Maharashtra");
+
+        // Vehicle passing toll
+        tollPlaza.chargeVehicle(vehicle, 120);
+        
+        // Recharge FASTag
+        fastag.recharge(200);
+        
+        // Another toll payment
+        tollPlaza.chargeVehicle(vehicle, 80);
+    }
+}
+
+
+5️⃣ Workflow
+1️⃣ Vehicle approaches a toll plaza
+2️⃣ RFID scanner detects FASTag
+3️⃣ FASTag balance checked
+4️⃣ ✅ If sufficient balance → Deduct toll & allow passage
+5️⃣ ❌ If insufficient balance → Alert driver & take manual payment
+6️⃣ Transaction stored & notification sent to user
+
+6️⃣ Scaling & Fault Tolerance
+Load Balancing: Distribute toll transactions across multiple servers.
+Caching: Use Redis to store vehicle FASTag details for quick lookups.
+Failover Mechanism: Secondary database to store pending transactions in case of network failure.

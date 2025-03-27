@@ -1,0 +1,301 @@
+1. Core Requirements
+Functional Requirements:
+Users should be able to create, update, delete, and view events.
+
+Events should have details like title, date, time, duration, location, participants, and description.
+
+Users can invite participants to events.
+
+Users should receive reminders/notifications for upcoming events.
+
+Events should support recurring schedules (daily, weekly, monthly).
+
+Users should be able to share their calendars with others (public/private access).
+
+Integration with third-party applications (e.g., Zoom, Slack, Microsoft Teams).
+
+Support for multiple time zones.
+
+Non-Functional Requirements:
+High availability: Users should always be able to access their events.
+
+Scalability: Millions of users should be able to store and retrieve events efficiently.
+
+Low latency: Quick response times when fetching calendar events.
+
+Data consistency: Event updates should be reflected in real-time.
+
+Security & Privacy: Users' private events should not be accessible by unauthorized users.
+
+2. System Components
+User Service: Manages user authentication and profile.
+
+Calendar Service: Stores and retrieves calendars for users.
+
+Event Service: Handles CRUD operations for events.
+
+Notification Service: Sends reminders via email, SMS, or push notifications.
+
+Sharing & Permission Service: Controls who can view or edit a calendar.
+
+Synchronization Service: Syncs events across devices and third-party apps.
+
+Search & Recommendation Service: Allows searching for events and suggesting available time slots.
+
+3. Database Schema (Simplified)
+
+Users Table
+Column	Type	Description
+user_id	INT (PK)	Unique User Identifier
+email	VARCHAR	User Email Address
+name	VARCHAR	User Name
+timezone	VARCHAR	User’s Time Zone
+
+Calendars Table
+Column	Type	Description
+calendar_id	INT (PK)	Unique Calendar Identifier
+user_id	INT (FK)	Owner of the calendar
+name	VARCHAR	Name of the calendar
+visibility	ENUM	Public, Private, Shared
+
+Events Table
+Column	Type	Description
+event_id	INT (PK)	Unique Event Identifier
+calendar_id	INT (FK)	Associated Calendar
+title	VARCHAR	Event Title
+description	TEXT	Event Details
+start_time	DATETIME	Event Start Time
+end_time	DATETIME	Event End Time
+location	VARCHAR	Event Location
+recurrence	ENUM	Daily, Weekly, Monthly
+
+Event Participants Table
+Column	Type	Description
+event_id	INT (FK)	Associated Event ID
+user_id	INT (FK)	Participant User ID
+status	ENUM	Accepted, Declined, Tentative
+
+4. 
+4.1 API Design
+Create an Event
+Request (POST /events)
+{
+  "calendar_id": 1,
+  "title": "Project Meeting",
+  "description": "Discuss project status",
+  "start_time": "2025-04-01T10:00:00Z",
+  "end_time": "2025-04-01T11:00:00Z",
+  "location": "Conference Room",
+  "participants": [2, 3, 4],
+  "recurrence": "WEEKLY"
+}
+
+Response
+{
+  "event_id": 101,
+  "message": "Event created successfully"
+}
+
+Get Events for a User
+Request (GET /users/{user_id}/events)
+{
+  "user_id": 1,
+  "date": "2025-04-01"
+}
+
+Response
+[
+  {
+    "event_id": 101,
+    "title": "Project Meeting",
+    "start_time": "2025-04-01T10:00:00Z",
+    "end_time": "2025-04-01T11:00:00Z",
+    "location": "Conference Room"
+  }
+]
+
+4.2 Implementation
+import java.util.*;
+
+// User class representing a user of Google Calendar
+class User {
+    private int userId;
+    private String name;
+    private String email;
+    private String timezone;
+    private List<Calendar> calendars;
+    
+    public User(int userId, String name, String email, String timezone) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.timezone = timezone;
+        this.calendars = new ArrayList<>();
+    }
+    
+    public Calendar createCalendar(String name) {
+        Calendar calendar = new Calendar(this, name);
+        calendars.add(calendar);
+        return calendar;
+    }
+}
+
+// Calendar class representing a collection of events
+class Calendar {
+    private static int calendarCounter = 1;
+    private int calendarId;
+    private String name;
+    private User owner;
+    private List<Event> events;
+    
+    public Calendar(User owner, String name) {
+        this.calendarId = calendarCounter++;
+        this.name = name;
+        this.owner = owner;
+        this.events = new ArrayList<>();
+    }
+    
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+}
+
+// Event class representing an individual calendar event
+class Event {
+    private static int eventCounter = 1;
+    private int eventId;
+    private String title;
+    private Date startTime;
+    private Date endTime;
+    private String location;
+    private List<Participant> participants;
+    
+    public Event(String title, Date startTime, Date endTime, String location) {
+        this.eventId = eventCounter++;
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.participants = new ArrayList<>();
+    }
+    
+    public void addParticipant(User user) {
+        participants.add(new Participant(user, this));
+    }
+}
+
+// Participant class representing an attendee of an event
+class Participant {
+    private User user;
+    private Event event;
+    private String status; // Accepted, Declined, Tentative
+    
+    public Participant(User user, Event event) {
+        this.user = user;
+        this.event = event;
+        this.status = "Pending";
+    }
+}
+
+// Notification class to handle event notifications
+class Notification {
+    private User user;
+    private String message;
+    private Date sentAt;
+    
+    public Notification(User user, String message) {
+        this.user = user;
+        this.message = message;
+        this.sentAt = new Date();
+    }
+    
+    public void send() {
+        System.out.println("Notification sent to " + user.email + ": " + message);
+    }
+}
+
+// Reminder class for scheduling event reminders
+class Reminder {
+    private int minutesBefore;
+    private String method; // Email, SMS, Push
+    
+    public Reminder(int minutesBefore, String method) {
+        this.minutesBefore = minutesBefore;
+        this.method = method;
+    }
+}
+
+// Main method to demonstrate functionality
+public class GoogleCalendarSystem {
+    public static void main(String[] args) {
+        User user = new User(1, "Alice", "alice@example.com", "PST");
+        Calendar calendar = user.createCalendar("Work Calendar");
+        
+        Event event = new Event("Team Meeting", new Date(), new Date(), "Zoom");
+        calendar.addEvent(event);
+        event.addParticipant(user);
+        
+        Notification notification = new Notification(user, "You have an upcoming event: Team Meeting");
+        notification.send();
+    }
+}
+
+5. System Architecture
+High-Level Design
+                 +-------------------+
+                 |   Load Balancer    |
+                 +-------------------+
+                          |
+       +------------------------------------+
+       |                                    |
++-------------------+        +----------------------+
+|   API Gateway    |        | Authentication & ACL |
++-------------------+        +----------------------+
+       |                                    |
++-----------------------+      +---------------------+
+|  Event Service       |      |  User Service       |
++-----------------------+      +---------------------+
+       |                                    |
++-----------------------+      +----------------------+
+|  Calendar Service    |      |  Notification Service |
++-----------------------+      +----------------------+
+       |
++-----------------------------+
+|  Database (SQL + NoSQL)      |
++-----------------------------+
+
+Technology Stack
+Backend: Java (Spring Boot), Node.js
+Database: PostgreSQL (for relational data), Redis (for caching), ElasticSearch (for search)
+Messaging Queue: Kafka (for event-driven updates)
+Storage: AWS S3 (for attachments)
+Frontend: React.js, Angular
+
+6. Scaling Considerations
+Read Optimization
+Use Redis caching for frequently accessed events.
+Implement sharding in databases based on user ID.
+
+Write Optimization
+Use message queues (Kafka) for async event processing (e.g., sending notifications).
+Implement batch updates for recurring events.
+
+Load Balancing
+Deploy API servers behind a load balancer.
+Implement rate limiting to prevent API abuse.
+
+High Availability
+Deploy services across multiple data centers.
+Use leader-follower replication for the database.
+
+7. Failure Handling & Security
+Data Backup & Recovery: Regular database backups.
+Rate Limiting: Prevent API abuse by limiting request frequency.
+Access Control: Only authorized users can modify calendars.
+Audit Logs: Maintain logs for event modifications.
+Encryption: Secure user data using TLS & database encryption.
+
+8. Conclusion
+This Google Calendar-like system allows users to create, manage, and share events efficiently. 
+It uses a microservices architecture for scalability and event-driven mechanisms for real-time notifications.
+

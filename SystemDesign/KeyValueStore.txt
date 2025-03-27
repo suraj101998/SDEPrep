@@ -1,0 +1,264 @@
+A Key-Value Store is a distributed database that stores data as key-value pairs. 
+It allows fast read/write operations, making it ideal for caching, session storage, and NoSQL databases like Redis.
+
+Core Requirements
+Functional Requirements
+put(key, value): Store a key-value pair.
+get(key): Retrieve the value for a given key.
+delete(key): Remove a key-value pair.
+exists(key): Check if a key exists.
+clear(): Delete all key-value pairs.
+Persistence: Store data in-memory with optional disk persistence.
+Concurrency: Support concurrent reads and writes.
+
+Non-Functional Requirements
+Scalability: Handle a large number of keys efficiently.
+Low Latency: Fast lookup operations.
+Fault Tolerance: Recover data in case of crashes.
+
+2️⃣ Class Diagram (Text Representation)
++---------------------+
+| KeyValueStore      |
++---------------------+
+| - store: Map<K, V> |
++---------------------+
+| + put(key, value)  |
+| + get(key)         |
+| + delete(key)      |
+| + exists(key)      |
+| + clear()          |
++---------------------+
+
++---------------------+
+| PersistenceManager  |
++---------------------+
+| + saveToDisk()     |
+| + loadFromDisk()   |
++---------------------+
+
++---------------------+
+| Cache              |
++---------------------+
+| - cache: Map<K, V> |
++---------------------+
+| + getFromCache()   |
+| + putInCache()     |
++---------------------+
+
+3️⃣ Implementation in Java
+import java.util.concurrent.ConcurrentHashMap;
+import java.io.*;
+
+class KeyValueStore<K, V> {
+    private ConcurrentHashMap<K, V> store;
+
+    public KeyValueStore() {
+        store = new ConcurrentHashMap<>();
+    }
+
+    public void put(K key, V value) {
+        store.put(key, value);
+    }
+
+    public V get(K key) {
+        return store.get(key);
+    }
+
+    public void delete(K key) {
+        store.remove(key);
+    }
+
+    public boolean exists(K key) {
+        return store.containsKey(key);
+    }
+
+    public void clear() {
+        store.clear();
+    }
+}
+
+// Persistence Manager
+class PersistenceManager {
+    public static void saveToDisk(KeyValueStore<String, String> store, String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(store);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static KeyValueStore<String, String> loadFromDisk(String filename) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            return (KeyValueStore<String, String>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new KeyValueStore<>();
+        }
+    }
+}
+
+// Example Usage
+public class KeyValueStoreApp {
+    public static void main(String[] args) {
+        KeyValueStore<String, String> kvStore = new KeyValueStore<>();
+        
+        kvStore.put("name", "Alice");
+        System.out.println("Get name: " + kvStore.get("name"));
+
+        kvStore.delete("name");
+        System.out.println("Exists? " + kvStore.exists("name"));
+    }
+}
+
+4️⃣ Workflow of Operations
+Put Operation
+Key-value pair is stored in ConcurrentHashMap.
+If persistence is enabled, it is written to disk.
+
+Get Operation
+Lookup key in ConcurrentHashMap.
+If found, return value.
+
+Delete Operation
+Remove key from ConcurrentHashMap.
+If persistence is enabled, update the file.
+
+5️⃣ Scaling Considerations
+Partitioning: Distribute data across multiple nodes using consistent hashing.
+Replication: Use leader-follower replication for fault tolerance.
+Sharding: Store data across multiple servers.
+
+This design is scalable, supports concurrency, and provides persistence.
+
+Enhancing Key-Value Store with TTL and Distributed Setup
+To scale the Key-Value Store, we need:
+✅ Time-to-Live (TTL): Expire keys after a set duration.
+✅ Distributed Setup: Scale across multiple nodes.
+
+1️⃣ Enhancements to Core Design
+Functional Enhancements
+put(key, value, ttl): Store a key-value pair with expiration.
+evictExpiredKeys(): Remove expired keys.
+distributedPut(key, value): Store key-value pairs across nodes.
+distributedGet(key): Retrieve values from a distributed system.
+
+Non-Functional Enhancements
+Concurrency: Support multi-threaded expiration checks.
+Scaling: Use consistent hashing for distribution.
+Fault Tolerance: Replication of data.
+
+2️⃣ Updated Class Diagram (Text Representation)
++------------------------+
+| KeyValueStore<K, V>   |
++------------------------+
+| - store: Map<K, V>     |
+| - expiry: Map<K, Long> |
++------------------------+
+| + put(key, value, ttl) |
+| + get(key)             |
+| + delete(key)          |
+| + exists(key)          |
+| + evictExpiredKeys()   |
++------------------------+
+
++------------------------+
+| DistributedKVStore     |
++------------------------+
+| - nodes: List<Node>    |
++------------------------+
+| + distributedPut()     |
+| + distributedGet()     |
+| + getNodeForKey()      |
++------------------------+
+
+Java Implementation
+✅ Key-Value Store with TTL
+import java.util.concurrent.*;
+
+class KeyValueStore<K, V> {
+    private final ConcurrentHashMap<K, V> store = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<K, Long> expiry = new ConcurrentHashMap<>();
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    public KeyValueStore() {
+        scheduler.scheduleAtFixedRate(this::evictExpiredKeys, 5, 5, TimeUnit.SECONDS);
+    }
+
+    public void put(K key, V value, long ttlMillis) {
+        store.put(key, value);
+        expiry.put(key, System.currentTimeMillis() + ttlMillis);
+    }
+
+    public V get(K key) {
+        if (!store.containsKey(key)) return null;
+        if (expiry.containsKey(key) && expiry.get(key) < System.currentTimeMillis()) {
+            delete(key);  // Expire key
+            return null;
+        }
+        return store.get(key);
+    }
+
+    public void delete(K key) {
+        store.remove(key);
+        expiry.remove(key);
+    }
+
+    private void evictExpiredKeys() {
+        long now = System.currentTimeMillis();
+        expiry.forEach((key, expiryTime) -> {
+            if (expiryTime < now) delete(key);
+        });
+    }
+}
+
+✅ Distributed Key-Value Store
+import java.util.*;
+
+class DistributedKVStore<K, V> {
+    private final List<KeyValueStore<K, V>> nodes;
+    private final int numberOfNodes;
+
+    public DistributedKVStore(int numberOfNodes) {
+        this.numberOfNodes = numberOfNodes;
+        nodes = new ArrayList<>();
+        for (int i = 0; i < numberOfNodes; i++) {
+            nodes.add(new KeyValueStore<>());
+        }
+    }
+
+    private int getNodeForKey(K key) {
+        return Math.abs(key.hashCode()) % numberOfNodes;
+    }
+
+    public void distributedPut(K key, V value, long ttlMillis) {
+        int nodeIndex = getNodeForKey(key);
+        nodes.get(nodeIndex).put(key, value, ttlMillis);
+    }
+
+    public V distributedGet(K key) {
+        int nodeIndex = getNodeForKey(key);
+        return nodes.get(nodeIndex).get(key);
+    }
+}
+
+4️⃣ Workflow of Enhancements
+TTL Mechanism
+Store key -> value along with expiryTime.
+Every 5 sec, remove expired keys.
+get() checks if TTL is expired before returning value.
+
+Distributed Storage Mechanism
+put(key) hashes key to find the correct node.
+get(key) finds the node and retrieves value.
+Consistent Hashing ensures even distribution.
+
+5️⃣ Scaling Considerations
+Sharding: Distribute data among nodes using hashing.
+Replication: Maintain backup copies for reliability.
+Load Balancing: Use a consistent hashing ring.
+Cluster Expansion: Auto-scale nodes dynamically.
+
+Conclusion
+This enhanced Key-Value Store supports: ✅ TTL-based automatic expiry
+✅ Scalability with distributed nodes
+✅ Fault tolerance with consistent hashing

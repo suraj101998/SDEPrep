@@ -1,0 +1,164 @@
+1. Core Requirements
+Functional Requirements:
+Shorten URL: Users can enter a long URL and get a shortened URL.
+Redirect to Original URL: Users can enter a short URL and be redirected to the original long URL.
+Custom Short URLs: Users can specify custom aliases.
+Analytics: Track the number of clicks for each short URL.
+Expiration: URLs can have an expiration time after which they become invalid.
+User Authentication (Optional): Users can log in and manage their URLs.
+
+Non-Functional Requirements:
+Scalability: Should handle millions of URL shortening requests.
+High Availability: Ensure uptime close to 99.99%.
+Low Latency: Fast redirection (sub-50ms response time).
+Security: Prevent spam and malicious links.
+
+2. System Components and Classes
+Key Classes
+URLShortener: Main service to handle URL shortening and redirection.
+URLMapping: Stores the mapping between short and long URLs.
+AnalyticsService: Tracks click counts.
+User (optional): Represents a registered user.
+
+3. UML Class Diagram
++------------------+
+|   URLShortener   |
++------------------+
+| - urlMap        |
+| - base62Encoder |
++------------------+
+| + shortenURL()  |
+| + expandURL()   |
++------------------+
+
+         |
+         |
++------------------+
+|   URLMapping    |
++------------------+
+| - shortURL      |
+| - longURL       |
+| - createdAt     |
+| - expiresAt     |
+| - clickCount    |
++------------------+
+| + incrementClick() |
++------------------+
+
+         |
+         |
++------------------+
+| AnalyticsService |
++------------------+
+| - clickData     |
++------------------+
+| + trackClick()  |
+| + getStats()    |
++------------------+
+
+4. Implementation
+
+4.1 URLShortener Class
+import java.util.*;
+
+class URLShortener {
+    private Map<String, URLMapping> urlMap = new HashMap<>();
+    private static final String BASE_URL = "https://short.ly/";
+    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    
+    public String shortenURL(String longURL) {
+        String shortURL = generateShortCode();
+        urlMap.put(shortURL, new URLMapping(longURL));
+        return BASE_URL + shortURL;
+    }
+
+    public String expandURL(String shortURL) {
+        String code = shortURL.replace(BASE_URL, "");
+        URLMapping mapping = urlMap.get(code);
+        if (mapping == null || mapping.isExpired()) {
+            return "URL not found or expired.";
+        }
+        mapping.incrementClick();
+        return mapping.getLongURL();
+    }
+
+    private String generateShortCode() {
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            sb.append(CHARACTERS.charAt(rand.nextInt(CHARACTERS.length())));
+        }
+        return sb.toString();
+    }
+}
+
+4.2 URLMapping Class
+import java.time.LocalDateTime;
+
+class URLMapping {
+    private String longURL;
+    private LocalDateTime createdAt;
+    private LocalDateTime expiresAt;
+    private int clickCount;
+
+    public URLMapping(String longURL) {
+        this.longURL = longURL;
+        this.createdAt = LocalDateTime.now();
+        this.expiresAt = createdAt.plusDays(30); // Default expiration: 30 days
+        this.clickCount = 0;
+    }
+
+    public String getLongURL() {
+        return longURL;
+    }
+
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(expiresAt);
+    }
+
+    public void incrementClick() {
+        clickCount++;
+    }
+}
+
+4.3 AnalyticsService
+class AnalyticsService {
+    private Map<String, Integer> clickData = new HashMap<>();
+
+    public void trackClick(String shortURL) {
+        clickData.put(shortURL, clickData.getOrDefault(shortURL, 0) + 1);
+    }
+
+    public int getClickStats(String shortURL) {
+        return clickData.getOrDefault(shortURL, 0);
+    }
+}
+
+5. Workflow
+
+URL Shortening
+User enters a long URL.
+URLShortener.shortenURL() generates a short code and stores it.
+A short URL (https://short.ly/abc123) is returned.
+
+URL Redirection
+User visits https://short.ly/abc123.
+URLShortener.expandURL() looks up the original URL.
+Redirects the user if valid, else shows an error.
+
+6. Scaling Considerations
+Database Optimization: Use NoSQL (Redis, DynamoDB) for fast lookups.
+Sharding: Distribute URLs across multiple servers.
+Caching: Store popular URLs in Redis for faster redirection.
+Load Balancing: Distribute requests using Nginx or AWS ELB.
+Rate Limiting: Prevent abuse by restricting requests per user.
+
+7. Security Considerations
+Blacklist Malicious URLs: Scan for spam and phishing.
+Rate Limiting: Prevent bot spamming.
+Access Control: Only authorized users can create URLs (optional).
+
+8. Conclusion
+This design provides an efficient and scalable URL shortener with analytics and expiration. 
+It ensures low latency and high availability.
+

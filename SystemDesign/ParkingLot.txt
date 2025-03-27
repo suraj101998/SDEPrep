@@ -1,0 +1,200 @@
+1. Core Requirements
+
+Functional Requirements:
+Parking Spot Management: Ability to track available, occupied, and reserved spots.
+Vehicle Entry & Exit: Vehicles can enter and exit the parking lot.
+Ticket Generation: Generate parking tickets upon entry.
+Payment Processing: Calculate and process parking fees.
+Multiple Vehicle Types: Support different parking spot sizes for cars, bikes, and trucks.
+User Memberships: Support monthly or yearly memberships.
+Security & Surveillance: Maintain logs for security and monitoring.
+Admin Dashboard: Admins can manage parking spots, pricing, and reports.
+Alerts & Notifications: Notify users about available spots and payment reminders.
+
+Non-Functional Requirements:
+
+Scalability: Support large parking lots with thousands of spots.
+Reliability: Ensure 99.99% uptime for real-time tracking.
+Low Latency: Quick ticket generation and payment processing.
+Security: Secure user data, transactions, and access control.
+Availability: Ensure parking lot operations 24/7.
+
+2. System Components and Classes
+
+2.1 Key Classes
+ParkingLot: Manages the entire parking lot.
+ParkingSpot: Represents individual parking spots.
+Vehicle: Represents a vehicle entering the lot.
+ParkingTicket: Stores ticket details.
+Payment: Handles payment processing.
+User: Represents customers and admins.
+Gate: Handles entry and exit of vehicles.
+SecuritySystem: Monitors security logs.
+
+3. Diagrams
+3.1 Class Diagram
++----------------+
+|  ParkingLot    |
++----------------+
+| - id          |
+| - address     |
+| - spots[]     |
++----------------+
+       |
+       |
++----------------+
+|  ParkingSpot   |
++----------------+
+| - spotId      |
+| - type        |
+| - isOccupied  |
++----------------+
+       |
+       |
++----------------+
+|    Vehicle     |
++----------------+
+| - licensePlate|
+| - type        |
++----------------+
+       |
+       |
++----------------+
+| ParkingTicket |
++----------------+
+| - ticketId    |
+| - entryTime   |
+| - exitTime    |
+| - amount      |
++----------------+
+
+3.2 UML Diagram
++---------------------+
+|      ParkingLot     |
++---------------------+
+| - name             |
+| - location         |
+| - levels           |
+| - parkingSpots     |
++---------------------+
+| + addVehicle()     |
+| + removeVehicle()  |
+| + getAvailableSpots() |
++---------------------+
+         |
+         |
++---------------------+
+|      ParkingLevel   |
++---------------------+
+| - levelId          |
+| - spots            |
++---------------------+
+| + getAvailableSpots() |
++---------------------+
+         |
+         |
++---------------------+
+|    ParkingSpot     |
++---------------------+
+| - spotId          |
+| - type            |
+| - isOccupied      |
++---------------------+
+| + assignVehicle() |
+| + removeVehicle() |
++---------------------+
+         |
+         |
++---------------------+
+|      Vehicle       |
++---------------------+
+| - licensePlate    |
+| - type           |
++---------------------+
+| + park()         |
+| + leave()        |
++---------------------+
+
+4. Implementation
+
+4.1 ParkingLot Class
+class ParkingLot {
+    private String id;
+    private String address;
+    private List<ParkingSpot> spots;
+    
+    public ParkingSpot findAvailableSpot(VehicleType type) {
+        for (ParkingSpot spot : spots) {
+            if (!spot.isOccupied() && spot.getType() == type) {
+                return spot;
+            }
+        }
+        return null;
+    }
+}
+
+4.2 ParkingSpot Class
+class ParkingSpot {
+    private String spotId;
+    private VehicleType type;
+    private boolean isOccupied;
+    
+    public void occupySpot() { isOccupied = true; }
+    public void freeSpot() { isOccupied = false; }
+}
+
+4.3 Vehicle Class
+class Vehicle {
+    private String licensePlate;
+    private VehicleType type;
+}
+
+4.4 Ticketing System
+class ParkingTicket {
+    private String ticketId;
+    private LocalDateTime entryTime;
+    private LocalDateTime exitTime;
+    private double amount;
+}
+
+4.5 Payment System
+class Payment {
+    public double calculateFees(ParkingTicket ticket) {
+        Duration duration = Duration.between(ticket.getEntryTime(), ticket.getExitTime());
+        return duration.toHours() * 10.0; // Example: $10 per hour
+    }
+}
+
+5. Workflow for Each Function
+
+5.1 Vehicle Entry
+Vehicle enters the lot.
+System checks for an available parking spot.
+If found, generate a ticket and mark the spot as occupied.
+User receives a ticket and proceeds to park.
+
+5.2 Vehicle Exit & Payment
+Vehicle arrives at the exit gate.
+System calculates parking fees based on time spent.
+User makes payment via cash/card/digital payment.
+Spot is marked as available.
+
+6. Scaling Considerations
+Distributed Database: To handle millions of users.
+Load Balancing: AWS Load Balancer for handling high traffic.
+Caching: Redis for storing frequently accessed data.
+Microservices Architecture: Independent services for parking, payments, and security.
+
+7. Security Considerations
+Access Control: Role-based access for admin and users.
+Encryption: Secure payment transactions.
+Fraud Prevention: Detecting unauthorized vehicle entry.
+
+8. Failure Handling & Fault Tolerance
+Retry Mechanism: For failed transactions.
+Backup Database: Ensuring data persistence.
+Circuit Breaker: Handling system failures gracefully.
+
+9. Conclusion
+This LLD ensures efficient parking lot management with real-time tracking, secure payments, and scalability. 
+The system follows best practices in design, fault tolerance, and user experience.
