@@ -67,41 +67,27 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Person {
-
     private String name;
-
     private int age;
-
     private String city;
  
     public Person(String name, int age, String city) {
-
         this.name = name;
-
         this.age = age;
-
         this.city = city;
-
     }
  
     // getters and setters
-
     public String getName() {
-
         return name;
-
     }
  
     public int getAge() {
-
         return age;
-
     }
  
     public String getCity() {
-
         return city;
-
     }
 
 }
@@ -112,17 +98,11 @@ public class OldestPerson{
 }
  
 List<Person> people = Arrays.asList(
-
             new Person("John", 20, "New York"),
-
             new Person("Jane", 30, "London"),
-
             new Person("Jim", 17, "Paris"),
-
             new Person("Jill", 25, "New York"),
-
             new Person("Joe", 35, "London")
-
         );
 
  

@@ -482,4 +482,30 @@ Enhances code readability and reduces boilerplate code
 # Concurrency API Improvements 
 New classes for parallel processing (e.g., CompletableFuture)
 
+35. what is Type Casting?
+# converting a variable from one data type to another. Java provides two types of type casting:
+# Implicit Casting (Widening Conversion): 
+Occurs when a smaller type is converted to a larger type (e.g., from int to long). Java automatically handles this type of casting because it’s safe and won’t lose data.
+
+# Explicit Casting (Narrowing Conversion): 
+Occurs when a larger type is converted to a smaller type (e.g., from double to int). This kind of conversion requires the programmer to explicitly tell Java to perform the cast using parentheses (), as it might result in loss of data or precision.
+
+# Casting Between Primitive Types
+When converting between primitive data types, you can use either implicit or explicit casting, depending on the relationship between the types.
+
+# Widening (Implicit): 
+Smaller types are automatically promoted to larger types, as no data loss occurs.
+Example: byte to short, short to int, int to long, float to double.
+
+# Narrowing (Explicit): 
+Larger types need to be explicitly cast to smaller types, as data loss might occur.
+Example: double to float, int to short, long to int.
+
+# Casting Between Object Types
+Casting is also possible between object types, specifically when dealing with inheritance (i.e., when one class extends another). Here, you can cast between parent and child classes, but the cast must be valid according to the class hierarchy.
+# Upcasting (Parent to Child) is implicit.
+# Downcasting (Child to Parent) requires explicit casting.
+
+# Wrapper Class Casting
+ You can convert between wrapper classes and primitive types using autoboxing (primitive to wrapper) and unboxing (wrapper to primitive).
 

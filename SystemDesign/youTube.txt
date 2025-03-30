@@ -1,0 +1,243 @@
+Design YouTube
+
+System Design: YouTube
+1. Core Functionalities
+YouTube is a large-scale, distributed video-sharing platform with functionalities such as:
+User Management (Signup, Login, Profile)
+Video Management (Upload, Store, Stream)
+Search & Recommendations
+Monetization & Ads
+Comments & Likes
+Subscriptions & Notifications
+
+2. High-Level Architecture
+System Components
+User Service: Manages users, authentication, and profiles.
+Video Service: Handles uploads, encoding, storage, and streaming.
+Metadata Service: Stores video details (title, description, tags, etc.).
+Search Service: Indexes videos and retrieves results.
+Recommendation Service: Suggests videos using AI.
+Analytics Service: Tracks views, watch time, and trends.
+Ad Service: Manages ad placements and revenue.
+Comment & Like Service: Stores user interactions.
+Subscription & Notification Service: Manages subscribers and alerts.
+
+3.
+3.1 Class Relationships
+
+User uploads Videos → (One-to-Many)
+User subscribes to other Users → (Many-to-Many)
+User can Comment on Videos → (One-to-Many)
+Video contains Comments → (One-to-Many)
+Video has Metadata (title, tags, views) → (One-to-One)
+Video interacts with Recommendation & Search Services → (Dependency Relationship)
+User can Like a Video → (Many-to-Many)
+
+
+3.2 Class Diagram
++----------------------+
+|       User          |
+|----------------------|
+| - id: String        |
+| - name: String      |
+| - email: String     |
+| - password: String  |
+| - subscriptions: List<User> |
+|----------------------|
+| + uploadVideo()     |
+| + subscribe(User)   |
++----------------------+
+          |
+          | 1
+          |---------------------------------
+          |                                |
++----------------------+          +----------------------+
+|       Video         | 1        *|      Comment        |
+|----------------------|          |----------------------|
+| - id: String        |          | - id: String        |
+| - title: String     |          | - user: User        |
+| - uploader: User    |          | - content: String   |
+| - duration: int     |          | - timestamp: Date   |
+| - metadata: Metadata|          |----------------------|
+| - comments: List<Comment> |      | + reply(Comment)   |
+| - likes: int        |          +----------------------+
+|----------------------|
+| + play()            |
+| + like()            |
+| + addComment()      |
++----------------------+
+          |
+          | 1
+          |---------------------------------
+          |                                |
++----------------------+          +----------------------+
+|    Metadata         |          |  RecommendationService |
+|----------------------|          |----------------------|
+| - id: String        |          | + suggestVideos()     |
+| - tags: List<String>|          +----------------------+
+| - views: int        |
+| - resolution: String|
+|----------------------|
++----------------------+
+
+Class Relationship Details
+
+User → Video (1:M): A user can upload multiple videos.
+User → User (M:M): Users can subscribe to other users.
+User → Comment (1:M): A user can post multiple comments.
+Video → Comment (1:M): A video can have multiple comments.
+Video → Metadata (1:1): Each video has its own metadata.
+Video → RecommendationService (Dependency): Recommendation Service suggests videos to users based on watch history.
+
+4. Database Schema
+Users Table
+CREATE TABLE users (
+    id VARCHAR PRIMARY KEY,
+    name VARCHAR,
+    email VARCHAR UNIQUE,
+    password VARCHAR
+);
+
+Videos Table
+CREATE TABLE videos (
+    id VARCHAR PRIMARY KEY,
+    title VARCHAR,
+    uploader_id VARCHAR REFERENCES users(id),
+    duration INT,
+    views INT DEFAULT 0,
+    resolution VARCHAR
+);
+
+Comments Table
+CREATE TABLE comments (
+    id VARCHAR PRIMARY KEY,
+    video_id VARCHAR REFERENCES videos(id),
+    user_id VARCHAR REFERENCES users(id),
+    content TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+5. Java Implementation
+User Class
+import java.util.ArrayList;
+import java.util.List;
+
+class User {
+    private String id;
+    private String name;
+    private String email;
+    private List<User> subscriptions;
+
+    public User(String id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.subscriptions = new ArrayList<>();
+    }
+
+    public void subscribe(User user) {
+        subscriptions.add(user);
+    }
+
+    public List<User> getSubscriptions() {
+        return subscriptions;
+    }
+}
+
+Video Class
+import java.util.ArrayList;
+import java.util.List;
+
+class Video {
+    private String id;
+    private String title;
+    private User uploader;
+    private List<Comment> comments;
+    private int views;
+    private int likes;
+
+    public Video(String id, String title, User uploader) {
+        this.id = id;
+        this.title = title;
+        this.uploader = uploader;
+        this.comments = new ArrayList<>();
+        this.views = 0;
+        this.likes = 0;
+    }
+
+    public void play() {
+        views++;
+        System.out.println("Playing video: " + title);
+    }
+
+    public void like() {
+        likes++;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+}
+
+Comment Class
+import java.util.Date;
+
+class Comment {
+    private String id;
+    private User user;
+    private String content;
+    private Date timestamp;
+
+    public Comment(String id, User user, String content) {
+        this.id = id;
+        this.user = user;
+        this.content = content;
+        this.timestamp = new Date();
+    }
+}
+
+6. API Endpoints (Spring Boot)
+Upload Video
+@RestController
+@RequestMapping("/videos")
+public class VideoController {
+    private final VideoService videoService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadVideo(@RequestBody Video video) {
+        videoService.upload(video);
+        return ResponseEntity.ok("Video uploaded successfully!");
+    }
+}
+
+Play Video
+@GetMapping("/{id}/play")
+public ResponseEntity<String> playVideo(@PathVariable String id) {
+    boolean played = videoService.play(id);
+    if (played) {
+        return ResponseEntity.ok("Video is playing");
+    }
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Video not found");
+}
+
+
+7. Scaling YouTube
+A. Video Storage & Streaming
+CDN (Content Delivery Network): To store and serve videos faster.
+HLS (HTTP Live Streaming): Adaptive bitrate streaming for different network speeds.
+
+B. Database Scaling
+Sharding: Distribute video data across multiple servers.
+Read Replicas: Scale reads by using read-only replicas.
+
+C. Caching & Performance
+Redis: Cache frequently watched videos and user recommendations.
+Elasticsearch: Fast search and indexing for video queries.
+
+8. Key Takeaways
+✅ Microservices architecture ensures scalability
+✅ CDN helps in fast video delivery
+✅ HLS enables smooth playback
+✅ Redis & Elasticsearch optimize performance
+✅ Recommendation engine improves user engagement
+

@@ -1,0 +1,32 @@
+1. Tell the React Life Cycle?
+
+Lifecycle of Class Components
+In class-based components, React provides several lifecycle methods that allow developers to hook into different stages of a component's lifecycle:
+Phases of React Lifecycle in Class Components
+
+Mounting Phase: 
+The component is being created and inserted into the DOM.
+
+Updating Phase: 
+The component's state or props have changed, causing a re-render.
+
+Unmounting Phase: 
+The component is being removed from the DOM.
+
+Error Handling Phase: 
+If an error occurs during rendering, in lifecycle methods, or in the constructors of any child components, this method can catch the error.
+
+Summary of Lifecycle Methods in Functional and Class Components
+
+Class Component	
+Mounting:	constructor, getDerivedStateFromProps, render, componentDidMount	
+Updating:	getDerivedStateFromProps, shouldComponentUpdate, render, getSnapshotBeforeUpdate, componentDidUpdate	
+Unmounting:	componentWillUnmount	
+Error Handling:	getDerivedStateFromError, componentDidCatch
+
+Functional Component (Hooks)
+
+Mounting: useEffect with an empty dependency array []
+Updating: useEffect with dependencies (e.g., [data])
+Unmounting: useEffect cleanup function (return in effect)
+Error Handling: Error Boundaries (a separate component, not a hook)
