@@ -1,0 +1,3 @@
+API Gateway Pattern: 
+An API Gateway acts as a single entry point for all client requests, managing authentication, authorization, and rate limiting. 
+It simplifies security by centralizing these concerns and providing a consistent security policy across all microservices.

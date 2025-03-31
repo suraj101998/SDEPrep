@@ -170,6 +170,11 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
 eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImFkbWluIn0.
 SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 
+jwt token storing:
+
+Client-side (Best Practice): Store in HTTP-only cookies for security.
+Server-side (Cache like Redis): Use only if JWT revocation is required.
+
 22. Difference Between Comparable and Comparator in Java
 Both Comparable and Comparator are interfaces in Java used for sorting objects. 
 Difference:
@@ -509,3 +514,86 @@ Casting is also possible between object types, specifically when dealing with in
 # Wrapper Class Casting
  You can convert between wrapper classes and primitive types using autoboxing (primitive to wrapper) and unboxing (wrapper to primitive).
 
+36. what is exception handling?
+
+mechanism that allows a program to handle runtime errors (exceptions). It Prevents Crashes, Improves Debugging, Encapsulates Error Handling, Ensures Resource Management.
+
+# Types of Exceptions in Java
+1. Checked Exceptions – Must be handled using try-catch or declared with throws.
+    Examples: IOException, SQLException
+
+2. Unchecked Exceptions – Occur at runtime due to logical errors.
+    Examples: NullPointerException, ArrayIndexOutOfBoundsException
+
+3. Errors – Indicate serious problems that should not be caught.
+    Examples: StackOverflowError, OutOfMemoryError
+
+# How to Handle Exceptions?
+Using try-catch Block
+Handling Multiple Exceptions in a Single catch
+Using finally Block
+Using throws Keyword (Declaring Exceptions)
+Custom Exceptions (extends Exception)
+
+37. explain about Thread Life Cycle?
+# New:	Thread is created but not started (new Thread()).
+# Runnable:	Thread is ready to run but waiting for CPU (start()).
+# Running:	Thread is currently executing (run()).
+# Blocked / Waiting / Timed Waiting : A thread can enter these states if it needs to wait for another thread to complete an operation.
+Blocked: 	Waiting for a lock (e.g., synchronized block).
+Waiting: 	Waiting indefinitely for another thread to notify it (wait()).
+Timed Waiting: 	Waiting for a specific time (sleep(time), join(time)).
+# Terminated	Thread has finished execution or stopped.
+
+38. explain the differences between Hashing and Encryption ? 
+
+# Purpose: 	
+Hashing Converts data to a fixed-length value for verification.	
+Encryption Converts data into a secure format for confidentiality.
+
+# Reversibility: 	
+Hashing is Irreversible (One-way). 
+Encryption is Reversible (Decryption possible)
+
+# Use Case:	
+Hashing used in Password storage, data integrity verification	
+Encryption used in Data security in transmission and storage
+
+# Key Usage	
+For Hashing No key required	
+For Encryption Requires encryption & decryption keys
+
+# Examples	
+Hashing algorithms: SHA-256, MD5, bcrypt	
+Encryption algorithms: AES, RSA, DES
+
+39. what is access token and refresh token?
+
+In a secure authentication system, we use two types of JWT tokens:
+
+# Access Token: Short-lived, used for API access.
+
+# Refresh Token: Long-lived, used to obtain a new access token when it expires.
+
+# How Access & Refresh Tokens Work
+1. User logs in → Server returns Access Token + Refresh Token.
+2. Client stores tokens (Access Token in memory, Refresh Token in HTTP-only cookies).
+3. Client makes API requests → Sends Access Token in the Authorization header.
+4. Access Token expires → Client sends a Refresh Token to get a new Access Token.
+5. If Refresh Token is valid → Server issues a new Access Token.
+
+# How It Works
+Login API (/auth/login)
+Takes username as input.
+Returns Access Token (15 min) & Refresh Token (7 days).
+Access API (with Authorization: Bearer <access_token>)
+Token is validated in JwtAuthFilter.
+User can access protected endpoints.
+Refresh Token API (/auth/refresh)
+Takes refreshToken as input.
+Returns a new Access Token (if valid).
+If Refresh Token is invalid → 401 Unauthorized.
+
+Access Token: 	store in Memory / LocalStorage but is Exposed to XSS attacks.
+
+Refresh Token: HTTP-only Cookies but is Safer, prevents XSS.

@@ -1,0 +1,6 @@
+3. Circuit Breaker Pattern
+This pattern prevents service failure by providing a fallback mechanism when a service is unreachable or fails. 
+It monitors service calls and "breaks" the circuit to prevent further calls when failures exceed a threshold.
+
+A travel booking system where multiple external services (airline, hotel, car rental) are integrated. 
+If one service is slow or fails, the circuit breaker prevents cascading failures and provides a default response to maintain system stability.

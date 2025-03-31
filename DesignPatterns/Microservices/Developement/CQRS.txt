@@ -1,0 +1,6 @@
+6. CQRS (Command Query Responsibility Segregation) Pattern
+CQRS separates the read and write operations of a data store. 
+Commands (write operations) update the state, while queries (read operations) fetch data from a different model optimized for reads.
+
+An online retail application where the product catalog requires frequent updates and fast queries. 
+Using CQRS, the write model ensures consistency when updating product information, while the read model provides quick responses for customer queries.

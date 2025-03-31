@@ -1,0 +1,6 @@
+Blue-Green Deployment Pattern:
+This pattern involves maintaining two environments: 
+Blue (current production) and Green (new version).
+The new version of the microservice is deployed to the Green environment, while the Blue environment continues to serve live traffic.
+Once the new version is tested and verified in the Green environment, traffic is switched from Blue to Green.
+This pattern minimizes downtime and allows for quick rollback if issues are encountered in the new version.

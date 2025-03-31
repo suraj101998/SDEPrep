@@ -1,0 +1,6 @@
+5. Event Sourcing Pattern
+This pattern captures changes to an application state as a sequence of events. 
+Instead of storing just the current state, it stores the state changes (events), allowing the system to reconstruct past states and audit trails.
+
+A financial application managing transactions and accounts. 
+By using event sourcing, the system can reconstruct account histories, track every transaction, and provide audit trails for regulatory compliance.

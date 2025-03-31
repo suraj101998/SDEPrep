@@ -1,0 +1,3 @@
+Access Token Pattern: 
+Use access tokens to authenticate and authorize requests between clients and microservices. 
+Access tokens (e.g., JWT) contain information about the user's identity and permissions, allowing microservices to verify the request without querying the authentication server repeatedly.

@@ -1,0 +1,6 @@
+4. Service Discovery Pattern
+Service Discovery allows microservices to find and communicate with each other dynamically. 
+It involves a service registry where services register themselves and look up other services.
+
+A microservices-based application deployed in a cloud environment where instances of services start and stop frequently. 
+Service discovery ensures that services can locate each other without manual configuration, enabling automatic scaling and resilience.

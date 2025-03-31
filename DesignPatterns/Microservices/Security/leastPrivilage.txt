@@ -1,0 +1,3 @@
+Least Privilege Pattern: 
+Apply the principle of least privilege to ensure that microservices and users have the minimum level of access necessary to perform their tasks. 
+Regularly review and adjust permissions to reduce the risk of unauthorized access.

@@ -1,0 +1,4 @@
+Service Instance per Container Pattern:
+Each microservice instance is deployed in its own container.
+Containers provide a lightweight and efficient way to encapsulate a microservice along with its dependencies, ensuring consistency across different environments.
+This pattern leverages container orchestration platforms like Kubernetes to manage the deployment, scaling, and operation of containers, making it easier to maintain and scale microservices.

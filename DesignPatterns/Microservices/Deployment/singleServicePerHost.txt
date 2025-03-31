@@ -1,0 +1,5 @@
+Service Instance per Host Pattern:
+Each instance of a microservice runs on its own host.
+This host could be a virtual machine or a physical server.
+This pattern provides strong isolation between microservices, enhancing security and fault tolerance, as issues in one microservice do not affect others.
+The trade-off is higher resource usage since each service has its own host, potentially leading to underutilization of resources.

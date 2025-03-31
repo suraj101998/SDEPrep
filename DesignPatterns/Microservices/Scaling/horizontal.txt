@@ -1,0 +1,4 @@
+Horizontal Scaling Pattern:
+Horizontal scaling, or "scaling out," involves adding more instances of a microservice to distribute the load.
+This pattern improves the system's ability to handle increased traffic and provides better fault tolerance.
+Instances can be added or removed dynamically based on the current load, which is particularly effective in cloud environments where resources can be provisioned on demand.

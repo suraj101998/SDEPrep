@@ -1,0 +1,8 @@
+1. API Gateway Pattern
+An API Gateway acts as a single entry point for all clients, 
+routing requests to the appropriate microservices. 
+It can handle cross-cutting concerns such as authentication, logging, rate limiting, and load balancing.
+
+A large e-commerce platform where multiple clients (web, mobile, third-party) 
+need to interact with various services (catalog, user management, orders). 
+The API Gateway simplifies client communication by providing a unified interface and handling complexities like security and routing.

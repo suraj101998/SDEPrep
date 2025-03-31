@@ -1,0 +1,4 @@
+Vertical Scaling Pattern:
+Vertical scaling, or "scaling up," involves adding more resources (CPU, memory) to an existing microservice instance.
+This pattern can enhance the performance of a microservice without changing the number of instances.
+However, it has limitations as there is a maximum capacity for a single instance, and it may lead to higher costs for more powerful hardware or virtual machines.

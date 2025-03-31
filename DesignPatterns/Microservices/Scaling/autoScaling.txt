@@ -1,0 +1,4 @@
+Auto-Scaling Pattern:
+Auto-scaling automatically adjusts the number of microservice instances based on predefined metrics and thresholds, such as CPU usage, memory usage, or request rate.
+This pattern ensures that the system can handle varying loads efficiently, scaling out during peak times and scaling in during low-demand periods.
+Auto-scaling helps in optimizing resource usage and cost, maintaining performance without manual intervention.

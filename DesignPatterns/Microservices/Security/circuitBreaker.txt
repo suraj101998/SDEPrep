@@ -1,0 +1,3 @@
+Circuit Breaker Pattern: 
+Use circuit breakers to protect microservices from cascading failures and limit the impact of a compromised or malfunctioning service. 
+Circuit breakers can also be configured to prevent excessive retry attempts, which can be exploited for denial-of-service attacks.

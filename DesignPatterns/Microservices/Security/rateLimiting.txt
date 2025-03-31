@@ -1,0 +1,3 @@
+Rate Limiting and Throttling Pattern: 
+Implement rate limiting and throttling to prevent abuse and denial-of-service attacks. 
+These mechanisms control the number of requests a client or service can make within a specified period, protecting microservices from being overwhelmed by excessive traffic.

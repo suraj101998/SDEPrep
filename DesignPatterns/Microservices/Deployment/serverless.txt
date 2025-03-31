@@ -1,0 +1,5 @@
+Serverless Deployment Pattern:
+In a serverless deployment, microservices are deployed as serverless functions, such as AWS Lambda or Azure Functions.
+The cloud provider manages the infrastructure, automatically handling the execution, scaling, and resource allocation.
+This pattern is particularly useful for event-driven applications, where functions are triggered by events.
+It simplifies deployment and reduces operational overhead, but may come with limitations on execution time and resource usage.

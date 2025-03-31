@@ -1,0 +1,6 @@
+7. Saga Pattern
+Saga manages distributed transactions across multiple microservices by coordinating a sequence of local transactions. Each service performs its transaction and publishes an event triggering the next service’s transaction. 
+If a transaction fails, compensating transactions undo the changes.
+
+An order processing system where placing an order involves multiple services (payment, inventory, shipping). 
+The saga pattern ensures that all steps are completed successfully, and if any step fails, compensating actions roll back the previous steps.

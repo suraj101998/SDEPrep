@@ -1,0 +1,5 @@
+Service Mesh Pattern:
+A service mesh provides a dedicated infrastructure layer for managing service-to-service communication.
+It includes features such as load balancing, traffic management, service discovery, and security policies.
+A service mesh abstracts the communication logic out of the microservices, enabling better observability, resilience, and control over how services interact.
+It is particularly useful in complex microservices architectures, ensuring consistent and secure communication between services.

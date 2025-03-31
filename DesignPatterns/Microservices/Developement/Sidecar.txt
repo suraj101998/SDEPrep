@@ -1,0 +1,6 @@
+10. Sidecar Pattern
+The Sidecar pattern deploys helper components (sidecars) alongside the main microservices. 
+These sidecars handle cross-cutting concerns like logging, monitoring, and configuration management, allowing the main services to focus on business logic.
+
+An application running in a Kubernetes cluster, where each microservice is accompanied by a sidecar for logging and monitoring. 
+This pattern centralizes these concerns and simplifies the main service’s codebase.

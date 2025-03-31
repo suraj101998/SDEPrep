@@ -1,32 +1,24 @@
 1. Tell the React Life Cycle?
 
-Lifecycle of Class Components
-In class-based components, React provides several lifecycle methods that allow developers to hook into different stages of a component's lifecycle:
-Phases of React Lifecycle in Class Components
+Phases of React Lifecycle:
 
-Mounting Phase: 
-The component is being created and inserted into the DOM.
+# Mounting Phase: The component is being created and inserted into the DOM.
+# Updating Phase:  The component's state or props have changed, causing a re-render.
+# Unmounting Phase: The component is being removed from the DOM.
+# Error Handling Phase: If an error occurs during rendering, in lifecycle methods, or in the constructors of any child components, this method can catch the error.
 
-Updating Phase: 
-The component's state or props have changed, causing a re-render.
+2. what are hooks in react ? Mention some hooks?
 
-Unmounting Phase: 
-The component is being removed from the DOM.
+Hooks are functions that allow functional components to use state and 
+lifecycle features without writing a class.
 
-Error Handling Phase: 
-If an error occurs during rendering, in lifecycle methods, or in the constructors of any child components, this method can catch the error.
+useState:	Manages component state
+useEffect:	Handles side effects
+useContext:	Accesses global state
+useRef:	Works with DOM elements & persists values
+useReducer:	Manages complex state logic
+useCallback:	Memoizes functions to prevent re-creation
+useMemo:	Memoizes expensive calculations
+useLayoutEffect:	Similar to useEffect, but runs synchronously after DOM updates
+useImperativeHandle:	Customizes ref behavior when using forwardRef
 
-Summary of Lifecycle Methods in Functional and Class Components
-
-Class Component	
-Mounting:	constructor, getDerivedStateFromProps, render, componentDidMount	
-Updating:	getDerivedStateFromProps, shouldComponentUpdate, render, getSnapshotBeforeUpdate, componentDidUpdate	
-Unmounting:	componentWillUnmount	
-Error Handling:	getDerivedStateFromError, componentDidCatch
-
-Functional Component (Hooks)
-
-Mounting: useEffect with an empty dependency array []
-Updating: useEffect with dependencies (e.g., [data])
-Unmounting: useEffect cleanup function (return in effect)
-Error Handling: Error Boundaries (a separate component, not a hook)

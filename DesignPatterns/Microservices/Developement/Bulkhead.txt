@@ -1,0 +1,6 @@
+9. Bulkhead Pattern
+Bulkhead isolates different parts of a system to prevent failure in one component from affecting others. 
+Each service or group of services operates in its own "compartment," like bulkheads in a ship.
+
+A streaming service with different microservices for user management, video playback, and recommendations. 
+Using bulkheads ensures that a failure in the recommendation service doesn’t impact video playback or user management, maintaining overall system stability.

@@ -1,0 +1,6 @@
+2. Database per Service Pattern
+Each microservice has its own database, ensuring loose coupling and independent data management.
+This pattern avoids a single point of failure and allows services to use different types of databases suited to their needs.
+
+A SaaS application with multiple microservices such as billing, user management, and analytics. 
+Each service requires different database technologies (e.g., relational for billing, NoSQL for user profiles, time-series for analytics), allowing optimized performance and scalability.

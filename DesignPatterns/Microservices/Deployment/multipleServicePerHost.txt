@@ -1,0 +1,4 @@
+Multiple Service Instances per Host Pattern:
+This pattern involves deploying multiple instances of different microservices on a single host, whether it's a virtual machine or a physical server.
+By sharing the same host, this pattern maximizes resource utilization, reducing the cost and overhead associated with running multiple separate hosts.
+However, it requires careful resource management to ensure that the services do not compete for the same resources, potentially leading to performance bottlenecks.

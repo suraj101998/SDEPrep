@@ -1,0 +1,6 @@
+8. Strangler Fig Pattern
+This pattern incrementally replaces a legacy system with a microservices architecture. 
+The new system gradually takes over the functionality of the old system until the legacy system is entirely replaced.
+
+Migrating a monolithic insurance application to a microservices architecture. 
+The strangler fig pattern allows the new microservices to take over functionalities one by one, reducing the risk and complexity associated with a big-bang migration.
