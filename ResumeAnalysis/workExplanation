@@ -96,6 +96,8 @@ We are using Nginx for this. We have 4 Services login, Dashboard, Admin-controls
 
 Microservices are Communicating with each other in a synchronous way using REST API where a service calls an API that another service exposes, using a HTTP protocol.
 
+I havent worked on kafka but if you are looking for asynchronous way of communication the you can go for message queues or some kind of event driven architechture using Kafka. So you can Have Parallel events triggeed at all your different services without waiting for response. like That your operation becomes much Faster.
+
 At Nginx routes have been made :
 /login, /dashboard, /admin-controls, /documents.
 
