@@ -21,5 +21,6 @@ class Singleton {
 }
 // output: true
 
-/*If your singleton implementation is incorrect(e.g., without synchronization in a multi-threaded environment),
-multiple instances can be created mistakenly. However, a correctly implemented singleton always holds exactly one instance.*/ 
+/*If your singleton implementation is incorrect
+(e.g., without synchronization in a multi-threaded environment), multiple instances can be created mistakenly. 
+However, a correctly implemented singleton always holds exactly one instance.*/ 

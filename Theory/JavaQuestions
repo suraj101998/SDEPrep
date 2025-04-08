@@ -195,7 +195,7 @@ Difference:
 6)syntax: class ClassName implements Comparator<AnotherClass>
 
 23. what are Wrapper Classes in Java?
-Wrapper classes are object representations of primitive types. Each primitive type has a corresponding wrapper class in Java.
+object representations of primitive types. Each primitive type has a corresponding wrapper class in Java.
 Use Cases:
 1. Collections Framework: 
 Collections like ArrayList can only store objects, not primitives, so wrapper classes are needed.
@@ -240,8 +240,10 @@ Key OOP Concepts in Java
 1. Class and Object:
 Class: A blueprint for creating objects.
 Object: An instance of a class with attributes and behaviors.
+
 2. Encapsulation (Data Hiding)
 Restrict direct access to class fields using private modifiers. achieved by Declaring the class variables as private and use public getters and setters to access/modify only the required private data.
+
 3. Inheritance (Code Reusability)
 Allows one class (child) to inherit properties of another class (parent).
     Types of Inheritance in Java:
@@ -249,6 +251,7 @@ Allows one class (child) to inherit properties of another class (parent).
     Multilevel: A → B → C
     Hierarchical: A → {B, C}
     Java does not support multiple inheritance using classes (avoids ambiguity).
+
 4. Polymorphism (Many Forms)
 
         1. Method Overloading (Compile-time Polymorphism)
@@ -597,3 +600,82 @@ If Refresh Token is invalid → 401 Unauthorized.
 Access Token: 	store in Memory / LocalStorage but is Exposed to XSS attacks.
 
 Refresh Token: HTTP-only Cookies but is Safer, prevents XSS.
+
+40. how did you handle key management for JWT in your microservices architecture? What measures did you take to ensure the security of the secret keys?
+
+1. Secure Storage of JWT Secrets & Keys
+Instead of hardcoding secrets in the source code or environment variables, I use secure vaults such as:
+HashiCorp Vault – Securely stores and dynamically generates secrets.
+
+2. Using Public-Private Key Pair (Asymmetric Signing)
+For better security and scalability:
+RSA (RS256) or Elliptic Curve (ES256) keys instead of HMAC (HS256).
+Public key is shared across microservices to verify tokens.
+Private key is securely stored and used only by the authentication service.
+
+3. Key Rotation & Revocation Strategies
+Automated Key Rotation – Configured to rotate signing keys at intervals (e.g., every 90 days).
+Key Identifier (kid) in JWT Header – Ensures microservices use the correct public key for validation.
+Revocation via Blacklist – If using short-lived tokens (e.g., 15 min) with refresh tokens, store revoked tokens in Redis or DB.
+
+4. Secure Transmission & Access Controls
+Environment-Based Restrictions – Different secrets for dev, staging, and production.
+Role-Based Access – Only privileged services/users can retrieve JWT keys from vaults.
+
+5. Logging & Monitoring
+Audit logs for key access and token usage.
+Rate limiting to prevent brute-force attacks on JWT endpoints.
+
+41. difference between abstract class and interface:
+Abstract Class:
+Keyword: abstract
+Methods: Can have both abstract and concrete methods (with body).
+Fields/Variables: Can have instance variables (non-final, non-static).
+Access Modifiers: Can have public, protected, or private methods.
+Multiple Inheritance: Does not support.
+Constructor: Can have constructors.
+When to Use?: When classes share common behavior but need partial implementation.
+
+Interface
+Keyword: interface
+Methods: Can have only abstract methods, default & static methods.
+Fields/Variables: Variables are implicitly public, static, and final (constants).
+Access Modifiers: All methods are public by default.
+Multiple Inheritance: Supports
+Constructor: Cannot have constructors.
+When to Use?: When classes share only method signatures but different implementations.
+
+42. How to handle multiple exception in a single cat h block?
+ you can handle multiple exceptions in a single catch block using the pipe (|) operator.
+ try {
+    // Code that may throw exceptions
+} catch (ExceptionType1 | ExceptionType2 e) {
+    // Common exception handling logic
+}
+
+43. what is Java collection framework?
+Java Collection Framework provides a set of classes and interfaces to store and manipulate a group of objects. It supports various data structures like lists, sets, queues, and maps.
+
+Collection: Root interface representing a group of objects.
+List: Ordered collection allowing duplicates like ArrayList, LinkedList.
+Set: Unordered collection with no duplicates like HashSet, LinkedHashSet.
+Queue: Ordered collection for holding elements before.
+
+44. difference between List and Set:
+List
+Order: Maintains insertion order
+Duplicates: Allows duplicate elements
+Access by Index: Allows random access using index
+Implementations: ArrayList, LinkedList, Stack
+Performance: Fast iteration and random access
+Use Case: When order matters and duplicates are allowed
+
+Set
+Order: Does not guarantee order (HashSet), or maintains sorted order (TreeSet), or insertion order (LinkedHashSet).
+Duplicates: Does not allow duplicate elements
+Access by Index: No index-based access
+Implementations: HashSet, LinkedHashSet, TreeSet
+Performance: Faster lookup in HashSet due to hashing
+Use Case: When unique elements are required
+
+

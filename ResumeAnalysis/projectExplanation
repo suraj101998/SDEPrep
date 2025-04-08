@@ -1,0 +1,42 @@
+## Tell Me About Your Project and Specific Modules which you have developed
+
+1. UPI
+
+# Flow Of UPI / Or How Payments Works in UPI
+So there are 4 Parties involved in UPI:
+
+1. Payer PSP: 
+Payer is Associated with a PSP(like phonepe, GPAY) is which provides you with a VPA for your transactions. Now this VPA is different for different banks. when I am initiating a payment, my PSP is is sending a request to NPCI. The request contains my address(Payer VPA) as well as beneficiary address(Payee VPA). Using my payer VPA NPCI recognizes Which bank he needs to trigger for debiting.
+
+2. Remitter Bank: 
+NPCI then sends a debit request to my bank / Remitter Bank. The Bank Check whether my account is having that much money or not and debits that amount. based on that, it sends debit successful / Unsucessfull to NPCI. If Success, NPCI sends a collect request to benficiary bank and sends Payment successful response to Payer PSP / To me.
+
+3. Beneficiary Bank: 
+After Recieving collect request benficiary bank checks for the Payee PSP address / Payee VPA and credit that much amount in his account. Success response is sent back to NPCI.
+
+4. Payee PSP: 
+Post recieving Success response from benficiary Bank NPCI forwards this to the payee PSP in the form of notification that MR. XYZ has sent this much amount to you.
+
+Settlement between the bank is done as per their time mostly in late nights.
+
+Also if both the Remitter and Beneficiary bank is same then it is a ONUS transaction else if both are different then it is a OFUS transaction.
+
+
+
+# What you have recently developed?
+
+Ok So I have worked on various modules of UPI. few of the recent ones are Rupay Credit card on UPI, Contextual Payments and embedded Payments. Where embedded Payments is new and yet to be launched:
+
+# Flow of Embedded Payments:
+Embedded Payments is basically the extension of how payer can make a payment. Now he can Download his PSP(phonePe, Gpay etc) on his car multimedia like how maps, gaana or other apps are installed. For any petrol pump, or any shopping outlet like KFC, McDonald he can directly pay through his car multimedia without using his phone.
+
+Process will be Same as he registered himself on any PSP in his phone. But since this is a kind of making a clone of my PSP (in phone and Multimedia) so all my payer Testcases gets a split. And based on the testcase I am executing NPCI comes to know that the request came from phone or Car Multimedia.
+
+# any challenges / difficulty You faced while development and how you overcome?
+So biggest challenge we faced while developing Embedded Payments is how NPCI will know that which request Came from phone and which came from the embedded device. We can't make new testcases otherwise it will be copy of the same exsisting One having same functionality. Unnecessary no. of testcases will increase and My partners or PSP can ask like why i should again do the same testcase.
+
+For overcoming that We proposed the idea of splitting the same testcase (Like MT_60_P where P is for phone and MT_60_M for multimedia). Which solves all above issues and provides a geniune reason for partners to integrate it and NPCI will get to know from where the request is coming from by looking the testcase id.
+
+
+# Is there any portal for partners?
+so we are providing a sandbox testing environment to all our partners where they can come and test any new module which has been developed under a product which they are trying to integrate. Post completion they move to the production with the new Feature. That sandbox environment is exposed over HTTPS and is developed on React.

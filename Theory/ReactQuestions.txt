@@ -9,8 +9,7 @@ Phases of React Lifecycle:
 
 2. what are hooks in react ? Mention some hooks?
 
-Hooks are functions that allow functional components to use state and 
-lifecycle features without writing a class.
+Hooks are functions that allow functional components to use state and lifecycle features without writing a class.
 
 useState:	Manages component state
 useEffect:	Handles side effects

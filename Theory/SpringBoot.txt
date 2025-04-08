@@ -175,3 +175,35 @@ Method level security: It is used when low privileged or unauthorized user acces
 Parameterized queries: It is used to protect against SQL injections. 
 Rigorous input validation: The input's length, type, format and range must be validated. Built-in validation can be used here. 
 Sensitive data encryption: It will be done by the @EncryptablePropertySource function.
+
+28. what is bean destruction?
+refers to the process of cleaning up resources or performing any necessary shutdown operations before a bean is removed from the Spring container.
+Ways to Handle Bean Destruction in Spring:
+1. Using @PreDestroy Annotation: Part of JSR-250, marks a method to be called before the bean is destroyed.
+2. Implementing DisposableBean Interface: Implement the destroy() method to define custom destruction logic.
+3. Using destroyMethod in XML or @Bean: Specify the destroy method explicitly in configuration.
+eg: @Bean(destroyMethod = "cleanup")
+
+29. Define Bean lifecycle?
+Bean Lifecycle Flow:
+
+Bean is instantiated.
+Dependencies are injected.
+Initialization methods (@PostConstruct or InitializingBean) are called.
+Bean is in use.
+Destruction phase:
+Calls methods annotated with @PreDestroy, destroy() from DisposableBean, or specified destroyMethod.
+
+30. what is Fetch Type in JPA?
+
+FetchType determines how related entities are loaded from the database. 
+It defines whether associated entities should be fetched eagerly or lazily when querying the main entity.
+two types of fetching strategies:
+1. FetchType.EAGER : Related entities are loaded immediately with the parent entity.
+use-case: When Associated entity is always needed. To avoid multiple queries (if small data).
+Risk: lead to performance issues if many associations are fetched eagerly (N+1 problem).
+
+2. FetchType.LAZY: Related entities are loaded on-demand (when accessed).
+use-case: When Associated data is optional. To improve performance and avoid heavy joins.
+Risk: Can cause LazyInitializationException.
+

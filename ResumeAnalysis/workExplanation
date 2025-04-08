@@ -1,0 +1,124 @@
+## How would you verify that your jwt token is sent from the right user
+
+1. Verify the Signature
+JWT tokens are signed using a secret key (HS256) or a private key (RS256).
+On the server side, verify the token's signature using the same secret/private key.
+If the signature matches → the token was not tampered with and was issued by your server.
+
+2. Verify the Token Claims
+Common checks:
+sub (subject) → Usually the userId
+exp (expiry) → Ensure token is not expired
+iss (issuer) → Validate issuer
+aud (audience) → Ensure correct audience
+roles or authorities → Check user roles if needed
+
+3. Check Token Expiry
+Final Flow (Best Practice)
+Client sends request with: Authorization: Bearer <JWT_TOKEN>
+Server does:
+
+Verify signature.
+Verify claims (userId, roles, expiry).
+Match userId from token with resource being accessed.
+Proceed if valid.
+
+
+## list some 10 advanced features in React.js
+
+1. React Hooks (Advanced Usage)
+Hooks allow functional components to have state and lifecycle features.
+
+Advanced Hooks include:
+useReducer (for complex state management)
+useMemo (performance optimization)
+useCallback (function memoization)
+useRef (persisting values without re-render)
+Custom Hooks (for reusability)
+
+2. Context API with useContext
+Global state management without Redux.
+Example use cases:
+Theme Management
+Auth Management
+
+3. Code Splitting & Lazy Loading
+Split your code to load components only when needed — improving performance.
+
+4. Server-Side Rendering (SSR) with Next.js
+Rendering pages on the server for SEO and faster initial load.
+
+5. React Portals
+Render components outside of the root DOM hierarchy.
+Used for:
+Modals
+Tooltips
+
+6. React DevTools Profiler
+Analyze component performance and re-rendering issues.
+
+7. React Router helps in:
+Managing URLs.
+Rendering specific components based on URL.
+Handling navigation programmatically.
+
+
+## what have you done on AWS:
+
+1. Codecommit: 
+we used to push our code to AWS codecommit it is nothing but AWS git. 
+All the developer used to code in their particular branches and the final code 
+is merged into the release branch.
+
+2. ECR(Elastic Container Registry) and ECS(Elastic Container Service): 
+From the release branch pipeline has 
+been made and the code is built and moved to ECR. It is nothing but a docker registry kind of thing 
+also it performs CI/CD and checks for vulnerability giving reports. 
+Once the build is done pipeline is triggered to move the build to ECS. 
+After moving to ECS we start It as a service.
+
+3. CloudFront: 
+we can see the logs of the application here.
+
+4. Roles and Access Management: 
+Root and IAM roles are there. You can provide custom access to the user as per the requirement of the level like read only, read write or read write update.
+
+5. VPC: 
+it is nothing but how we are having our on prem environments one in Hyderabad one in Chennai 
+similar to that in AWS we can host our application on different zones so during failover/peak hours 
+if one zone is down/facing heavy traffic we can move the traffic to the other zone.
+
+
+## which microservices articheture pattern you followed:
+
+API gateway Pattern: Single point of entry for all of your microservices.
+We are using Nginx for this. We have 4 Services login, Dashboard, Admin-controls, Documents. 
+
+Microservices are Communicating with each other in a synchronous way using REST API where a service calls an API that another service exposes, using a HTTP protocol.
+
+At Nginx routes have been made :
+/login, /dashboard, /admin-controls, /documents.
+
+Load balancing and rate limiting has been set in the Nginx level.
+
+
+## how you Optimized database architecture with caching and session management?
+
+We are Using a 70:30 percent of DB:cache operations where frequently accessed items are fetched from the cache.
+
+1. Caching Strategy Used: 
+Redis (In-Memory Cache) : Extremely fast key-value store for frequently accessed data. 
+
+2. Implementation Flow:
+→ Used Spring Cache / RedisTemplate (if Java Spring)
+→ Set TTL (Time to Live) for cache expiry to avoid stale data. ideally we have made it to live till the seesion expiry.
+→ Wrote cache invalidation logic during DB update events like put and delete methods. why because redis assigns one key for each of my records. Now if i want to delete/change any data from the record the value gets changed therefore the corresponding key associated with it changes and a new key is generated having the updated value. so that removal of the older key is called cache invalidation and addition of the new key is cache validation.  
+
+3. Session Management Optimization:
+Store Sessions in Redis 
+JWT Tokens for Stateless Auth: we are storing JWT token in redis for better management and token revocation.
+
+4. Query Optimization:
+Optimized indexes on large tables.
+used Fetch Join / Lazy Loading properly.
+Partitioned large tables for faster scans.

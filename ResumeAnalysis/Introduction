@@ -1,0 +1,12 @@
+## Introduce Yourself
+
+Hii I am [your_name] basically from [district] [state] I have completed my [degree] in [domain like CSE] 
+back in [year]. Post that I started working as a full stack developer in [organization_name], [location] 
+from April 2022 Since then it's been [no. of years] I am working under UPI and GSEC. For Backend we are using:
+(golang, frameworks like Gin, Echo, Go Concurrency patterns and Fiber) ------if Golang developer
+(Java, Spring Boot, Hibernate, microservices, Spring Data JPA) -----if Java developer
+for frontend we are heavily relying on react js for database we are using MySQL and REDIS
+and deployement is taken care by docker and AWS. I have also provided technical solutions to almost 
+50+ partners now such as phonepe, CRED and GooglePay for intergrating various scopes under UPI 
+and have recieved exceptional feedback from them.
+
