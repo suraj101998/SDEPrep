@@ -2,6 +2,7 @@
 Inteface which have one and only one abstract method.
 Advantage: we can write a lamda expression which makes our code simple.
 can we have public private or default methods in fuctional interface: Yes, but abstact method can only be one.
+Can be used with Stream API: allowing functions like filtering, mapping, etc.
 
 2. Java is compiled or Interpreted Language? 
 both. Compiler convert source code into byteCode. This byteCode is Platform independent. 
@@ -76,6 +77,10 @@ Ensure that one thread acquires one lock and waits for another lock, while the o
 
 15. what are optional classes?
 The Optional class in Java is a container that can hold either a value or null. part of the java.util package and is primarily used to represent optional (nullable) values in a more readable and safer way, reducing the chances of encountering NullPointerException.
+-Purpose of Optional
+The primary purpose of Optional is to prevent NullPointerExceptions by providing a more elegant way to handle null values. 
+-benifits
+Avoid null Checks: With Optional, you can avoid direct null checks
 
 16. what are stream API in java
 provides a functional programming approach to process and manipulate collections of data in a declarative manner. It is a part of the java.util.stream package and is designed to work with data collections like lists, sets, or arrays. Streams make operations like filtering, mapping, and reducing data easier and more efficient.
@@ -466,10 +471,14 @@ used to prevent a field from being serialized when an object is written to a fil
 A concise way to represent a method interface using an expression
 Allows you to treat functionality as a method argument
 Lets you code as data
+-Why was it introduced?
+Code simplicity: Lambda expressions reduce boilerplate code by enabling a cleaner, more readable syntax for operations on collections.
 
 # Stream API 
 A way to perform operations on collections of data in a functional way
 Streams are a sequence of elements that can be processed in parallel or sequentially
+-Why was it introduced?
+Declarative programming: The Stream API helps to process collections in a more functional and declarative way, making the code more readable and concise.
 
 # Date and Time API 
 Includes classes like LocalDate, LocalTime, LocalDateTime, and ZonedDateTime
@@ -478,6 +487,11 @@ Addresses the limitations of the old Date and Calendar classes
 
 # Optional class 
 A container object that is used to contain a value that might or might not be present
+-Why was it introduced?
+Avoiding null pointer exceptions: It reduces the usage of null and improves code readability, making it easier to work with optional values.
+
+Optional<String> name = Optional.ofNullable(null);
+name.ifPresent(System.out::println);  // Will not print anything if the value is null
 
 # Default methods
 Allows you to add non-abstract methods in the interfaces

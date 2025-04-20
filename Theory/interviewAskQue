@@ -1,0 +1,207 @@
+# java-8 jdk-17/18
+
+# OOPs Concepts in Java
+1. Encapsulation
+Definition: Wrapping data (variables) and code (methods) into a single unit (class) and restricting direct access to some components.
+use for :
+-Data hiding
+-Control over data
+-Makes code more maintainable
+
+2. Inheritance
+Definition: Acquiring properties and behavior (methods) of a parent class in a child class using extends keyword.
+use for :
+-Code reusability
+-Method overriding (polymorphism)
+-Better organization
+
+3. Polymorphism
+Definition: Same method name behaves differently depending on context.
+
+Types:
+Compile-time (Method Overloading)
+Runtime (Method Overriding)
+
+use for :
+-Flexibility
+-Interface design
+-Clean code
+
+4. Abstraction
+Definition: Hiding internal implementation and showing only essential details.
+
+Ways to achieve:
+1)Abstract class
+
+abstract class Vehicle {
+    abstract void drive();
+}
+2) by Interface
+
+interface Flyable {
+    void fly();
+}
+
+use for :
+-Helps with complex system design
+
+5. Class & Object
+
+Class: Blueprint
+Object: Instance of class
+
+# diff btw compile and run time
+Feature	             Compile-time Polymorphism  	    Run-time Polymorphism
+Also Known As	        Method Overloading	              Method Overriding
+Decision Made At	    Compile Time	                     Runtime
+Achieved Using	        Same method name, different args	Same method signature in subclass
+
+
+# exception
+ an exception is an event that disrupts the normal flow of a program's execution. It occurs when something goes wrong during the execution of a program, such as:
+
+Trying to divide a number by zero
+Trying to access an array element that doesn’t exist
+Opening a file that doesn’t exist
+
+# types of exception
+1. Checked Exceptions:
+These are exceptions that are checked at compile time. If a method can throw a checked exception, it must declare it using the throws keyword, and the code must either handle the exception with a try-catch block or declare it to be thrown further up the call stack.
+
+Examples:
+
+IOException,SQLException,ClassNotFoundException,FileNotFoundException,ParseException
+
+2. Unchecked Exceptions:
+These exceptions are not checked at compile time. They are subclasses of RuntimeException. These exceptions usually indicate programming bugs, such as logic errors or improper use of APIs.
+
+Examples:
+
+NullPointerException,ArrayIndexOutOfBoundsException,ArithmeticException,ClassCastException,
+IllegalArgumentException,IllegalStateException
+
+-Key Differences:
+
+Aspect	            Checked Exceptions	                    Unchecked Exceptions
+1)Inheritance	          Inherits from Exception	            Inherits from RuntimeException
+2)Compile-Time Check	 Yes, must be handled or declared	    No, not required to be handled
+3)Examples	        IOException, SQLException	          NullPointerException, ArithmeticException n
+4)Cause	       Typically external issues (I/O errors)   Usually caused by programming mistakes(null references, divide by zero, etc.)
+
+# what is output of it and also it will compile or not
+try{
+    sop(try block)
+
+}catch(Exception e){
+    sop(catch block)
+
+}catch(NullpointerException e){
+    sop(catch Null pointer block)
+
+}finally{
+    sop(Finally block)
+
+}
+ans :  would not compile as-is due to the incorrect order of catch blocks.the catch(Exception e) block comes before the catch(NullPointerException e) block, which is incorrect because NullPointerException is a subclass of Exception. So, the more general Exception block will catch all exceptions, including NullPointerException, and the more specific catch(NullPointerException e) block will never be reached.
+
+# What is Hashing / hashing machanism?
+
+# (TC is -o(n)in worst: in case of many collisions/Average Case: O(1) for insertions, deletions, and lookups in a well-designed hash table , SC-O(n) where n is the number of elements in the hash table, as it stores both keys and values)
+Hashing is a technique used to convert an input (like a string, number, or object) into a fixed-size value, typically an integer. This value is called a hash code.
+
+In Java, hashing is commonly used in (or support by) data structures like:
+
+HashMap
+HashSet
+Hashtable
+
+Hashing Mechanism:
+-Hash Function: A hash function takes an input (or "key") and returns a fixed-size string, typically a hash value (or hash code). This value is a numerical representation of the input data, which ideally should be unique for different inputs.
+
+-Hash Table: A hash table (or hash map) uses the hash function to store and retrieve data efficiently. Each data element is associated with a unique key, which is hashed into a hash code. The hash code determines the index in the hash table where the value is stored.
+
+-Collision: Sometimes, two different inputs can produce the same hash value. This is called a collision. A good hash function minimizes collisions.
+
+# how to handle Collision in hashing:
+🔧 1) Chaining (Using a Linked List)
+🗂️ Think of it like this: Each bucket (or locker) can hold a list of items.
+
+📦 If two keys go to the same locker, we store them together in a list.
+
+🔍 Example:
+Imagine you’re storing:
+
+"apple" → hash = 3
+
+"banana" → hash = 3
+
+Instead of overwriting, you do this:
+Locker 3 → [apple, banana]  ← a linked list of values
+So, both live together at the same spot.
+
+👉 This is what Java’s HashMap does behind the scenes.
+
+🔧 2) Open Addressing (Find Next Empty Spot)
+Instead of storing multiple values in one locker, we look for the next free locker.
+
+There are 3 main ways to do this:
+
+a) Linear Probing (Step by 1)
+🧭 If the locker is full, check the next locker.
+
+"apple" → locker 3 (taken)  
+Try locker 4 → empty → store there
+
+b) Quadratic Probing (Step with square pattern)
+⏭️ Instead of going one by one, jump in square steps:
+
+Try locker 3 → taken  
+Try locker 3 + 1² = 4 → taken  
+Try locker 3 + 2² = 7 → empty → store there
+
+c) Double Hashing (Use a second hash function)
+🔁 If collision happens, use a different formula (2nd hash) to decide the jump.
+
+newIndex = (hash1 + i * hash2) % tableSize
+
+# Applications/ use of Hashing:
+-Data Retrieval: Used in hash maps (like HashMap in Java) for quick lookups.
+-Cryptography: Hashing is essential in data security, particularly in password storage and digital signatures.
+-Caching: Hashing is used to store frequently accessed data for quick retrieval in cache systems.
+-Database Indexing: Databases use hash indexes to speed up query operations.
+
+# diff btw sleep and wait
+1. Thread.sleep()
+Purpose: The sleep() method is used to pause the execution of the current thread for a specified amount of time. It does not release any locks or monitors. It's a simple way to delay the execution of a thread.
+
+Use Cases:
+
+-To introduce a delay in the execution of a thread.
+-Useful in situations where you want to slow down the execution, such as simulating a delay in an application or controlling the rate of operation
+
+2)Object.wait()
+Purpose: The wait() method is used to pause the current thread until it is notified by another thread. It is typically used for inter-thread communication and synchronization.
+
+Use Cases:
+
+-Producer-Consumer Problem: A classic example where one thread (producer) puts data into a shared buffer, and another thread (consumer) waits until there is data to consume.
+
+# diff btw hashmap and LinkedHashMap
+HashMap                 	                           LinkedHashMap
+No guarantee of order	                            Maintains insertion order
+Slightly faster (no overhead of maintaining order)	Slightly slower (due to maintaining order)
+Allows one null key and multiple null values	     Allows one null key and multiple null values
+Use Case : When order doesn't matter	            use case: When order of insertion matters
+Iteration Order	is Unpredictable	           Iteration Order isPredictable (same order as inserted)
+
+# diff between list and set
+List	                                               Set
+Allows duplicate elements	                    Does not allow duplicate elements
+Maintains insertion order	                   Depends on implementation (unordered or ordered)
+Supports indexing (get(int index))	            Does not support indexing
+Access by index (e.g., list.get(0))	            Access via iteration
+Common Implementations:ArrayList, LinkedList	   HashSet, LinkedHashSet, TreeSet
+
+
+
+
