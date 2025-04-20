@@ -4,6 +4,9 @@ given with a String "AABBCDEFFFYHG". print all the unique elements and duplicate
 
 */
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class countDuplicatedString {
     public static int duplicates(String str){
       int count=0;
@@ -18,9 +21,25 @@ public class countDuplicatedString {
       System.out.println(uniqueString.toString());
       return count;
     }
-    
+
+    //find duplicate characters
+    public static void findDuplicateCharacters(String str) {
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (char ch : str.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+
+        System.out.println("Duplicate characters are: ");
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > 1) {
+                System.out.println(entry.getKey() + " => " + entry.getValue());
+            }
+        }
+    }
     public static void main (String[] args){
       String str = "AABBCDEFFFYHG";
       System.out.println(duplicates(str));
+      findDuplicateCharacters(str);
     }
 }

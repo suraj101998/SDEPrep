@@ -78,7 +78,18 @@ Ensure that one thread acquires one lock and waits for another lock, while the o
 The Optional class in Java is a container that can hold either a value or null. part of the java.util package and is primarily used to represent optional (nullable) values in a more readable and safer way, reducing the chances of encountering NullPointerException.
 
 16. what are stream API in java
-provides a functional programming approach to process and manipulate collections of data in a declarative manner. It is a part of the java.util.stream package and is designed to work with data collections like lists, sets, or arrays. Streams make operations like filtering, mapping, and reducing data easier and more efficient.
+part of the java.util.stream package and is designed to work with data collections like lists, sets, or arrays. Streams make operations like filtering, mapping, and reducing data easier and more efficient.
+
+Key Features of Java Streams:
+Declarative: Focuses on what to do, not how to do it.
+Functional: Leverages lambda expressions and method references.
+Lazy Evaluation: Intermediate operations are executed only when a terminal operation is invoked.
+Parallelizable: Can easily process data in parallel using .parallelStream().
+
+Stream Pipeline Structure:
+Source – A collection, array, or I/O channel (e.g., List, Set, Map).
+Intermediate Operations – Returns a new stream (e.g., map, filter, sorted, distinct).
+Terminal Operation – Produces a result or side-effect (e.g., collect, forEach, reduce, count).
 
 17. what are lambda expressions in java?
  provide a concise way to represent a function or behavior as an argument. They enable functional programming by allowing you to write short, expressive code, particularly when working with functional interfaces.
@@ -220,7 +231,9 @@ Usage: Use when thread safety is not needed.
 A keyword used to define constants, restrict inheritance, and prevent method overriding or variable reassignment.
 Final Variable: Its value cannot be changed after initialization.
 Final Method: Cannot be overridden by subclasses.
-Final Class: Cannot be extended (subclassed).
+Final Class: Cannot be extended (subclassed) or inherited.
+final Parameter: Prevents modification inside the method.
+static final: Creates constants (commonly named in UPPERCASE).
 
 2. finally:
 A block used with a try-catch statement to ensure a block of code runs regardless of whether an exception is thrown or not.
@@ -522,8 +535,15 @@ Casting is also possible between object types, specifically when dealing with in
 mechanism that allows a program to handle runtime errors (exceptions). It Prevents Crashes, Improves Debugging, Encapsulates Error Handling, Ensures Resource Management.
 
 # Types of Exceptions in Java
-1. Checked Exceptions – Must be handled using try-catch or declared with throws.
+1. Checked Exceptions – Must be handled using try-catch or declared with throws. you can handle multiple    exceptions in a single catch block using the pipe (|) operator.
     Examples: IOException, SQLException
+
+syntax of multiple catch block:
+try {
+    // Code that may throw exceptions
+} catch (ExceptionType1 | ExceptionType2 e) {
+    // Common exception handling logic
+}
 
 2. Unchecked Exceptions – Occur at runtime due to logical errors.
     Examples: NullPointerException, ArrayIndexOutOfBoundsException
@@ -645,7 +665,7 @@ Multiple Inheritance: Supports
 Constructor: Cannot have constructors.
 When to Use?: When classes share only method signatures but different implementations.
 
-42. How to handle multiple exception in a single cat h block?
+42. How to handle multiple exception in a single catch block?
  you can handle multiple exceptions in a single catch block using the pipe (|) operator.
  try {
     // Code that may throw exceptions
@@ -678,4 +698,118 @@ Implementations: HashSet, LinkedHashSet, TreeSet
 Performance: Faster lookup in HashSet due to hashing
 Use Case: When unique elements are required
 
+45. what are some Common Annotations in Mockito
+
+Annotation 		| Usage
+@Mock 			| Creates mock object
+@InjectMocks 		| Injects mock dependencies into class
+@Test 			| has the test data which we want to mock with
+@Spy 			| Partial mock (real + mock)
+@Captor 		| Captures arguments passed to methods
+
+46. what are some Security best practices 
+
+Use Spring Security for authentication.
+Always use strong password hashing algorithms (BCrypt).
+Use Role-Based Access Control (RBAC).
+Validate all user inputs (server-side).
+Avoid trusting client-side validation only.
+Prevent SQL Injection — use prepared statements/JPA.
+Encrypt sensitive data at rest and in transit.
+Use HTTPS (SSL/TLS).
+Mask sensitive data in logs.
+Do not expose internal errors to users.
+Create global exception handling using @ControllerAdvice.
+Avoid hardcoding credentials in the code.
+Use external configuration management.
+Implement session timeout.
+Avoid exposing session IDs in URL.
+Keep dependencies up-to-date.
+Avoid using outdated or vulnerable libraries.
+Enable CSRF protection in Spring Security.
+Sanitize output to prevent Cross-Site Scripting (XSS).
+Log sensitive operations.
+Do not log sensitive data like passwords, tokens.
+Use API Rate Limiting & Throttling. 
+
+47. How many ways we can communicate between two microservices
+
+1. Synchronous Communication eg: Payment Service call to Bank API
+(Real-time response — Request-Response based) 
+
+Common Protocols:
+REST API (HTTP/HTTPS)
+gRPC (Google Remote Procedure Call)
+
+Characteristics:
+Client waits for response.
+Direct request & response.
+Tight coupling between services.
+
+2. Asynchronous Communication eg: Order Service publish OrderPlaced
+(Non-blocking — Event Driven) 
+
+Common Protocols:
+Message Queue (RabbitMQ, ActiveMQ)
+Kafka (Event Streaming)
+
+Characteristics:
+No waiting for response.
+Publisher -> Broker -> Consumer.
+Loose coupling.
+High scalability.
+
+48. what are Phases in gradle
+	1. Initialization Phase It identifies which project(s) to build. Load settings.gradle
+	2. Configuration Phase Configures all the tasks but does not execute them. Read build.gradle
+	3. Execution Phase	Executes the tasks. Execute task actions
+
+49. Define HashMap Internal Working?
+
+1. HashCode Calculation:
+First, key.hashCode() is called.
+It gives an integer hash value.
+
+2. Index Calculation:
+Index in the internal array is calculated like: index = (n - 1) & hashCode
+
+3. Bucket:
+HashMap internally has an array of Node<K,V> or Entry<K,V>.
+Each index of this array is called a bucket.
+
+4. Collision Handling:
+Two keys can have the same hash index — This is called a Collision.
+How handled?
+Initially — LinkedList is used to store multiple nodes in the same bucket.
+If many elements fall into the same bucket (threshold reached), LinkedList is converted to Balanced Tree (Red-Black Tree) — for faster search (O(log N)).
+
+5. put() Working:
+Calculate hashCode.
+Calculate index.
+If bucket is empty — create new Node(key, value).
+If key already exists — update value.
+If collision — add to LinkedList or Tree.
+
+6. get() Working:
+Calculate hashCode.
+Calculate index.
+Check bucket.
+If LinkedList — traverse and compare equals().
+If Tree — search like in Red-Black Tree.
+
+7. Load Factor & Rehashing:
+Load Factor (default 0.75) — Threshold to resize the array.
+If size exceeds capacity * load factor, array size is doubled.
+All existing nodes are rehashed to new index in a bigger array.
+
+50. what are Intermittent and terminal operations?
+
+1. Intermediate Operations (Lazy Operations)
+These operations return a Stream again. They don’t process data immediately.
+Actual execution happens only when a terminal operation is called.
+Examples: filter(), map(), sorted(), distinct(), limit(), skip()
+
+2. Terminal Operations (Eager Operations)
+These trigger the processing of the Stream pipeline. They return a final result like List, Count, or single value. After terminal operation — stream can't be reused.
+Examples: collect(), forEach(), count(), min(), max(), reduce(), anyMatch(), allMatch()
 

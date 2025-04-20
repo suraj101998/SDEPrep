@@ -1,0 +1,54 @@
+1. what are Indexes in sql
+
+used to improve the speed of data retrieval from a table. Without Index → DB will perform Full Table Scan to find data (slow for large tables).
+
+Type 			| Usage
+Primary Index 		| Automatically created on Primary Key
+Unique Index 		| No duplicate values allowed
+Composite Index 	| Index on multiple columns
+Clustered Index 	| Sorts and stores data rows in order of index (Only 1 per table)
+Non-Clustered Index 	| Separate from data storage (Can have multiple)
+
+2. what are Types of Joins in sql
+
+Join Type 			| Explanation
+INNER JOIN 			| Returns matching rows in both tables
+LEFT JOIN 			| Returns all rows from left table + matched rows from right
+RIGHT JOIN 			| Returns all rows from right table + matched rows from left
+FULL JOIN 			| Returns all rows when there is a match in either table
+CROSS JOIN 			| Cartesian product (Every row of 1st table with every row of 2nd)
+SELF JOIN 			| Join a table with itself
+
+3. what are difference between master and transaction table?
+
+Master Table: 	Stores Static/Reference Data where Rare	changes/ updates occur. eg: Customer, Product, Employee
+Transaction Table: 	Stores Dynamic/Operational Data where Frequent changes/updates occur. eg: Order, Payment, Invoice
+
+4. what are the types of DB caching and tell about it's best practices?
+Types of DB Cache:
+1. Read-Through Cache: Cache is checked first. If miss → DB call → Store in cache.
+2. Write-Through Cache: DB and Cache both updated during write.
+3. Write-Behind Cache: Cache updated first. DB updated asynchronously.
+4. Cache-Aside (Lazy Load): Application checks cache → If miss → Load from DB → Update cache.
+
+Best Practices:
+Always set Cache Expiry (TTL)
+Use cache invalidation on DB updates
+Avoid caching sensitive data
+Use distributed cache in large-scale systems
+Use DB cache for static or read-heavy data
+
+5. Difference Between SQL and NoSQL:
+
+Feature	            SQL (Relational DB)	                NoSQL (Non-Relational DB)
+Structure	        Table-based (Rows & Columns)	    Document, Key-Value, Graph, Column
+Schema	            Fixed schema (Predefined)	        Dynamic schema (Flexible)
+Query Language	    SQL (Structured Query Language)	    No standard query language
+Scalability	        Vertical Scaling (limited)	        Horizontal Scaling (easy)
+Transactions	    Strong ACID properties	            Eventual Consistency, BASE
+Use Case	        Structured data, Complex joins	    Unstructured/Big Data, Real-time data
+Examples	        MySQL, Oracle, PostgreSQL	        MongoDB, Cassandra, Redis, CouchDB
+Joins Support	    Yes	                                No (Not suitable for complex joins)
+Data Storage	    Relational Tables	                JSON, Key-Value pairs, Graphs, Columns
+Best Use	        Banking, ERP, CRM systems	        Real-time apps, IoT, Analytics, Big Data
+

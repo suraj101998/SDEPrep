@@ -17,7 +17,10 @@
 @Configuration: Defines a configuration class for bean definitions.
 @Bean: Indicates a method that produces a Spring bean.
 @Autowired: Injects dependencies automatically by type.
-@Qualifier: Specifies which bean to inject when multiple options are available.
+@Qualifier: Specifies which bean to inject when multiple options are available. 
+To avoid NoUniqueBeanDefinitionException. Used in multi-implementation scenarios
+
+Helps Spring know which bean to inject.
 @Lazy: Initializes a bean only when it’s first accessed.
 @Value: Injects values into fields, such as from a properties file.
 @PropertySource: Declares a properties file as a source for values.
@@ -95,9 +98,15 @@ Configure the JPA properties in the application.properties or application.yml fi
 9. How to connect the Spring Boot application to a database using JDBC?
 To connect the Spring Boot to a database using JDBC, configure the JDBC properties in the application.properties or application.yml file.
 
-10. Spring Vs Spring Boot?
-Spring is a framework that provides various modules for building enterprise-level applications.
-Spring Boot is a framework that simplifies Spring development by providing a pre-configured environment that enables developers to focus on building the application logic.
+10. what are the Differences Spring Framework Vs Spring Boot?
+Key Differences:
+
+Spring Framework	                    Spring Boot
+Manual Configuration Required	        Auto-Configuration Enabled
+No Embedded Server	                    Embedded Server (Tomcat/Jetty)
+XML or Java Config Required	            No XML, Minimal Java Config
+Complex Project Setup	                Easy Starter Templates (starters)
+Used for Any Size App	                Best for Microservices & REST APIs
 
 11. What annotations are used to create an Interceptor?
 Interceptor is a prominent functionality of Spring Boot. It uses the annotated class @Component and implements the interface HandlerInterceptor.
@@ -133,7 +142,23 @@ The externalized configuration feature in Spring Boot allows users to use a sing
 Spring Boot DevTools are tools that ease application development and optimization. These tools reduce development time and enhance productivity. They can auto-recompile the code without the requirement to restart the application manually. DevTools are also used for static resource caching, actuator endpoints, and automatic application restart. The ‘spring-boot-devtools’ module dependency can easily be added to the project.
 
 19. What is the use of Spring Boot Actuator endpoints?
-Sprint Boot comprises multiple built-in Actuator endpoints that monitor and interact with the application. Users can add their actuator endpoints as well. The endpoints can be enabled, disabled and exposed through HTTP or JMX. These are used for the application's health checkup to gather metrics, information and the list of beans. The actuator endpoints are useful for knowing the mappings between URLs and controller methods, accessing environment properties, gaining thread dumps, and offering multiple other information.
+comprises built-in endpoints that monitor and interact with the application.
+It exposes REST endpoints to:
+Monitor Application Health
+Check Metrics (Memory, CPU, DB, etc.)
+View App Info
+Monitor Traffic
+Perform Health Checks
+Trace Errors
+
+Common Actuator endpoints
+Endpoint                | Purpose                       | Example URL
+/actuator/health        | Application health check      | http://localhost:8080/actuator/health
+/actuator/info          | Application info              | http://localhost:8080/actuator/info
+/actuator/metrics       | Performance metrics           | http://localhost:8080/actuator/metrics
+/actuator/env           | View environment variables    | http://localhost:8080/actuator/env
+/actuator/beans         | View all Spring Beans         | http://localhost:8080/actuator/beans
+/actuator/httptrace     | Last HTTP request details     | http://localhost:8080/actuator/httptrace
 
 20. What is Spring Boot Starter?
 Spring Boot Starter is a collection of dependency descriptors used to simplify the development process of Spring applications. It serves as the foundation for web applications, microservices and other Spring-based projects. It enhances the user’s productivity by directing the focus on writing rather than working on infrastructure handling. Spring Boot Starter also eases POM management and eliminates the requirement to remember dependency names and versions. 
@@ -177,9 +202,9 @@ Rigorous input validation: The input's length, type, format and range must be va
 Sensitive data encryption: It will be done by the @EncryptablePropertySource function.
 
 28. what is bean destruction?
-refers to the process of cleaning up resources or performing any necessary shutdown operations before a bean is removed from the Spring container.
+process of cleaning up resources or shutdown operations before a bean is removed from the Spring container.
 Ways to Handle Bean Destruction in Spring:
-1. Using @PreDestroy Annotation: Part of JSR-250, marks a method to be called before the bean is destroyed.
+1. Using @PreDestroy Annotation: marks a method to be called before the bean is destroyed.
 2. Implementing DisposableBean Interface: Implement the destroy() method to define custom destruction logic.
 3. Using destroyMethod in XML or @Bean: Specify the destroy method explicitly in configuration.
 eg: @Bean(destroyMethod = "cleanup")
@@ -206,4 +231,131 @@ Risk: lead to performance issues if many associations are fetched eagerly (N+1 p
 2. FetchType.LAZY: Related entities are loaded on-demand (when accessed).
 use-case: When Associated data is optional. To improve performance and avoid heavy joins.
 Risk: Can cause LazyInitializationException.
+
+31. What is @Async annotation?
+used to execute a method asynchronously, i.e., in a separate thread, 
+allowing the caller to continue execution without waiting for the method to complete.
+
+Use Case: When you want to perform non-blocking operations, such as:
+Sending emails
+Logging
+Calling external APIs
+Background jobs
+
+Setup Steps
+1. Enable async support in your configuration class
+2. Annotate your method with @Async: The method must not be private. Return type can be void, Future<T>, CompletableFuture<T>, etc.
+3. Call the method from another Spring-managed bean
+
+32. what is ApplicationContext ? 
+central interface in Spring Framework for providing configuration information to the application.
+Spring Boot automatically creates ApplicationContext on startup using @SpringBootApplication.
+It is responsible for:
+Bean Creation (Object Creation)
+Dependency Injection (Auto Wiring)
+Managing Bean Lifecycle
+Providing Configuration Metadata
+Event Handling
+
+33. what is Idompodent method in rest?
+
+if after performing an operation multiple times also has the same effect as performing it once.
+eg: GET, PUT, DELETE. beacuse they all does the operation on the same data.
+
+But POST is not Idompodent beacuse each time we do a post it creates a new record/resource in the DB.
+
+34. Employee list of addresses validation. How will I do it?
+public class EmployeeRequest {
+
+    @NotBlank(message = "Employee name should not be blank")
+    private String name;
+
+    @Valid // Mandatory for List validation
+    @NotEmpty(message = "Address list cannot be empty")
+    private List<Address> addresses;
+
+    // getters and setters
+}
+
+public class Address {
+
+    @NotBlank(message = "Street should not be blank")
+    private String street;
+
+    @NotBlank(message = "City should not be blank")
+    private String city;
+
+    @Pattern(regexp = "\\d{6}", message = "Pincode must be 6 digits")
+    private String pincode;
+
+    // getters and setters
+}
+
+@PostMapping("/addEmployee")
+public ResponseEntity<String> addEmployee(@Valid @RequestBody EmployeeRequest employeeRequest) {
+    return ResponseEntity.ok("Employee Added Successfully");
+}
+
+
+35. how do we handle caching in spring boot?
+
+1. Enable Caching
+To use caching in Spring Boot, add this annotation on your main class or any @Configuration class
+
+2. Use Caching in Your Service
+Spring provides annotations like:
+@Cacheable – Caches method return value
+@CachePut – Updates cache without skipping the method execution
+@CacheEvict – Removes entry from the cache
+
+3. Default Cache Manager
+By default, Spring uses SimpleCacheManager with a ConcurrentHashMap under the hood (in-memory cache). 
+You can configure custom managers like Redis or EhCache.
+
+36. Transactional annotations arr based on what rules?
+
+1. Transaction Propagation (Propagation Rules)
+Defines how a transaction should behave when a method is called inside an existing transaction.
+
+Common types:
+Propagation Type	            Description
+REQUIRED (default)	            Join current transaction or create new if none exists.
+REQUIRES_NEW	                Always create a new transaction, suspending the current one.
+NESTED	                        Execute within a nested transaction if supported.
+SUPPORTS	                    Join if a transaction exists, else execute non-transactionally.
+NOT_SUPPORTED	                Always execute non-transactionally, suspending any transaction.
+NEVER	                        Fails if a transaction exists.
+MANDATORY	                    Requires an existing transaction, fails if none.
+
+2. Rollback Rules
+By default, Spring only rolls back on unchecked exceptions (subclasses of RuntimeException or Error).
+eg: @Transactional(rollbackFor = Exception.class)
+
+3. Read-Only Transactions
+@Transactional(readOnly = true)
+Optimizes queries for read operations.
+Some databases use this hint to skip locking or flushing.
+
+4. Isolation Levels
+Controls how data is visible during concurrent transactions.
+types:
+DEFAULT: Use the DB's default.
+
+READ_UNCOMMITTED: Dirty reads possible: You can read data not yet committed by other transactions.
+Fastest, but least safe. Not commonly used. eg: T1 updates a row, but hasn’t committed. 
+T2 reads that dirty value.
+
+READ_COMMITTED: No dirty reads: Only sees committed data.
+Non-repeatable reads can happen: Same query in the same transaction may return different results.
+eg: T1 reads a row. T2 updates and commits the row. 
+If T1 reads again, it sees a different value.
+
+REPEATABLE_READ: Prevents dirty reads and non-repeatable reads.
+Phantom reads may happen: A new row added by another transaction may appear in the same query. 
+eg: T1 reads all rows with status = 'ACTIVE'. 
+T2 inserts a new status = 'ACTIVE' and commits. T1 re-executes the same query and sees more rows.
+
+SERIALIZABLE: Transactions are executed as if serially one after another. 
+Prevents all issues: dirty reads, non-repeatable reads, phantom reads. 
+Slower, may lead to more locking and blocking.
 

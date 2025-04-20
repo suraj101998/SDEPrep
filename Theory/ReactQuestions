@@ -1,0 +1,102 @@
+1. Tell the React Life Cycle?
+
+Phases of React Lifecycle:
+
+# Mounting Phase: The component is being created and inserted into the DOM.
+# Updating Phase:  The component's state or props have changed, causing a re-render.
+# Unmounting Phase: The component is being removed from the DOM.
+# Error Handling Phase: If an error occurs during rendering, in lifecycle methods, or in the constructors of any child components, this method can catch the error.
+
+2. what are hooks in react ? Mention some hooks?
+
+Hooks are functions that allow functional components to use state and lifecycle features without writing a class.
+
+# useState:	Manages component state
+# useEffect:	Handles side effects
+# useContext:	Accesses global state
+# useRef:	Works with DOM elements & persists values
+# useReducer:	Manages complex state logic
+# useCallback:	Memoizes functions to prevent re-creation
+# useMemo:	Memoizes expensive calculations
+# useLayoutEffect:	Similar to useEffect, but runs synchronously after DOM updates
+# useImperativeHandle:	Customizes ref behavior when using forwardRef
+
+3. what are the advantages of React?
+
+# Component-Based Architecture: Reusable UI components. Easy to maintain and scale.
+# Virtual DOM: Fast rendering. Only updates the changed part of UI.
+# One-Way Data Binding: Predictable data flow. Easy debugging and testing.
+# JSX (JavaScript + HTML): Easy to write UI code. Clean & readable syntax.
+# Strong Community & Ecosystem: Large open-source support. Many ready-to-use libraries.
+# SEO Friendly: Supports Server Side Rendering (SSR) with Next.js.
+# Easy Integration: Can be integrated with existing projects (even non-React apps).
+# Developer Tools: React Dev Tools for easy debugging.
+# Cross-Platform Development : React Native for mobile apps using same React knowledge.
+
+
+4. what is UseRef and CreateRef ? 
+
+Feature	            useRef	                            createRef
+Used in	            Functional components	            Class components
+Returns	            A stable ref across renders	        A new ref on each call
+Persistence	        Yes (across renders)	            No (unless in constructor)
+Use case	        Mutable values, DOM refs	        DOM refs in class components
+
+5. what is Obj.freeze and obj.seal?
+
+# Object.freeze()
+Makes an object completely immutable.
+You cannot add, delete, or change any property.
+Properties become non-writable and non-configurable.
+
+# Object.seal()
+You cannot add or delete properties.
+But you can modify existing properties (if they're writable).
+Properties become non-configurable but can remain writable.
+
+6. what is React portal?
+used to render a component outside the DOM hierarchy of its parent component, useful for UI elements like modals, popups, tooltips, and overlays.
+
+They help in situations where CSS positioning or interaction needs to be managed independently of the parent component.
+
+Portals do not change the component hierarchy in React; they simply render the component outside the DOM structure but maintain the component's context and functionality.
+
+7. what is UseTransition?
+
+useTransition helps manage concurrent rendering by allowing React to keep the UI responsive even when expensive state updates are happening in the background. It allows you to tell React that certain updates can be deferred and do not need to block immediate rendering.
+
+8. what is Difference between UseEffect and UseLayoutEffect?
+
+# useEffect 
+runs after the component renders and paints. It doesn't block the browser’s painting process. It is useful for side effects that don't affect the layout directly.
+
+# useLayoutEffect 
+runs before the browser paints. It can block painting until the effect has been executed, which makes it suitable for DOM measurements and synchronously updating the layout.
+
+9. what is StrictMode in react?
+
+It helps with:
+Identifying unsafe lifecycles
+Warning about deprecated APIs
+Detecting unexpected side effects
+Double-invoking certain functions in development to surface hidden issues (only in dev mode!)
+
+10. difference between React and React-dom?
+
+1. react Package
+The react package contains the core React library.
+
+It includes:
+React components
+useState, useEffect, useRef, useContext, etc. (all hooks)
+Virtual DOM functionality
+createElement, Fragment, memo, and JSX support
+
+2. react-dom Package
+The react-dom package is specific to the web platform.
+
+It provides:
+DOM-specific methods to render React components into the actual HTML DOM
+ReactDOM.createRoot() (from React 18)
+Portals (createPortal)
+findDOMNode() (less used now)
