@@ -716,7 +716,7 @@ Use Case: When unique elements are required
 
 Annotation 		| Usage
 @Mock 			| Creates mock object
-@InjectMocks 		| Injects mock dependencies into class
+@InjectMocks 	| Injects mock dependencies into class
 @Test 			| has the test data which we want to mock with
 @Spy 			| Partial mock (real + mock)
 @Captor 		| Captures arguments passed to methods

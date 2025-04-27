@@ -312,7 +312,7 @@ Spring provides annotations like:
 By default, Spring uses SimpleCacheManager with a ConcurrentHashMap under the hood (in-memory cache). 
 You can configure custom managers like Redis or EhCache.
 
-36. Transactional annotations arr based on what rules?
+36. Transactional annotations are based on what rules?
 
 1. Transaction Propagation (Propagation Rules)
 Defines how a transaction should behave when a method is called inside an existing transaction.
