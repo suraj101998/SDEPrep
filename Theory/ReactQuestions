@@ -100,3 +100,82 @@ DOM-specific methods to render React components into the actual HTML DOM
 ReactDOM.createRoot() (from React 18)
 Portals (createPortal)
 findDOMNode() (less used now)
+
+# What is Redux?
+Redux = A library to manage data (state) in a bigger app.
+-we use Redux to put all data in one central place (called "store")!
+Then any component can get data from store — no need to pass props manually everywhere.
+
+# ✅ In React, components also have lifecycle stages:
+Mounting (Birth 👶): (Component is being created and inserted into the DOM)
+Updating (Growth 🧒):(Component is being re-rendered because of changes in props or state)
+Unmounting (Death ): (Component is removed from the DOM)
+
+Phase	            Meaning	                                          Example
+Mounting	Component is created and added to screen.	        First time you open a page.
+Updating	Component changes (because of props, state, etc.) and re-renders.	User types in input box, clicks button.
+Unmounting	Component is removed from screen.	You move to a different page.
+
+# error Handling
+Error handling in React is important for ensuring that your application remains robust and doesn’t crash unexpectedly when something goes wrong. 
+- Handling Errors in Functional Components with useEffect:
+In functional components, you can use useEffect with try-catch blocks for error handling, particularly for asynchronous operations like API calls.
+
+# diff in react and react DOM
+React	
+React is the core library that provides the foundation for building user interfaces (UI).
+React is not web-specific. It can be used to build apps for web, mobile (React Native), and other platforms.
+Used in all React apps (including React Native)
+Example Usage:useState, useEffect, component logic
+
+react DOM
+React DOM is a specific implementation of React for the web. It helps React render components to the web browser's DOM.
+React DOM is only for the web. It handles rendering to browser DOM (HTML elements).
+Used only in web apps to interact with the DOM
+Example Usage:ReactDOM.render() to attach components to the DOM
+
+# Strict Mode?
+React Strict Mode is a tool used in React to help developers find potential problems in an app during development.
+It doesn’t affect the production build of the app, only during development.
+
+🎯 What Does Strict Mode Do?
+When you wrap parts of your app (or the entire app) in React.StrictMode, it enables additional checks and warnings in the development environment. These checks help you to identify:
+    -Side effects that might not be safe (such as things that might lead to memory leaks).
+    -Detecting unexpected side-effects or certain bad practices that can cause bugs.
+
+# react portal ?
+React Portals are a feature in React that allows you to render a component outside of 
+its parent component's DOM hierarchy.
+🎯 Why Use Portals?
+React’s default behavior is to render components inside their parent component’s DOM container,
+but sometimes you need to render a child component outside the parent’s DOM, while still maintaining
+React's reactivity and event handling.
+
+# What is JSX?
+-JSX is a syntax that looks like HTML but is actually JavaScript.
+-jSX (JavaScript XML) is a syntax extension for JavaScript used in React.
+It allows you to write HTML-like code directly within your JavaScript code. 
+JSX makes it easier to create and describe UI components by mixing the logic (JavaScript)
+and presentation (HTML) together.
+
+# 3. Explain the Virtual DOM in React.
+The Virtual DOM is a lightweight copy of the actual DOM (Document Object Model) in the browser.
+React keeps a virtual representation of the DOM in memory and uses it to optimize the process of updating the actual DOM.
+
+# 4. What is React Context?
+React Context is a feature that allows you to share values like state or functions across the entire component tree without having to pass them down through props.
+It's useful when you have "global" data that many components need access to, such as user authentication or theme settings.
+
+# 7. What is the difference between state and props in React?
+state:
+Managed within a component: The component itself controls the state (e.g., with useState).
+Mutable: State can be changed, and updates will trigger a re-render.
+Use case: Use state for values that can change during the lifetime of the component (e.g., user input, button clicks).
+
+props:
+Passed to a component from its parent: Props are immutable and cannot be modified by the component that receives them.
+Immutable: You cannot change props directly in the child component.
+Use case: Use props for data that is passed down from a parent component to a child component (e.g., user data, configuration settings).
+
+# what is DOM
+DOM(document object model)it is Just like tree structure that represent your web page inside the browser

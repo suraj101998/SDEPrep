@@ -21,6 +21,20 @@ If it is null create a new instance, assign it to the variable and return the va
 throw: used to throw an exception explicitiy within your method on meeting certain condition.
 throws: used in the signature of the method itself denoting that method may throw specific kind of checked expressions.
 
+✅ throw
+throw is used to actually throw an exception.
+You use it inside a method.
+
+🔵 Example:
+throw new Exception("Something went wrong!");
+👉 Meaning:
+"I am throwing an exception right now."
+
+✅ throws
+throws is used in the method signature to declare that the method might throw an exception.
+It warns whoever is calling the method:
+"Hey! I might throw an exception. Be ready to handle it."
+
 5. what is object class:
 default parent of all the java classes. 
 Integral part of code and provides with certain method such as equals(), wait(), notify(), notifyAll(), toString() etc. 
@@ -39,6 +53,22 @@ step1: make class final so that one can inherit it.
 step2: make all the fields private and final so that no one can modify them.
 step3: remove all the setter method so that no one can set the values of variables.
 step4: create parameterized constuctor which can intialize all fields when we are creating the objects.
+
+Why Use Immutable Classes?
+✔ Thread-Safety → No need for synchronization.
+✔ Security → Prevents unintended modifications.
+✔ Cache-Friendly → Objects can be safely shared.
+✔ Reliable Hashing → Useful in HashMap, HashSet.
+
+# Does java create imutable 
+Yes, Java provides several immutable classes by default, such as:
+
+1. Built-in Immutable Classes in Java
+✔ String
+✔ Wrapper classes (Integer, Double, Boolean, etc.)
+✔ java.time API classes (LocalDate, LocalTime, LocalDateTime)
+
+These classes are immutable by design.
 
 9. what is final keyword in java:
 used whenever we want to restrict from modifying the value.
@@ -82,6 +112,11 @@ The primary purpose of Optional is to prevent NullPointerExceptions by providing
 -benifits
 Avoid null Checks: With Optional, you can avoid direct null checks
 
+When to Use Optional
+-To Represent Optional Values: Use Optional to represent values that might or might not be present, especially when null would be the alternative.
+-Return Values from Methods: If a method can return null to indicate an absent value, consider returning an Optional instead.
+-Avoid null Checks: With Optional, you can avoid direct null checks and take advantage of its rich API for handling absent values in a more functional style.
+
 16. what are stream API in java
 part of the java.util.stream package and is designed to work with data collections like lists, sets, or arrays. Streams make operations like filtering, mapping, and reducing data easier and more efficient.
 
@@ -95,9 +130,38 @@ Stream Pipeline Structure:
 Source – A collection, array, or I/O channel (e.g., List, Set, Map).
 Intermediate Operations – Returns a new stream (e.g., map, filter, sorted, distinct).
 Terminal Operation – Produces a result or side-effect (e.g., collect, forEach, reduce, count).
+or
+A Stream in Java 8 is a sequence of elements that supports functional-style operations such as filtering, mapping, and reducing. It allows processing of collections efficiently using laziness and parallelism.
+
+# 1. Intermediate Operations:
+Take a stream, perform some operation (like filtering, mapping, etc.), and
+Return a new stream.
+These are lazy — they don't do anything until you call a terminal operation.
+Examples: .filter(), .map(), .sorted()
+
+# 2. Terminal Operations (including collect and reduce):
+Take a stream, and
+Don't return another stream.
+They produce a final result like a List, Map, Integer, etc.
+Examples: .collect(), .reduce(), .forEach(), .count()
+Now, reduce and collect are both terminal operations, but: diff between them is-
+
+# diff in collect and reduce
+collect
+Collect gathers data into a collection type (like List, Set, Map).
+Uses Collectors.toList(), Collectors.toMap(), etc.
+Example: .collect(Collectors.toList())
+reduce
+Reduce combines elements to produce a single result (like a single sum, product,max, min or String).
+Uses a combining function to reduce elements step-by-step.
+Example: .reduce(0, (a, b) -> a + b)
 
 17. what are lambda expressions in java?
  provide a concise way to represent a function or behavior as an argument. They enable functional programming by allowing you to write short, expressive code, particularly when working with functional interfaces.
+or Lambda expression is a way to declare and represent a function in a simple and short-hand way.
+It is implemented using a functional interface.
+Java Rule:
+➔ A lambda can only be used where a functional interface is expected.
 
 18. synchronized and volatile in Java Multithreading?
 # synchronized
@@ -106,10 +170,30 @@ Use Cases: To protect shared resources (like variables, objects, or blocks of co
 Types:
 Synchronized Method: Synchronizes the entire method.
 Synchronized Block: Synchronizes only a portion of the code.
+Static Synchronized Method → synchronized on static methods
 
 # volatile
-The volatile keyword ensures that the value of a variable is always read from and written to the main memory, not from a thread’s local cache. It ensures visibility of updates across threads.
+The volatile keyword ensures that the value of a variable is always read from and written to the main memory, not from a thread’s local cache. It ensures(prevent problem of visibility in multi-theading) visibility of updates across threads.
 Use Cases: For variables that are shared across threads and subject to frequent updates.
+volatile is used for thread synchronization in multi-threaded environments
+
+# transient Keyword
+transient is used in serialization to prevent a variable from being serialized.
+When an object is serialized, transient variables are not saved in the file.
+Useful for sensitive data like passwords.
+class User implements Serializable {
+    String username;
+    transient String password;  // Will not be serialized
+
+    User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+}
+Key Points:
+password is transient, so it won’t be stored in the serialized file.
+When deserialized, password will be null.
+Used for sensitive information like passwords, security keys, or session tokens.
 
 19. Types of Interfaces in Java?
 1. Functional Interface:
@@ -261,6 +345,11 @@ Object: An instance of a class with attributes and behaviors.
 
 2. Encapsulation (Data Hiding)
 Restrict direct access to class fields using private modifiers. achieved by Declaring the class variables as private and use public getters and setters to access/modify only the required private data.
+Why Use Encapsulation?
+✔ Data Hiding – Prevents direct access to fields, ensuring security.
+✔ Improves Maintainability – Changing the implementation doesn’t affect other classes.
+✔ Prevents Invalid Data – We can validate data using setter methods.
+✔ Encourages Modularity – Reduces dependencies between classes.
 
 3. Inheritance (Code Reusability)
 Allows one class (child) to inherit properties of another class (parent).
@@ -347,6 +436,17 @@ public class Main {
     }  
 }
 
+# Real-life Example of OOP in Java
+Imagine a Banking System where:
+Customer has a BankAccount (Encapsulation).
+SavingsAccount extends BankAccount (Inheritance).
+Deposit and withdraw behave differently (Polymorphism).
+ATM interface provides abstract methods for transactions (Abstraction).
+
+When to Use What?
+✔ Use Abstract Class when you want to share common behavior (methods with implementation) among related classes.
+✔ Use Interface when you need to enforce a contract on multiple unrelated classes.
+
 28. what is "Has-A" Relationship vs. "Is-A" Relationship in Java?
 The two main types of relationships between classes define how objects interact are:
 
@@ -404,16 +504,29 @@ public class Main {
         d.bark(); // Child class method
     }
 }
+4️⃣ When to Use "Is-A" vs. "Has-A"?
+
+Scenario	                                    Use "Is-A" (Inheritance)	Use "Has-A" (Composition)
+You need to model a strict parent-child relationship.   	✅ Yes	❌ No
+You want to reuse code from a base class.	                ✅ Yes	❌ No
+You want flexibility (e.g., changing behavior at runtime).	❌ No	✅ Yes
+You want loose coupling.	                                ❌ No	✅ Yes
+You are designing an object with distinct components.	    ❌ No	✅ Yes
 
 29. What is SOLID Principles in Java?
 
 help software developers create maintainable, scalable, and robust object-oriented systems.
 
 S – Single Responsibility Principle (SRP)- class should have only one reason to change (i.e., one responsibility).
+Why? If a class has multiple responsibilities, changes in one responsibility may affect others, making the code hard to maintain.
 O – Open/Closed Principle (OCP)- class should be open for extension but closed for modification.
+Why? Avoid modifying existing code; instead, extend functionalities.
 L – Liskov Substitution Principle (LSP)- subclass should be replaceable for its parent class without affecting the program's behavior.
+Why? If a subclass alters the behavior of the base class, it violates LSP.
 I – Interface Segregation Principle (ISP)- No class should be forced to implement methods it does not use.
+Why? Avoid large interfaces with unrelated method
 D – Dependency Inversion Principle (DIP)- High-level modules should not depend on low-level modules. Both should depend on abstractions (interfaces).
+Why? Reduces dependencies between classes and makes the system more flexible.
 
 30. What is Garbage Collector?
 is an automatic memory management process that removes objects that are no longer referenced to free up memory.
@@ -440,6 +553,18 @@ Parallel GC: Uses multiple threads for GC (Best for high-throughput applications
 CMS (Concurrent Mark-Sweep) GC:	Performs GC with minimal pause times (Best for low-latency applications) : Concurrent Mark-Sweep Algorithm Used
 G1 (Garbage First) GC:	Divides heap into regions and cleans selectively (Best for large heaps (4GB+ memory)) : Region-based marking Algorithm Used
 ZGC & Shenandoah GC:	Advanced low-latency GCs for large applications (Best for real-time applications) : Region-based concurrent Algorithm Used
+
+# Core Algorithms Used in Java Garbage Collection
+Java’s GC follows three main algorithms:
+Algorithm	                    Purpose
+Mark and Sweep:	    Identifies live and dead objects, then clears memory.
+Copying (Scavenge):	Divides heap into two areas, copies live objects, and reclaims memory efficiently.
+Generational Collection: Divides heap into Young, Old, and Perm (Metaspace) for optimized collection.
+
+# When Does GC Run?
+✔ When Heap Memory is full
+✔ When the JVM decides
+✔ When we suggest using System.gc() (not guaranteed)
 
 31. what is Difference Between Heap and Stack Memory in Java?
 # Stack:
@@ -474,6 +599,11 @@ Class B and Class C inherit from Class A.
 Class D inherits from both B and C.
 If A has a method, and B & C don’t override it, D gets two copies of the same method.
 This creates ambiguity about which method should be called.
+
+🚀 Java’s Solution to the Diamond Problem
+✅ Java allows multiple inheritance only with interfaces.
+Classes cannot inherit from multiple classes.
+Interfaces support multiple inheritance using default methods.
 
 33. what is transient Keyword in Java?
 used to prevent a field from being serialized when an object is written to a file or transmitted over a network. Prevents sensitive data (passwords, security tokens) from being stored.
@@ -679,6 +809,14 @@ Multiple Inheritance: Supports
 Constructor: Cannot have constructors.
 When to Use?: When classes share only method signatures but different implementations.
 
+When to Use What?
+✔ Use Abstract Class when you want to share common behavior (methods with implementation) among related classes.
+✔ Use Interface when you need to enforce a contract on multiple unrelated classes.
+
+Real-Life Analogy:
+Abstract Class → Like a "Vehicle" class that provides common functionalities (e.g., engine start/stop) for all vehicles.
+Interface → Like a "Flyable" interface, which can be implemented by both Bird and Airplane, even though they are unrelated.
+
 42. How to handle multiple exception in a single catch block?
  you can handle multiple exceptions in a single catch block using the pipe (|) operator.
  try {
@@ -711,6 +849,1512 @@ Access by Index: No index-based access
 Implementations: HashSet, LinkedHashSet, TreeSet
 Performance: Faster lookup in HashSet due to hashing
 Use Case: When unique elements are required
+
+# Preventing Singleton from Cloning in Java
+In Java, cloning (via the clone() method) can break the Singleton Pattern by creating a new instance of the singleton class. To prevent this, we must override the clone() method.
+If a class implements Cloneable and does not override clone(), the default clone() method creates a new instance of the class, violating the Singleton principle.
+
+Example: Singleton Broken by Cloning
+
+class Singleton implements Cloneable {
+    private static final Singleton INSTANCE = new Singleton();
+
+    private Singleton() {} // Private constructor
+
+    public static Singleton getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); // Breaks Singleton
+    }
+}
+output:Instance 1 HashCode: 12345678  
+Instance 2 HashCode: 87654321  // Different instance created!
+
+Solution: Prevent Cloning by Overriding clone()
+1)To prevent cloning, we should override clone() and throw an exception instead of allowing a new instance to be created.
+
+Fixed Singleton Class
+
+class Singleton implements Cloneable {
+    private static final Singleton INSTANCE = new Singleton();
+
+    private Singleton() {} // Private constructor
+
+    public static Singleton getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException("Cloning is not allowed for Singleton class");
+    }
+}
+output: Cloning prevented: Cloning is not allowed for Singleton class
+
+2)Alternative Approach: Return the Same Instance
+Instead of throwing an exception, we can return the same instance inside clone():
+@Override
+protected Object clone() throws CloneNotSupportedException {
+    return INSTANCE; // Always return the same instance
+}
+
+# Multithreading Environment
+A multithreading environment in Java refers to a scenario where multiple threads run concurrently within a process, allowing parallel execution of tasks.
+
+# What is Multithreading?
+Multithreading is a feature of Java that enables concurrent execution of multiple threads within a program. Each thread runs independently but shares the same memory space.
+
+# ForkJoinPool
+ForkJoinPool is designed for parallel computing using the divide-and-conquer approach. It splits a large task into smaller sub-tasks, executes them in parallel, and then combines the results.
+
+How it Works?
+The array is divided into smaller parts recursively.
+When the size is small enough (≤ 5 elements), computation is done directly.
+Tasks are executed in parallel using fork() and join().
+
+Best Use Cases
+Parallel processing of large tasks (sorting, searching, matrix operations).
+Recursive computations.
+
+# ThreadPoolExecutor
+ThreadPoolExecutor is a general-purpose thread pool that manages a fixed number of threads to execute tasks asynchronously.
+
+How it Works?
+The pool starts with 2 threads (corePoolSize = 2).
+It can grow up to 4 threads (maxPoolSize = 4) if needed.
+If the queue is full, new threads are created (up to maxPoolSize).
+Threads reuse existing threads for efficiency.
+
+Best Use Cases
+Handling web requests (I/O operations).
+Asynchronous task execution (e.g., sending emails, processing files).
+Running background tasks in web apps.
+
+# Blocking Concept in Java
+Blocking in Java refers to a situation where a thread waits until a required resource becomes available or a specific condition is met. This occurs in multi-threaded environments and can impact performance.
+
+Types of Blocking in Java
+I/O Blocking → Thread waits for input/output (e.g., reading from a file, network call).
+Thread Blocking → Thread waits due to synchronization or locks.
+Resource Blocking → Thread waits for a resource (e.g., database connection).
+
+Blocking in Synchronization (Locks)
+When multiple threads attempt to access shared resources in a multi-threaded environment, synchronization ensures that only one thread can access a particular section of code at a time. However, blocking happens when a thread cannot immediately access the synchronized block or method because another thread already holds the lock.
+
+Blocking in Synchronization:
+When does blocking occur?
+A thread gets blocked when it tries to acquire a lock on a resource that is already locked by another thread.
+For example, when multiple threads are trying to enter a synchronized method or synchronized block, only one thread can hold the lock at a time, and the others have to wait (they get blocked) until the lock is released.
+
+# Problem in Permanent Generation (PermGen) [or Metaspace Concept] in Java 8
+The PermGen space was part of the Java heap memory in earlier versions of Java (before Java 8) and was used to store class metadata, including the class definition, method data, and the constant pool. The size of PermGen was fixed and could not grow dynamically, which led to certain issues:
+1. OutOfMemoryError: PermGen space
+2. Fixed Size of PermGen
+
+# How to implement polymorphism 
+1) Compile-Time Polymorphism (Method Overloading)
+2)Runtime Polymorphism (Method Overriding)
+3) Implementing Polymorphism Using Interfaces
+Polymorphism can also be achieved through interfaces, where multiple classes implement the same method differently.
+example:
+interface Vehicle {  
+    void start();  
+}  
+
+class Car implements Vehicle {  
+    public void start() {  
+        System.out.println("Car starts with a key");  
+    }  
+}  
+
+class Bike implements Vehicle {  
+    public void start() {  
+        System.out.println("Bike starts with a self-start button");  
+    }  
+} 
+4. Polymorphism Using Method Overriding & Super Keyword
+The super keyword helps call the parent class method inside the child class.
+
+✅ Example Using super
+
+class Parent {  
+    void show() {  
+        System.out.println("Parent class method");  
+    }  
+}  
+
+class Child extends Parent {  
+    void show() {  
+        super.show();  // Calls Parent's method  
+        System.out.println("Child class method");  
+    }  
+}  
+#  Advantages of Polymorphism in Java
+✔ Code Reusability – Same method name for different implementations.
+✔ Scalability – New functionalities can be added easily.
+✔ Maintainability – Reduces duplicate code.
+
+# intern() Method in Java's String Class
+The intern() method in Java is used to store a String in the String Pool and return its reference.
+
+📌 How intern() Works?
+If the String is already in the String Pool, intern() returns its reference.
+If the String is not in the String Pool, it adds the string to the pool and returns its reference.
+This helps in reducing memory usage by avoiding duplicate String objects.
+
+# How to Write a Custom Exception in Java?
+A custom exception (also called a user-defined exception) is created by extending Exception (for checked exceptions) or RuntimeException (for unchecked exceptions).
+
+📌 Steps to Create a Custom Exception
+Extend Exception (Checked Exception) or RuntimeException (Unchecked Exception).
+Define constructors to support custom messages and cause chaining.
+Throw the exception using throw new CustomException("message").
+
+# What is ConcurrentHashMap in Java?
+ConcurrentHashMap is a thread-safe, high-performance implementation of Map in Java. Unlike HashMap, it allows concurrent read and write operations without locking the entire map, making it suitable for multi-threaded applications.
+
+📌 Defined in: java.util.concurrent.ConcurrentHashMap
+📌 Introduced in: Java 5
+
+# Runnable vs Callable in Java
+Both Runnable and Callable are interfaces used to execute tasks in a separate thread, but they have key differences.
+
+
+Feature	                        Runnable	                Callable<T>
+Package	                        java.lang	                java.util.concurrent
+Return Type	                    void (No return value)	    T (Generic return type)
+Exception Handling	            throw checked exceptions	Can throw checked exceptions
+Method Signature	            void run()	                T call() throws Exception
+Execution	            Used with Thread or ExecutorService 	Used with ExecutorService.submit()
+Future Support	                ❌ No	                    ✅ Yes (returns Future<T>)
+
+# Predicate and Consumer in Java
+In Java 8, the Predicate<T> and Consumer<T> interfaces are part of the java.util.function package. They are commonly used in functional programming, lambda expressions, and Stream API operations.
+
+🔹 Predicate<T>
+A Predicate is a functional interface that takes an input and returns a boolean value (true or false) based on a condition.Used Predicate with filter() in stream.
+
+🔹A Consumer is a functional interface that takes an input but does not return any result. It is mainly used for performing operations like printing, modifying objects, logging, etc.
+
+# Types of Joins in MySQL
+Joins in MySQL allow you to combine data from multiple tables based on related columns. They are crucial when working with relational databases.
+ 1. INNER JOIN
+✅ Returns only matching rows from both tables based on the condition.
+❌ Excludes non-matching rows from either table.
+
+2. LEFT JOIN (LEFT OUTER JOIN)
+✅ Returns all rows from the left table and matching rows from the right table.
+❌ If no match is found, NULL is returned for right table columns.
+
+3. RIGHT JOIN (RIGHT OUTER JOIN)
+✅ Returns all rows from the right table and matching rows from the left table.
+❌ If no match is found, NULL is returned for left table columns.
+
+4. FULL JOIN (FULL OUTER JOIN)
+✅ Returns all rows when there is a match in either left or right table.
+❌ If no match is found, NULL is returned from the missing side.
+⚠️ Note: MySQL does not support FULL OUTER JOIN directly but we can use UNION.
+
+5. CROSS JOIN
+✅ Returns the Cartesian product (all combinations) of both tables.
+❌ No matching condition is needed.
+
+ 6. SELF JOIN
+✅ A table is joined with itself to compare values in the same table.
+
+# Key Differences Between UNION and UNION ALL
+
+Feature             	    UNION	                UNION ALL
+Removes duplicates?	     ✅ Yes                  	❌ No
+Faster performance?	     ❌ No (due to DISTINCT)	✅ Yes (no duplicate check)
+Sorting applied?	     ✅ Yes (default sorting)	❌ No
+Use case	             When you need unique values	When duplicates are needed
+
+# 1. What is Collection in Java?
+Collection in Java is an interface (in the java.util package) that represents a group of objects, known as elements.
+It is part of the Java Collection Framework (JCF), which provides data structures like List, Set, and Queue to store and manipulate objects efficiently.
+
+# 2. Collection vs Collections
+
+Term	                    Description
+Collection:          An interface that defines a group of objects. (E.g., List, Set, Queue implement Collection.)
+Collections	:        A utility class with static methods for working with collections (like sorting, searching, etc.).
+
+# Concrete class for each interface
+Here are the concrete classes for each Collection interface in Java:
+
+1. List Interface (Allows Duplicates, Ordered)
+
+Interface	Concrete Class	Description
+List<E> 	ArrayList<E>	Dynamic array, fast random access (O(1)).
+            LinkedList<E>	Doubly linked list, fast insert/delete (O(1)).
+            Vector<E>	Synchronized ArrayList, thread-safe.
+            Stack<E>	LIFO (Last In, First Out) implementation.
+
+2. Set Interface (Unique Elements, Unordered)
+
+Interface	    Concrete Class      	Description
+Set<E>	        HashSet<E>	Unordered, unique elements, O(1) operations.
+                LinkedHashSet<E>	Maintains insertion order, O(1) operations.
+                TreeSet<E>	Sorted order, uses Red-Black Tree, O(log N) operations.
+
+3. Queue Interface (FIFO - First In, First Out)
+
+Interface	Concrete Class	Description
+Queue<E>	    LinkedList<E>	Doubly linked list, used as a queue.
+                PriorityQueue<E>	Elements sorted based on priority, O(log N).
+                Deque<E>	ArrayDeque<E>	Double-ended queue, better than Stack & LinkedList.
+
+# . What is a Bucket in HashMap?
+A bucket is a linked list (or tree in case of high collision) where multiple key-value pairs (nodes) are stored.
+Each bucket corresponds to a specific index in the array inside HashMap where entries are placed.
+The index of a bucket is determined using hashing.
+
+2. How Does HashMap Store Key-Value Pairs?
+Computing Hash Code → Java computes a hash value using the hashCode() method of the key.
+Index Calculation → The bucket index is calculated using:
+
+index = hashCode(key) % array.length
+Storing in a Bucket → The key-value pair is stored in the corresponding bucket.
+
+Handling Collisions → If multiple keys hash to the same index, they are stored as a linked list inside that bucket (or converted to a tree if too many collisions occur).
+
+# internall implementation of hashMap
+1. Calculate HashCode:
+HashMap calculates a hash value using the hashCode() method of the key.
+Using this hash value, it calculates the bucket index where the key-value pair should be stored.
+
+2. Check the Bucket:
+If the bucket at that index is empty, it directly stores the new key-value pair.
+If the bucket is not empty, it checks inside:
+-If same key is found (using .equals() method), it updates the value with the new one.
+-If a different key is found, it inserts the new key-value pair into the bucket by forming a linked list (or a balanced tree if there are many collisions).
+
+# 1. Steps to Build a Custom HashMap
+Define a Node Class → Each key-value pair will be stored in a Node (linked list for collision handling).
+
+1)Define an Array[Create an array of Node type] (Bucket Array) → This array will store nodes at indexed positions.
+2)Implement put(K key, V value) → Store key-value pairs based on hash codes.
+-First calculate a hash code for the key.
+-Calculate index using hash (usually hash % capacity).
+-Check if a key already exists at that index:
+    If same key exists → update its value.
+    If different key exists (collision) → add new node using linked list.
+3)Implement get(K key) → Retrieve values based on computed bucket index.
+Calculate the index based on the key’s hash.
+Traverse through the bucket (linked list) at that index.
+    If the key is found, return the value.
+    If not found, return null.
+4)Implement remove(K key) → Delete a key from the map.
+Handle Collisions → Use Separate Chaining (Linked List) to handle hash collisions.
+means,Solution (Separate Chaining):
+Instead of storing just one node at the bucket index,
+we store a linked list of nodes at that bucket.
+Each node contains a key-value pair.
+
+example :
+First, we store the key-value pair (A, "apple") at Bucket[3].
+Then, when key B hashes to index 3, a collision happens, and we create a new node (B, "banana"). This node gets added to the linked list:
+Bucket[3] → (A, "apple") → (B, "banana")
+
+Operation	Time Complexity (Average)	Time Complexity (Worst)
+put(K, V)	O(1)	O(N) (all keys in one bucket)
+get(K)	O(1)	O(N)
+remove(K)	O(1)	O(N)
+resize()	O(N)	O(N)
+Space Complexity: O(N) (for storing elements)
+
+# Method Hiding in Java
+Method hiding occurs when a static method in a child class has the same signature as a static method in the parent class. Unlike method overriding (which works with instance methods and supports dynamic binding), method hiding follows static binding (resolved at compile time).
+
+# Key Differences Between Method Hiding & Method Overriding
+
+Feature	        Method Hiding (Static Methods)	Method Overriding (Instance Methods)
+Method Type	            Static methods only	              Instance methods only
+Binding Type	Static Binding (Compile-time)	          Dynamic Binding (Runtime)
+Access Modifier	Cannot reduce visibility but can change	  Cannot reduce visibility
+Object Reference	Calls method based on reference type	Calls method based on actual object type
+Keyword Used	    static	                                No static keyword
+
+# JUnit in Java
+JUnit is a popular testing framework in Java for unit testing. It helps developers write and run repeatable tests, ensuring that individual pieces of code (units) function correctly.
+
+🔹 Key Features of JUnit
+Annotation-Based Testing (@Test, @Before, @After, etc.)
+Assertions for validation (assertEquals, assertTrue, etc.)
+Test Runners for executing test cases
+Parameterized Tests for running tests with multiple inputs
+Mocking Support (used with Mockito)
+
+🔹 Key Concepts of JUnit
+Test Case:A single unit of testing that checks a specific functionality.
+Test Suite:A collection of test cases that run together.
+Assertions:Used to compare expected and actual outcomes.
+Annotations:Special markers used to define methods and configurations.
+
+# what is output
+interface A {
+    default void print() {
+        System.out.println("Print method from A");
+    }
+}
+
+interface B {
+    default void print() {
+        System.out.println("Print method from B");
+    }
+}
+
+public class Main implements A, B {
+    // Resolving conflict by overriding the print method
+    @Override
+    public void print() {
+        // We must specify which interface method to call
+        A.super.print();  // or B.super.print();
+    }
+
+    public static void main(String[] args) {
+        Main obj = new Main();
+        obj.print(); // Output: Print method from A
+    }
+}
+Explanation:
+Diamond Problem in Interfaces:
+Both A and B have a default method print(), so when Main implements both, there's a conflict.
+Java does not automatically resolve this conflict, so the class must override print().
+Using A.super.print();
+In the overridden method, we explicitly call A.super.print();, which executes print() from A.
+If we used B.super.print();, it would call print() from B.
+
+Output:Print method from A
+
+# What is a Setter in Java?
+A setter is a method in a Java class that allows modification of private fields from outside the class. 
+2. Why Use a Setter?
+✔ Encapsulation → Keeps fields private but allows controlled modification.
+✔ Validation → You can add checks before setting values.
+✔ Data Hiding → Prevents direct field modification from outside.
+
+5. When to Use and Avoid Setters
+✔ Use setters when the object needs modification after creation.
+✔ Avoid setters when designing immutable or thread-safe objects
+
+# Cloneable Interface in Java
+The Cloneable interface in Java allows objects to be copied using the clone() method. It is part of java.lang and is used to create a field-by-field copy of an object.
+
+1. Key Points About Cloneable Interface
+✔ Marker Interface → It does not have any methods, only acts as a flag.
+✔ Used with clone() Method → Defined in Object class.
+✔ Throws CloneNotSupportedException if a class does not implement Cloneable.
+✔ Shallow Copy by Default → References are copied, not deep cloned.
+
+4. When to Use Cloneable?
+✔ When we need object duplication (e.g., creating multiple configurations).
+✔ When we need fast copying, as clone() is faster than manually copying fields.
+✔ When working with prototypes in design patterns.
+
+5. Disadvantages of Cloneable
+❌ Does not support deep copy by default (requires manual implementation).
+❌ Breaks Encapsulation → Calls super.clone(), which can copy private fields.
+❌ Not Recommended in Modern Java → Prefer copy constructors or serialization.
+
+3. Important Points About clone()
+It performs shallow copy (object references are copied, not new objects).
+To achieve deep copy, we must override clone() in referenced objects.
+
+class Employee implements Cloneable {
+    int id;
+    String name;
+
+    public Employee(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();  // Uses clone() method from Object class
+    }
+}
+to make deep copy:
+class Address implements Cloneable {
+    String city;
+
+    Address(String city) {
+        this.city = city;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Address(this.city);  // Creating a new object (Deep copy)
+    }
+}
+
+# What is the Parameter of filter() in Java Streams?
+The filter() method in Java accepts a parameter of type Predicate<T>, which is a functional interface that takes an input and returns a boolean value.
+
+Syntax of filter()
+stream.filter(Predicate<T> predicate)
+✅ filter() retains only the elements that satisfy the condition in Predicate<T>.
+exmaple:
+List<Integer> evenNumbers = numbers.stream()
+                .filter(n -> n % 2 == 0) // Predicate<T> checks if the number is even
+                .collect(Collectors.toList());
+
+# What is HashSet in Java?
+A HashSet is a collection in Java that stores unique elements only. It is implemented using a HashMap internally, meaning elements are stored in an unordered way and have an average time complexity of O(1) for insert, remove, and search operations.
+Operation	Average Case	Worst Case
+Adding (add(E e))	O(1)	O(N) (In case of hash collisions)
+
+
+# 1. What is Dependency Injection in Spring Boot?
+Dependency Injection (DI) is a design pattern used in Spring Boot to manage object dependencies automatically instead of manually creating objects.
+
+✅ Reduces tight coupling
+✅ Improves maintainability
+✅ Makes unit testing easier
+
+📌 How Does DI Work in Spring Boot?
+Spring Boot manages dependencies using the Spring Container. The container creates and injects beans where needed.
+
+🛠 2. Types of Dependency Injection in Spring Boot
+Spring Boot supports three types of dependency injection:
+
+Type	                     How It's Done?	    Example
+Constructor Injection	    Injects dependencies via constructor.	@Autowired on constructor
+Setter Injection	        Injects dependencies via setter method.	@Autowired on setter
+Field Injection	            Injects dependencies directly into fields.	@Autowired on field
+
+# 📌 @SpringBootApplication in Spring Boot
+@SpringBootApplication is a meta-annotation in Spring Boot that combines three important annotations:
+1️⃣ @Configuration → Marks the class as a source of bean definitions.
+2️⃣ @EnableAutoConfiguration → Enables automatic configuration based on dependencies.
+3️⃣ @ComponentScan → Scans and registers components in the package and sub-packages.
+
+🔹 Features of @SpringBootApplication
+✔ Auto Configuration → Automatically configures Spring beans based on dependencies.
+✔ Component Scanning → Detects components like @Service, @Repository, @Controller.
+✔ Configuration → Acts as a Spring @Configuration class.
+
+# que @componet @ service in my class it's is not available soes spring create bin for it
+ans:
+📌 @Component vs. @Service in Spring Boot
+Both @Component and @Service are used for bean registration in Spring Boot, but Spring will only create a bean if the class is inside a package scanned by Spring Boot.
+
+# que I have a class inside jar file but not anotation so how can I create bin for that class
+ans:
+📌 How to Create a Bean for a Class Inside a JAR Without Annotations in Spring Boot?
+If a class inside a JAR file does not have annotations like @Component, @Service, or @Repository, Spring will NOT automatically create a bean for it.
+However, you can manually register the class as a Spring Bean in the following ways:
+
+🔹 1. Using @Bean in a Configuration Class (Recommended)
+You can create a bean manually in a @Configuration class using the @Bean annotation:
+
+# 📌 @Profile and @Qualifier in Spring Boot
+Both @Profile and @Qualifier are used in Spring, but they serve different purposes:
+@Profile → Used for environment-specific beans.
+@Qualifier → Used for resolving multiple bean conflicts.
+
+# 📌 Handling Multiple Bean Conflicts in Spring Boot
+When there are multiple beans of the same type, Spring does not know which one to inject.
+Spring will throw an NoUniqueBeanDefinitionException, unless we resolve the conflict explicitly using:
+
+1️⃣ @Primary → Set a default bean.
+2️⃣ @Qualifier → Specify which bean to inject.
+3️⃣ @Bean with Custom Names → Define a bean explicitly in the @Configuration class.
+4️⃣ @Profile → Load beans based on environment.
+
+# 📌 Global Exception Handling in Spring Boot
+In Spring Boot, we can handle exceptions globally using @ControllerAdvice and @ExceptionHandler.
+This ensures that all exceptions are handled in one place instead of writing try-catch in every controller.
+
+🔹 1. Using @ControllerAdvice (Global Exception Handler)
+We define a class with @ControllerAdvice and handle exceptions using @ExceptionHandler.
+
+🚀 Summary: Best Practices for Global Exception Handling
+
+Approach	Use Case	Example Annotation
+@ControllerAdvice ✅	For handling exceptions globally in controllers	@ExceptionHandler
+@RestControllerAdvice ✅	For handling REST API exceptions and returning JSON responses	@RestControllerAdvice
+@ResponseStatus ✅	For defining custom exceptions with HTTP status	@ResponseStatus(HttpStatus.NOT_FOUND)
+
+# Http status code
+📌 HTTP Status Codes in Java & Spring Boot
+HTTP status codes indicate the result of a request made to a server. They are divided into 5 categories:
+
+1️⃣ Informational (1xx)
+100 Continue → The server received the request and expects more data.
+101 Switching Protocols → The client requests switching protocols (e.g., HTTP to WebSocket).
+
+2️⃣ Success (2xx)
+200 OK → Request was successful (used for GET, POST, etc.).
+201 Created → A new resource was successfully created.
+204 No Content → Request succeeded, but no response body.
+
+✅ Example in Spring Boot:
+@GetMapping("/success")
+public ResponseEntity<String> success() {
+    return new ResponseEntity<>("Request Successful!", HttpStatus.OK);
+}
+3️⃣ Redirection (3xx)
+301 Moved Permanently → The resource has been permanently moved.
+302 Found → Temporary redirection.
+304 Not Modified → The requested resource has not changed.
+
+✅ Example of Redirecting in Spring Boot:
+@GetMapping("/redirect")
+public String redirect() {
+    return "redirect:/new-url";  // 🔹 Redirects to a new URL
+}
+
+4️⃣ Client Errors (4xx)
+400 Bad Request → The request is incorrect or malformed.
+401 Unauthorized → Authentication is required.
+403 Forbidden → Access is denied even if authenticated.
+404 Not Found → The requested resource is missing.
+405 Method Not Allowed → The HTTP method is not allowed for this resource.
+
+✅ Example in Spring Boot:
+
+@GetMapping("/not-found")
+public ResponseEntity<String> notFound() {
+    return new ResponseEntity<>("Resource Not Found", HttpStatus.NOT_FOUND);
+}
+
+5️⃣ Server Errors (5xx)
+500 Internal Server Error → The server encountered an unexpected error.
+502 Bad Gateway → The server received an invalid response from an upstream server.
+503 Service Unavailable → The server is temporarily unavailable (e.g., maintenance).
+504 Gateway Timeout → The server took too long to respond.
+
+✅ Handling 500 Internal Server Error in Spring Boot:
+
+@GetMapping("/error")
+public ResponseEntity<String> internalServerError() {
+    return new ResponseEntity<>("Something went wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
+}
+
+# 📌 Microservices Design Patterns
+Microservices architecture consists of multiple independently deployable services that communicate with each other. To design scalable, resilient, and maintainable microservices, we use various design patterns.
+
+1️⃣ API Gateway Pattern
+✅ Problem: Direct client-to-microservices communication can lead to multiple network calls and tight coupling.
+✅ Solution: Use an API Gateway as a single entry point to route, aggregate, and manage requests.
+
+2️⃣ Circuit Breaker Pattern
+✅ Problem: When a microservice fails, repeated calls to it can overwhelm the system.
+✅ Solution: Use a circuit breaker to detect failures and stop requests temporarily.
+
+3️⃣ Service Discovery Pattern
+✅ Problem: Microservices need a way to dynamically find and communicate with each other.
+✅ Solution: Use Service Discovery to register and discover services dynamically.
+
+4️⃣ Saga Pattern (Distributed Transactions)
+✅ Problem: In microservices, a transaction spans multiple services (e.g., Order → Payment → Inventory).
+✅ Solution: Use Saga Pattern to manage distributed transactions by orchestrating or choreographing
+
+5️⃣ Event-Driven Architecture (Choreography Pattern)
+✅ Problem: Services need to communicate asynchronously.
+✅ Solution: Use an event-driven approach with message brokers like Kafka or RabbitMQ.
+
+6️⃣ CQRS (Command Query Responsibility Segregation)
+✅ Problem: A single database for read/write operations can cause performance bottlenecks.
+✅ Solution: Separate read and write models.
+
+# How Kafka Works?
+Apache Kafka is a distributed event streaming platform used for real-time data processing in microservices, analytics, and event-driven applications.
+
+🛠 Kafka Components:
+Kafka follows a publish-subscribe model with the following key components:
+
+1️⃣ Producer (Sends Data)
+Producers send messages (events) to a Kafka topic.
+Events can be anything: orders, transactions, logs, etc.
+
+2️⃣ Topic (Stores Data)
+A topic is like a message queue where data is stored.
+Topics are partitioned, meaning data is spread across multiple nodes.
+
+3️⃣ Consumer (Receives Data)
+Consumers subscribe to a topic and process messages.
+A Consumer Group allows multiple instances to share the load.
+
+4️⃣ Broker (Manages Messages)
+Kafka runs on multiple brokers (servers) that store and manage data.
+
+5️⃣ Zookeeper (Manages Kafka Cluster)
+Maintains metadata like leader election and consumer offsets.
+
+🚀 Kafka Workflow (Step-by-Step)
+Producer sends data → Kafka writes it to a topic.
+Data is split into partitions and stored across brokers.
+Consumers pull data from topics.
+Consumer offset is tracked, ensuring no duplicate processing.
+
+# ⚡ Kafka vs. REST API
+
+Feature     	Kafka (Event-Driven)	REST API (Synchronous)
+Reliability	High (Event persists even if the consumer is down)	Low (Fails if the service is down)
+Scalability	    Very High (Handles millions of messages)	Limited (Single request per call)
+Speed	            Fast (Parallel processing)	Slower (One request at a time)
+
+📌 When to Use Kafka?
+✅ Use Kafka for:
+Real-time streaming (e.g., logs, monitoring, stock prices).
+Microservices communication without service downtime.
+Event-driven systems like order processing, fraud detection.
+
+❌ Don't use Kafka for:
+Small applications where simple REST APIs are enough.
+Database transactions (Kafka is not a database).
+
+# NoSQL Cache
+A NoSQL Cache is a high-speed, distributed, and scalable caching layer that stores frequently accessed data in NoSQL databases like Redis, MongoDB, or Cassandra to improve performance and reduce database load.
+
+🔥 Why Use NoSQL Caching?
+✅ Faster Data Access – NoSQL databases provide in-memory caching, reducing read time.
+✅ Scalability – Handles millions of read requests efficiently.
+✅ Reduces Database Load – Prevents frequent queries to relational databases.
+✅ Improves Application Performance – Speeds up web applications and APIs.
+
+Cache	                Type	                                        Use Case
+Redis	        In-memory Key-Value Store	        Fastest caching, session storage, leaderboards
+
+🚀 How NoSQL Caching Works?
+Client Requests Data → Check cache (Redis, MongoDB, etc.).
+If data exists in cache → Return it (fast response).
+If data is missing, fetch from the database → Store it in the cache.
+Serve the cached response next time (reducing DB calls).
+
+# Difference Between SQL and NoSQL Databases
+SQL (Relational DB)         	        NoSQL (Non-Relational DB)
+Stores structured data in tables	   Stores unstructured/semi-structured data in JSON, key-value, graph format
+Uses SQL Structured Query Language   	Uses NoSQL queries (MongoDB Query Language, CQL, etc.)
+Supports joins between tables	         Does not support joins (denormalized data)
+Use Cases:	Banking, CRM, ERP, e-commerce	Real-time analytics, IoT, social media, big data
+
+# Hibernate Level 1 and Level 2 Caching
+🛠 What is Caching in Hibernate?
+Caching in Hibernate improves performance by reducing database hits by storing frequently used data in memory. Hibernate supports two levels of caching:
+
+🔹 Level 1 Cache (L1)
+✅ Enabled by default (built into Hibernate).
+✅ Stores objects per session (valid only within a session).
+✅ Cached objects are removed when the session is closed.
+✅ Useful to avoid repeated database queries in the same transaction.
+🔹 Level 2 Cache (L2)
+✅ Manually enabled (not by default).
+✅ Shared across multiple sessions and persists beyond a session.
+✅ Useful for reducing DB hits across transactions/users.
+✅ Requires third-party caching providers:EhCache,Hazelcast,Infinispan,Redis
+
+# que Spring jpa , in jpa is department entity and have multiple nomof employee..so how we configure it to jpa with relation between department and employees 
+ans:We will configure this relationship in JPA using @OneToMany and @ManyToOne.
+
+# indexing and partitioning
+Indexing in Databases
+1️⃣ What is Indexing?
+Indexing is a technique used in databases to improve the speed of data retrieval operations. It creates a data structure that allows the database to locate and fetch rows faster without scanning the entire table.
+3️⃣ How Indexing Works (Internally)
+Indexes use data structures like: ✅ B-Tree (Balanced Tree) → Used in most relational databases like MySQL, PostgreSQL.
+✅ Hash Tables → Used in NoSQL databases like MongoDB for fast lookups.
+
+-Use Indexing When:
+Searching data frequently (e.g., WHERE conditions)
+Sorting (ORDER BY)
+Joining large tables (JOIN)
+Filtering with range queries (BETWEEN, <, >)
+
+❌ Avoid Indexing When:
+Table has frequent INSERT, UPDATE, DELETE operations (Index updating is costly).
+Small tables (full scan is faster than maintaining an index).
+If data is rarely searched using that column.
+
+# Partitioning in Databases
+Partitioning divides a large table into smaller parts to improve performance.
+
+# Tool in ci cd
+CI/CD (Continuous Integration & Continuous Deployment) automates software delivery pipelines.
+1. Continuous Integration (CI) Tools:
+These tools help in automating code integration, building, and testing.
+Tool	                                Purpose
+Jenkins	                    Open-source CI/CD tool, highly customizable with plugins.
+GitHub Actions	            Native CI/CD for GitHub, easy to configure with YAML files.
+GitLab CI/CD	           Integrated with GitLab, supports pipelines with YAML-based configuration.
+
+2. Continuous Deployment (CD) & Delivery Tools
+These tools automate deployment to various environments.
+Tool	                        Purpose
+Docker	                    Containerization tool for packaging applications.
+Kubernetes	                Orchestrates containerized applications for scalability.
+ArgoCD	                     GitOps-based continuous deployment tool for Kubernetes.
+
+# CI/CD Flow Example Using Jenkins & Docker
+Developer pushes code to GitHub/GitLab.
+Jenkins triggers a pipeline to:
+    -Pull the latest code.
+    -Build the application.
+    -Run unit and integration tests.
+If successful, Docker builds an image and pushes it to a container registry.
+Kubernetes pulls the latest image and deploys it.
+
+# que I have created code for story and I want go to this code to ui so what is testing senaroio
+1. Unit Testing (Backend)
+Tools: JUnit, Mockito (for Java-based backend)
+
+Test Cases:
+✅ Verify that a new story can be created with valid inputs.
+✅ Validate error handling when required fields (title, content) are missing.
+✅ Check if stories are correctly fetched based on ID or user.
+✅ Test the update functionality (modifying a story).
+✅ Test the delete functionality (soft delete if applicable).
+✅ Ensure database constraints are followed (e.g., unique story ID).
+
+2. API Testing (Integration)
+Tools: Postman, RestAssured
+
+Test Cases:
+✅ POST /stories → Create a new story with valid data.
+✅ POST /stories → Send an empty request and verify error handling.
+✅ GET /stories/{id} → Fetch a specific story and validate response.
+✅ GET /stories → Fetch all stories and check pagination.
+✅ PUT /stories/{id} → Update a story and check if the changes are reflected.
+✅ DELETE /stories/{id} → Delete a story and confirm it no longer appears in the list.
+✅ Authorization Checks: Ensure only authorized users can create, edit, or delete a story.
+
+3. UI Testing (Frontend)
+Tools: Selenium, Cypress, Playwright
+
+Test Cases:
+✅ Verify that the UI correctly displays a list of stories.
+✅ Ensure users can create a new story via the UI form.
+✅ Check if error messages appear when invalid data is submitted.
+✅ Test if clicking on a story opens the detailed view.
+✅ Ensure users can edit and save a story successfully.
+✅ Verify that the delete button removes a story from the UI and backend.
+✅ Test responsiveness across different screen sizes.
+
+4. End-to-End Testing (UI + Backend)
+Tools: Cypress, Selenium
+
+Test Cases:
+✅ Create a story via UI and check if it appears in the database.
+✅ Modify a story in the backend and verify if changes reflect on the UI.
+✅ Delete a story via UI and confirm it's removed from the backend.
+✅ Ensure correct user access (only authors can edit/delete their own stories).
+
+5. Performance & Load Testing
+Tools: JMeter, Gatling
+
+Test Cases:
+✅ Test API response time under high load (e.g., 1000 concurrent users).
+✅ Check UI performance when displaying 100+ stories at once.
+✅ Ensure the database handles high write operations without lag.
+
+6. Security Testing
+Tools: OWASP ZAP, Burp Suite
+
+Test Cases:
+✅ Prevent SQL injection in story-related APIs.
+✅ Ensure proper authentication before allowing create/edit/delete.
+✅ Validate that users cannot modify other users' stories.
+✅ Test for Cross-Site Scripting (XSS) in story content.
+
+# que For unit testing what frame 
+
+For unit testing in a Java-based backend, you can use the following frameworks:
+
+1. JUnit (Most Common for Unit Testing)
+Framework: JUnit 5 (or JUnit 4 for older projects)
+Purpose: Testing individual methods in services and controllers.
+2. Mockito (For Mocking Dependencies)
+Framework: Mockito
+Purpose: Mock dependencies like repositories and services to isolate the test.
+3. Spring Boot Test (For Integration Testing)
+Framework: @SpringBootTest
+Purpose: Loads the full Spring application context for testing APIs.
+
+# List of Annotations for Unit Testing in Java (JUnit & Mockito)
+1. JUnit Annotations
+
+Annotation	                        Description
+@Test	                        Marks a method as a test case.
+@Disabled	                Skips a test method (used when a test is not ready).
+@Nested	                    Allows defining nested test classes (for better structuring).
+@ParameterizedTest	          Runs a test multiple times with different inputs.
+@ValueSource	            Provides input values for @ParameterizedTest.
+@CsvSource	                Provides CSV data for @ParameterizedTest.
+
+2. Mockito Annotations
+
+Annotation	Description
+@Mock	Creates a mock object.
+@InjectMocks	Injects mocks into the tested class.
+@Spy	Creates a spy (partial mock).
+@Captor	Captures method arguments in mocks.
+
+3. Spring Boot Test Annotations
+
+Annotation	                Description
+@SpringBootTest	        Loads the full Spring application context for integration testing.
+@WebMvcTest	            Loads only the web layer (for controller testing).
+@DataJpaTest	        Configures an in-memory database for JPA repository testing.
+@MockBean	            Creates a mock Spring bean.
+@TestConfiguration	    Defines additional beans for testing.
+
+# Agile Methodologies
+Agile is a software development methodology that focuses on iterative, incremental, and flexible development. It promotes collaboration, customer feedback, and adaptability to changes.
+
+1. Key Principles of Agile (from Agile Manifesto)
+Individuals & interactions over processes & tools.
+Working software over comprehensive documentation.
+Customer collaboration over contract negotiation.
+Responding to change over following a plan.
+
+2. Popular Agile Methodologies
+1. Scrum
+Most widely used Agile framework.
+Works in short iterations called Sprints (usually 2-4 weeks).
+Scrum Roles:
+    -Product Owner – Defines features and backlog.
+    -Scrum Master – Facilitates the process.
+    -Development Team – Builds the product.
+
+Key Scrum Events:
+Sprint Planning – Define tasks for the sprint.
+Daily Standup (Daily Scrum) – 15-minute status update.
+Sprint Review – Show completed work to stakeholders.
+Sprint Retrospective – Discuss improvements for the next sprint.
+
+# 3. Agile vs. Traditional (Waterfall)
+
+Feature	            Agile       	    Waterfall
+Flexibility	          High	                Low
+Customer               Involvement	        Continuous	Minimal
+Delivery	            Incremental	            One-time
+Testing         	Done in every sprint	Done at the end
+Risk Handling	     Easily adaptable	        High risk
+
+# In agile methodologies,there are multiple team what are diff meeting 
+Different Meetings in Agile Methodologies (Scrum Framework)
+Agile, especially in Scrum, includes multiple meetings (ceremonies) to ensure smooth development, collaboration, and progress tracking.
+
+1. Sprint Planning
+📅 When? Beginning of each sprint.
+🎯 Purpose: Plan what work will be done in the sprint.
+👥 Attendees: Product Owner, Scrum Master, Development Team.
+
+The Product Owner explains the Product Backlog (list of features).
+
+The Team selects tasks based on priority & effort estimation.
+
+Defines the Sprint Goal (main focus of the sprint).
+
+Example Sprint Goal:
+"Implement user authentication with Google login."
+
+2. Daily Standup (Daily Scrum)
+📅 When? Every day (15 minutes).
+🎯 Purpose: Quick status update, identify blockers.
+👥 Attendees: Development Team, Scrum Master.
+
+Each team member answers:
+1️⃣ What did I complete yesterday?
+2️⃣ What am I working on today?
+3️⃣ Any blockers?
+
+✅ Example:
+Developer: Yesterday, I completed the API integration. Today, I will test the API. I’m blocked because the test server is down.
+
+3. Sprint Review
+📅 When? End of the sprint.
+🎯 Purpose: Demonstrate completed work to stakeholders.
+👥 Attendees: Product Owner, Scrum Master, Development Team, Stakeholders.
+Team presents working software to the Product Owner & stakeholders.
+Feedback is collected for improvements.
+Unfinished tasks go back to the Product Backlog.
+
+✅ Example:
+"We implemented login functionality with Google and email. Based on feedback, we will add multi-factor authentication in the next sprint."
+
+4. Sprint Retrospective
+📅 When? After Sprint Review (end of the sprint).
+🎯 Purpose: Discuss what went well & what can improve.
+👥 Attendees: Scrum Master, Development Team.
+
+What went well? (Keep doing)
+What went wrong? (Improve)
+What can we do better?
+
+✅ Example:
+Team Feedback:
+
+✅ Good: Clear requirements helped us finish on time.
+❌ Bad: Too many last-minute changes.
+🔄 Improvement: Have clearer sprint goals next time.
+
+5. Backlog Refinement (Grooming)
+📅 When? Regularly (before sprint planning).
+🎯 Purpose: Keep the Product Backlog clean & prioritized.
+👥 Attendees: Product Owner, Development Team, Scrum Master.
+
+Remove unnecessary tasks.
+Clarify requirements for upcoming work.
+Break down large tasks into smaller, manageable stories.
+
+✅ Example:
+Product Owner: "We need a password reset feature. Let’s break it into UI, API, and email notification tasks."
+
+# que in case of abstract all has to implement abstract class method but in case of interface we can choose and some class only implement this methid.what so you mean by this statement and it is correct statement and gove example
+
+The statement suggests that:
+
+Abstract Class: When a class extends an abstract class, it must implement all abstract methods (unless it is itself declared abstract).
+
+Interface: When a class implements an interface, it can choose to implement only some methods if the interface provides default methods.
+
+👉 Is this statement correct?
+
+✅ Partially Correct – An abstract class forces subclasses to implement its abstract methods, while interfaces can provide default implementations, allowing implementers to choose whether to override them.
+
+# Types of Design Patterns
+Design patterns are categorized into three main types:
+
+1. Creational Patterns (Object Creation)
+
+Pattern         	Description
+Singleton       	Ensures only one instance of a class exists.
+Factory Method	    Creates objects without specifying the exact class.
+Abstract Factory	Provides an interface for creating families of related objects.
+Builder	Constructs  complex objects step by step.
+Prototype	        Clones an object instead of creating new instances.
+
+2. Structural Patterns (Class & Object Composition)
+
+Pattern             	Description
+Adapter	        Converts one interface into another.
+Bridge	        Separates abstraction from implementation.
+Composite	    Treats a group of objects as a single unit.
+Decorator	    Adds behavior to objects dynamically.
+Facade	        Simplifies complex systems by providing a single entry point.
+Flyweight	    Reduces memory usage by sharing objects.
+Proxy	        Controls access to an object.
+
+3. Behavioral Patterns (Object Interaction)
+
+Pattern	Description
+Observer	                Notifies multiple objects when the subject changes.
+Strategy	                Selects algorithms at runtime.
+Command 	                    Encapsulates a request as an object.
+Chain of Responsibility	            Passes requests along a chain of handlers.
+State	            Changes object behavior based on its state.
+Template Method	      Defines the skeleton of an algorithm.
+Mediator	        Centralizes communication between objects.
+Memento	            Captures an object’s state for restoration.
+
+# Best Practices for REST API Design
+A well-designed REST API should be scalable, maintainable, and secure. Below are the best practices categorized under design, implementation, and security.
+
+1. API Design Best Practices
+1) Use Nouns for Resource Names (Avoid Verbs)
+Use nouns to represent resources instead of verbs.
+❌ Bad: /getUsers, /createOrder
+✅ Good: /users, /orders
+
+2) Use Plural Form for Resources
+Use plural names to represent collections of resources.
+❌ Bad: /user, /order
+✅ Good: /users, /orders
+
+3) ✅ Use Proper HTTP Methods
+
+HTTP Method	Usage
+GET	Retrieve data
+POST	Create a new resource
+PUT	Update an entire resource
+PATCH	Partially update a resource
+DELETE	Remove a resource
+
+3) Use Query Parameters for Filtering, Sorting, and Pagination
+Filtering: GET /products?category=electronics&price=1000
+Sorting: GET /products?sort=price,asc
+Pagination: GET /products?page=1&size=10
+
+4) Use Proper Status Codes
+
+Status Code	Meaning
+200 OK	Success
+201 Created	Resource created
+204 No Content	Successful but no response body
+400 Bad Request	Invalid request
+401 Unauthorized	Authentication required
+403 Forbidden	No permission
+404 Not Found	Resource not found
+409 Conflict	Duplicate record or business rule violation
+500 Internal Server Error	Server-side issue
+
+5) ✅ Implement Rate Limiting
+Prevent abuse by limiting the number of requests per second.
+
+6) 4. API Documentation Best Practices
+✅ Use OpenAPI (Swagger)
+Swagger UI helps users test APIs easily.
+Add Swagger dependencies in pom.xml:
+
+# Sorting Algorithms in Java
+Sorting is a fundamental operation in computer science, used to arrange data in ascending or descending order. Below are different sorting algorithms, categorized by complexity and usage.
+
+1. Simple Sorting Algorithms (O(N²))
+These algorithms are suitable for small datasets.
+
+✅ Bubble Sort
+Repeatedly swaps adjacent elements if they are in the wrong order.
+Worst Case: O(N²)
+Best Case (Already Sorted): O(N)
+Stable: ✅
+
+✅ Selection Sort
+Finds the smallest element and swaps it to the correct position.
+Worst Case: O(N²)
+Best Case: O(N²)
+Stable: ❌ (May swap elements unnecessarily)
+
+✅ Insertion Sort
+Places each element in its correct position by shifting larger elements.
+Worst Case: O(N²)
+Best Case (Already Sorted): O(N)
+Stable: ✅
+
+2. Efficient Sorting Algorithms (O(N log N))
+These are better for large datasets.
+2.1) Merge Sort (Divide & Conquer)
+Divides array into halves, sorts them, and merges back.
+Worst & Best Case: O(N log N
+Stable: ✅
+
+2.2) ✅ Quick Sort (Divide & Conquer)
+Picks a pivot, partitions elements, and sorts recursively.
+Worst Case (Unbalanced Pivot): O(N²)
+Best Case: O(N log N)
+Stable: ❌
+
+# 1. Stack (LIFO - Last In, First Out)
+A stack follows the LIFO (Last-In-First-Out) principle, meaning the last inserted element is the first to be removed.
+
+✅ Stack Operations
+Push(x) → Inserts an element at the top.
+Pop() → Removes and returns the top element.
+Peek() → Returns the top element without removing it.
+isEmpty() → Checks if the stack is empty.
+size() → Returns the number of elements in the stack.
+
+# 2. Queue (FIFO - First In, First Out)
+A queue follows the FIFO (First-In-First-Out) principle, meaning elements are removed in the order they were inserted.
+
+✅ Queue Operations
+offer(x) → Inserts an element at the end (same as enqueue).
+poll() → Removes and returns the front element (same as dequeue).
+peek() → Returns the front element without removing it.
+isEmpty() → Checks if the queue is empty.
+size() → Returns the number of elements in the queue.
+
+# Name of functinal interface in steam api
+
+In Java's Stream API, several functional interfaces from the java.util.function package are used extensively. Below is a list of commonly used functional interfaces in the Stream API:
+
+✅ 1. Predicate<T>
+Method: boolean test(T t)
+Purpose: Used for filtering elements based on a condition.
+
+✅ 2. Function<T, R>
+Method: R apply(T t)
+Purpose: Transforms an element from one type to another. Often used in map().
+
+✅ 3. Consumer<T>
+Method: void accept(T t)
+Purpose: Performs an action on each element. Often used in forEach().
+
+✅ 6. UnaryOperator<T>
+Method: T apply(T t)
+Purpose: A specialized version of Function where input and output are of the same type.
+
+✅ 7. BinaryOperator<T>
+Method: T apply(T t1, T t2)
+Purpose: A specialized version of BiFunction where input and output types are the same.
+
+# default method
+In Java, a default method is a method in an interface that has a body (implementation). It allows you to add new methods to interfaces without breaking the existing implementation of classes.
+public interface Calculator {
+    int operate(int a, int b); // Abstract method
+
+    // Default method with implementation
+    default int multiply(int a, int b) {
+        return a * b;
+    }
+}
+✅ Key Points:
+A default method uses the default keyword.
+It allows backward compatibility so that adding new methods to interfaces does not break existing classes.
+Classes implementing the interface do not need to override default methods unless they want to provide a different implementation.
+
+# que Consider u have thred 1 and 2 thred and one thread hitting and stored in cache and thred 2 make changes in produc id 1 Thred 3 retrieve data prove proct 1 but it is data is derty how u validate cache has latest data
+ans:
+To ensure that your cache has the latest data and avoids serving stale or dirty data when multiple threads (or processes) modify or access the cache simultaneously, you can apply one or a combination of the following techniques:
+
+🔥 Solution Approaches:
+1. Cache Invalidation (Write-Through or Write-Behind Cache)
+Approach:
+When Thread 2 updates data in the database, the corresponding cache entry is invalidated or updated immediately.
+On the next read, the cache will either return updated data or trigger a fetch from the database.
+
+Steps:
+On data modification (update, delete), invalidate the cache entry.
+Fetch fresh data from the database and update the cache.
+
+2. Cache Expiry/TTL (Time-To-Live)
+Approach:
+Set a time limit for cache entries.
+After a certain period (TTL), the cache automatically invalidates the data.
+Thread 3 will be forced to retrieve fresh data after the TTL expires.
+
+Configuration:
+Define a TTL for cache entries.
+On read, if the data is expired, refresh it from the database.
+
+4. Distributed Cache with Pub/Sub (Cache Synchronization)
+Approach:
+Use a distributed cache like Redis.
+When Thread 2 updates the database, it publishes a message to a Redis channel.
+Thread 1 and Thread 3 receive the message and invalidate or update the cache.
+
+# ⚡️ 1. What is Lazy Loading?
+Lazy loading is a technique where resources (like JavaScript, images, and components) are loaded only when they are required, rather than loading everything upfront. This improves the initial load time of an application.
+⚡️ 4. Benefits of Lazy Loading & Code Splitting
+✅ Reduced initial page load time.
+✅ Better user experience with faster interaction.
+✅ Minimized memory usage by avoiding unnecessary loading.
+
+# ⚡️ 1. What is @Inject?
+@Inject is a Java annotation from JSR-330 (Java Dependency Injection). It is used to perform dependency injection automatically in Spring Boot and other dependency injection frameworks.
+
+🎯 2. Purpose of @Inject in Test Cases
+When writing test cases in Spring Boot, you often need to inject beans or components (like services or repositories) into your test class to test their functionality.
+✅ @Inject helps in injecting dependencies into the test class so that the required beans are available during test execution.
+
+🔥 3. Difference Between @Inject and @Autowired
+
+Feature  	                @Inject                     	@Autowired
+Annotation Type  	From javax.inject.Inject (JSR-330)	From org.springframework.beans.factory.annotation
+Required	       Optional by default	             Required by default (can be set to optional)
+Primary Usage	Works with standard Java DI frameworks	  Spring-specific dependency injection
+Use Case	Portable and can be used outside Spring      	Spring Boot-based applications
+
+# when to use multi threading
+✅Use when you need to perform multiple complex calculations that can be divided into smaller independent tasks.
+💡 Why?
+Threads can execute different parts of the task in parallel, utilizing multiple CPU cores efficiently.
+✅ Use when you want to keep the user interface responsive while performing long-running operations.
+Example:
+GUI applications (Swing, JavaFX, Android apps)
+Gaming engines (handling physics, AI, and rendering in parallel)
+💡 Why?
+Without multithreading, the UI would freeze when executing a long-running task.
+4️⃣ Multitasking (Executing Multiple Independent Tasks)
+✅ Use when you need to perform multiple independent tasks at the same time.
+Example:
+Downloading multiple files simultaneously
+Processing multiple user requests in a server
+Background tasks like logging, analytics, notifications
+5️⃣ Scheduled & Periodic Tasks
+✅ Use when you need to execute a task at regular intervals.
+Example:
+Auto-saving a document every 5 minutes
+Running scheduled background jobs
+Refreshing stock prices or weather updates
+
+# que What was the situation where u used multithreading in my gsec project 
+
+In your GSEC project, multithreading was used in situations where performance and responsiveness were critical. Here are the key areas where it was beneficial:
+
+1️⃣ Handling Multiple Transactions Simultaneously:
+✅ Situation: Your Hyperledger Fabric network processes financial transactions, such as trades, payments, and settlements.
+✅ Why Multithreading?
+Each transaction request is processed in parallel to prevent delays.
+Multiple smart contract invocations happen at the same time without blocking others.
+2️⃣ Querying Blockchain Ledger Without Blocking Other Operations:
+✅ Situation: The QueryByKey function retrieves transaction details from the blockchain ledger.
+✅ Why Multithreading?
+While a query is running, other users should still be able to submit transactions.
+It prevents system slowdowns when multiple users access the ledger.
+3️⃣ Preventing Chaincode Execution Delays in Hyperledger Fabric
+✅ Situation: If a smart contract method (chaincode) takes time, it can slow down the entire network.
+✅ Why Multithreading?
+Multiple chaincode functions (e.g., ValidateSettleDataPayload) can execute in parallel.
+Prevents bottlenecks when processing a large number of transactions.
+4️⃣ Asynchronous Error Handling and Logging
+✅ Situation: Your system logs transaction errors, missing fields, and validation failures.
+✅ Why Multithreading?
+Logging runs in the background, so it doesn’t slow down transaction processing.
+Error messages are written to logs asynchronously.
+
+# Difference Between Future and CompletableFuture in Java
+Both Future and CompletableFuture are used in Java concurrency for handling asynchronous tasks, but CompletableFuture provides more flexibility and better control over asynchronous execution.
+
+1️⃣ Future (Java 5)
+✅ Introduced in Java 5, Future represents the result of an asynchronous computation.
+✅ Once the task is submitted, you can call .get() to retrieve the result.
+❌ Limitations:
+Cannot manually complete a future.
+Cannot perform chaining (no .thenApply() or .thenCompose()).
+Blocks execution if .get() is called before the task completes.
+
+2️⃣ CompletableFuture (Java 8)
+✅ Introduced in Java 8, CompletableFuture improves Future by supporting:
+✔ Chaining multiple tasks using .thenApply(), .thenAccept().
+✔ Manually completing a future using .complete().
+✔ Running tasks asynchronously without blocking.
+✔ Exception handling using .exceptionally().
+
+# 1️⃣ What is Non-Blocking Execution?
+Non-blocking execution means a thread does not wait for a task to finish before moving to the next task. Instead, it continues execution while the task runs in the background.
+# 2️⃣ What is Chaining in CompletableFuture?
+Chaining means executing multiple asynchronous tasks one after another without blocking.
+
+# ExecutorService in Java
+ExecutorService is part of Java’s concurrency framework (introduced in Java 5) that provides a thread pool for executing tasks asynchronously. Instead of manually creating and managing threads, ExecutorService provides an efficient way to handle multiple tasks concurrently.
+
+1️⃣ Why Use ExecutorService?
+✔ Manages multiple threads efficiently (avoids creating too many threads).
+✔ Reuses threads (reduces the overhead of creating new threads).
+✔ Provides better control over task execution (shutdown, timeout, etc.).
+✔ Handles asynchronous execution with Future.
+
+# 🔥 How to Implement Redis in a Spring Boot Application?
+Redis is an in-memory data store used for caching, real-time analytics, session management, and message brokering. In Spring Boot, we can integrate Redis using Spring Data Redis.
+
+📌 Steps to Implement Redis in Spring Boot
+1️⃣ Add Redis Dependency (Maven)
+Add the Redis dependency in your pom.xml:
+2️⃣ Configure Redis in application.properties
+If Redis is running on localhost (default port 6379), add:
+3️⃣ Create a Redis Configuration Class
+4️⃣ Create a Redis Repository (Service Layer)
+5️⃣ Create a Controller to Use Redis
+
+# 🔥 How to Invalidate Cache in Redis?
+When caching data in Redis, it's crucial to invalidate the cache when data updates, to prevent stale data from being served. Here are different ways to invalidate Redis cache in a Spring Boot application.
+
+📌 Methods to Invalidate Cache in Redis
+1️⃣ Delete a Specific Key (DEL key)
+2️⃣ Use Time-to-Live (TTL) to Auto-Expire Data
+Set an expiration time when storing the data:
+3️⃣ Flush All Data (FLUSHALL) - Reset Entire Cache
+This removes all Redis keys (not recommended for production):
+4️⃣ Delete Keys by Pattern (KEYS pattern)
+If multiple keys follow a pattern (user:*), use:
+5️⃣ Use Cache Eviction in Spring Boot (@CacheEvict),bydefault @noEvict
+If you're using Spring Boot's caching mechanism, use @CacheEvict:
+
+# How to Invalidate a JWT (JSON Web Token)?
+JWTs (JSON Web Tokens) are stateless, meaning they cannot be invalidated directly after issuance because they are self-contained and don’t rely on server-side storage. However, here are some ways to invalidate a JWT effectively:
+
+1️⃣ Set Expiry Time (Best Practice)
+When generating the token, set a short expiration time (exp claim).
+Once expired, the token is automatically invalid.
+2️⃣ Use a Token Blacklist (Server-Side)
+Store invalidated tokens in a database or Redis.
+Check the token against the blacklist on each request.
+3️⃣ Change the Secret Key (Force Logout for All)
+If you change the secret key, all previously issued JWTs become invalid.
+Useful in case of security breaches.
+4️⃣ Use Refresh Tokens
+Instead of allowing JWTs to be long-lived, use short-lived access tokens and long-lived refresh tokens.
+Store refresh tokens securely (e.g., in the database), and delete them to force logout.
+
+# Why do we use Hashing and not Encryption for passwords?
+1. Hashing is one-way (irreversible):
+Once you hash a password, you can't convert it back to the original.
+This is good! Because even we (developers) or the system shouldn't know the actual password. Only the user knows it.
+
+2. Encryption is two-way (reversible):
+Encryption means the password can be decoded back using a key.
+If a hacker steals the encrypted password and the key, they can easily get the original password.
+That’s risky and not secure for passwords.
+
+# What input does SHA-256 take?
+SHA-256 is a hash function that takes any kind of input data (text, file, password, string, etc.) and produces a fixed 256-bit (32-byte) hash value.
+
+# 1. Symmetric Encryption
+Only ONE key is used for both encryption and decryption.
+Real-Life Example:
+You lock a box with a key and give it to your friend.
+Your friend must use the same key to unlock it.
+Both you and your friend need to share the same key.
+
+2. Asymmetric Encryption
+Uses two keys:
+Public key: Used to encrypt
+Private key: Used to decrypt
+
+Real-Life Example:
+You give your public key to everyone (like your email address).
+Anyone can use it to encrypt a message for you.
+But only you can decrypt it using your private key.
+
+# What is pom.xml in Spring Boot?
+pom.xml stands for Project Object Model.
+It's used by Maven to manage:Project dependencies,Build configuration,Plugins,Versioning
+
+# How does Maven work?
+Maven is a build automation tool used mainly for Java projects. It helps manage:
+
+Project builds (compiling code, packaging into a .jar or .war)
+Dependencies (external libraries)
+Plugins and goals (like testing, running, packaging)
+
+✅ How Maven works step by step:
+1. You write a pom.xml
+2. You run Maven command
+Examples:
+mvn compile – compile the source code
+mvn clean install – clean, build, test, and install the .jar file into local repo
+mvn spring-boot:run – run Spring Boot app
+3. Maven reads your pom.xml
+It checks:
+Which dependencies you need (e.g., Spring Boot, MySQL, etc.)
+What version of Java to use
+What build steps to perform
+4. Maven downloads dependencies
+From Maven Central (a big public repo)
+It saves them in your local repo (.m2 folder in your home directory)
+So next time it doesn't re-download them
+5. Maven builds the project
+Compiles .java to .class
+Runs tests (if any)
+Packages it into .jar or .war
+Puts it in /target folder
+
+# que U have java code and u have dependency .how maven take code and take dependency in maven
+Step-by-step: How Maven processes your code and dependencies
+1. You run a Maven command:
+mvn clean install
+2. Maven reads your pom.xml
+It checks:
+Java version
+List of dependencies (e.g., Spring Boot, MySQL, Jackson)
+Plugins to use
+Build goals
+3. Maven downloads dependencies
+Goes to Maven Central (online library repo)
+Downloads .jar files for all dependencies mentioned
+Stores them in your computer’s .m2 folder (local cache)
+These dependencies are now ready to use in your code
+4. Maven compiles your Java code
+Takes your .java files from src/main/java
+Compiles them using the Java version in pom.xml
+Converts them to .class files
+5. Maven links dependencies
+While compiling, it links your Java code with downloaded .jar libraries
+Example: You wrote import org.springframework.web.bind.annotation.*
+Maven includes spring-web jar automatically
+No need to download or link jars manually!
+6. Maven runs tests (optional)
+Runs unit tests in src/test/java using JUnit/TestNG (if included)
+7. Maven packages the project
+Packages everything into a .jar or .war file
+Places the file in the /target folder
+Final Output:
+You get a ready-to-run .jar (or .war)
+It includes:
+Your compiled Java code
+All linked .jar dependencies
+
+# “How does Maven know to run code using Spring Boot?”
+Maven knows how to run Spring Boot because of the spring-boot-maven-plugin in your pom.xml.
+
+# How does Spring Boot run?
+1. You have a main() method
+This is where everything starts — just like any Java app.
+2. @SpringBootApplication does magic
+This annotation is a combination of:
+@Configuration – lets you define beans
+@EnableAutoConfiguration – sets up beans automatically based on dependencies
+@ComponentScan – scans your package for @Component, @RestController, etc.
+So Spring Boot automatically configures your app based on what it sees in the classpath (e.g., if you have spring-boot-starter-web, it sets up Tomcat, REST, etc.)
+3. SpringApplication.run() starts the app
+This method:
+Creates the Spring ApplicationContext
+Sets up all beans and components
+Starts embedded Tomcat server
+App is now ready to receive HTTP requests (if it's a web app)
+
+# What is Application Security?
+It’s about protecting your app from:
+
+Unauthorized access
+Data theft or leaks
+Code injection (SQL, XSS, etc.)
+Broken authentication
+Misconfigurations
+✅ Common Security Areas:
+1. Authentication
+Verifying who the user is
+Username/password
+OAuth2 (Google, GitHub login)
+JWT (JSON Web Token)
+Session-based login
+2. Authorization
+Verifying what the user can do
+Roles (Admin, User, Manager)
+Access control to APIs or pages
+Example: Only admin can access /admin URL
+3. Data Protection
+Passwords are hashed (e.g., BCrypt)
+HTTPS to encrypt data in transit
+Sensitive fields (e.g., credit cards) are masked
+4. Prevent Common Attacks
+CSRF (Cross-Site Request Forgery)
+XSS (Cross Site Scripting)
+SQL Injection
+Spring Security provides protection by default!
+
+
+# In spring boot how request is going on leat suppose user hitting api from frontend how backend flow goes
+🔹 Step 1: User Sends a Request
+A user or frontend (React, Angular, Postman, etc.) sends an HTTP request (GET, POST, PUT, DELETE) to a Spring Boot REST API endpoint.
+🔹 Step 2: Request Reaches Dispatcher Servlet
+Spring Boot has an inbuilt front controller called DispatcherServlet.
+It receives the request and forwards it to the appropriate controller.
+It checks which controller method is mapped to the request URL.
+🔹 Step 3: Controller Handles the Request
+The request is passed to the Controller Layer, where the method corresponding to the API is executed.
+✔ The controller receives the request and extracts id from the URL.
+✔ Calls the service layer (userService.getUserById(id)).
+🔹 Step 4: Service Layer Processes Business Logic
+The Service Layer contains business logic and interacts with the repository (database layer).
+✔ Calls the Repository Layer to fetch data from the database.
+🔹 Step 5: Repository Fetches Data from Database
+Spring Boot uses Spring Data JPA (or other ORM frameworks) to communicate with the database.
+✔ The repository queries the database and retrieves the user data.
+🔹 Step 6: Data Returns to the Controller
+The Service Layer gets the response from the Repository Layer.
+The Controller Layer receives the processed data from the Service Layer.
+The data is converted into JSON (or XML) and sent as an HTTP response.
+🔹 Step 7: Response Sent to Frontend
+The API returns the JSON response to the frontend.
+✔ Frontend receives the response and displays it in the UI.
+
+
+
+
+
+
+
+
+
 
 45. what are some Common Annotations in Mockito
 

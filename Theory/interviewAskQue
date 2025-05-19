@@ -194,6 +194,7 @@ Allows one null key and multiple null values	     Allows one null key and multip
 Use Case : When order doesn't matter	            use case: When order of insertion matters
 Iteration Order	is Unpredictable	           Iteration Order isPredictable (same order as inserted)
 
+
 # diff between list and set
 List	                                               Set
 Allows duplicate elements	                    Does not allow duplicate elements
@@ -201,7 +202,538 @@ Maintains insertion order	                   Depends on implementation (unordere
 Supports indexing (get(int index))	            Does not support indexing
 Access by index (e.g., list.get(0))	            Access via iteration
 Common Implementations:ArrayList, LinkedList	   HashSet, LinkedHashSet, TreeSet
+Use Case:When order matters and duplicates are allowed	When uniqueness matters (no duplicates)
 
+🎯 Technique to Remember:
+✅ “List is Like a LINE”
+LINE of people → order matters
+Some people might have the same name → duplicates allowed
+You can say “Who’s at position 3?” → index-based access
+
+❌ “Set is Like a SCHOOL Roll Call”
+Everyone must be unique (no duplicates)
+Doesn’t matter in which order they answer
+You can’t say “Who’s the 2nd person?” → No index
+
+# 🌳 TreeMap vs 🗺️ Map (like HashMap) – Another Simple Difference
+
+Feature	            TreeMap	                          HashMap (Map)
+Ordering	✅ Sorted by keys (ascending by default)	❌ No order maintained
+Speed	❌ Slower (O(log n) due to tree traversal)	✅ Faster (O(1) average with hashing)
+Null Key	❌ Does NOT allow null key	            ✅ Allows one null key
+Traversal Use Case	Useful when you want to iterate in order	Useful when order doesn’t matter
+Internal Structure	Self-balancing binary search tree (Red-Black)	Hash table with buckets
+
+🧠 Memory Trick
+🌳 Tree is like a LIBRARY shelf
+
+Books are sorted alphabetically 📚
+Takes time to put/search — but looks tidy ✅
+You can't just drop a random book (no null keys)
+
+🗺️ Map is like a TOOLBOX
+
+Tools are thrown in randomly 🔧
+Super fast to grab what you need 😎
+You can throw anything in — even null!
+
+# ArrayList vs LinkedList: Key Differences
+
+Feature	                ArrayList	                        LinkedList
+Internal Structure	Dynamic Array (resizable array) 	Doubly Linked List (nodes with pointers)
+Access Time	✅ Fast random access (O(1) to get element)	❌ Slow random access (O(n) to get element)
+Insertion/Deletion	❌ Slow insert/delete (O(n)) in the middle	✅ Fast insert/delete (O(1)) at both ends (head/tail)
+Resizing	Automatic resizing (doubling the array size)	No resizing needed (as nodes are linked)
+Use Case	Best when you frequently access elements (random access)	Best when you frequently add/remove elements at the ends
+
+Memory Trick to Remember:
+ArrayList:
+Array = "Fast Access" (O(1) for index)
+List = "Resizes, shifts" (O(n) for insertions/deletions)
+
+Imagine an Array where the elements are like seats in a row: Accessing a seat (element) is fast, but moving a person (inserting/removing) takes time because everyone shifts!
+
+LinkedList:
+Linked = "Fast insertion/removal" (O(1) at ends)
+List = "Needs to walk" (O(n) for access)
+
+Imagine a chain of people, where each person knows who’s next, but you have to walk down the chain to find someone!
+
+# Common Interview Questions:
+What happens when you insert an element in the middle of an ArrayList?
+
+In an ArrayList, it requires shifting all the subsequent elements to make space, which takes O(n) time.
+
+When would you use a LinkedList over an ArrayList?
+
+LinkedList is better when insertions and deletions happen frequently, especially at the beginning or end of the list, as it provides O(1) time for these operations.
+
+Which one is faster for accessing elements by index?
+
+ArrayList is faster for accessing elements by index because it has direct access (O(1)) using an internal array, whereas LinkedList needs to traverse (O(n)).
+
+What is the memory overhead for a LinkedList?
+
+A LinkedList uses more memory because each node stores two pointers (one to the next node and one to the previous), while an ArrayList only stores the elements themselves in a dynamic array.
+
+# 4. Stack vs Queue
+These two data structures are commonly asked to test your understanding of how data is added/removed.
+
+
+Feature	            Stack	                    Queue
+Access Order	LIFO (Last In First Out)	FIFO (First In First Out)
+Insertion/Deletion	✅ Push and Pop (add/remove from the top)	✅ Enqueue and Dequeue (add/remove from the ends)
+Use Case	Best for reversing things, or when you need to process in reverse order (e.g., undo operations)	Best for processing in order (e.g., task scheduling, queue management)
+Memory Trick for Stack vs Queue:
+Stack: Think of a stack of plates—you add a plate on top, and you take the top plate. Last plate added is the first plate taken.
+
+Queue: Think of a line at a movie theater—the first person in line is the first one out.
+
+# 5. ArrayList vs Vector
+Sometimes, interviewers ask about ArrayList vs Vector, especially about thread safety and performance.
+
+
+Feature	            ArrayList	                                Vector
+Thread Safety	❌ Not synchronized (not thread-safe)	✅ Synchronized (thread-safe)
+Growth Behavior	Resizes dynamically (doubling size)	      Resizes dynamically, but doubles size on each addition
+Performance	    ✅ Faster for single-threaded operations	   ❌ Slower due to synchronization overhead
+Use Case	Best when thread safety is not a concern	Use when you need thread safety, but beware of performance cost
+
+Memory Trick for ArrayList vs Vector:
+ArrayList: Think of a single-user database—no synchronization overhead, but works fast.
+Vector: Think of a multi-user database—everyone is careful to not step on each other, which makes it slower but safer.
+
+Conclusion for Interview Prep:
+
+-LinkedList vs HashMap: LinkedList is good for fast insertions/removals, HashMap for fast lookups.
+-ArrayList vs LinkedList: ArrayList is best for fast access, LinkedList for frequent insertions/-removals.
+-HashMap vs TreeMap: HashMap is for fast, unsorted lookups; TreeMap is for sorted data.
+-Stack vs Queue: Stack is LIFO, Queue is FIFO—think of the order of operations!
+-ArrayList vs Vector: ArrayList is faster for single-threaded, Vector is thread-safe but slower.
+
+
+# 1. LinkedList vs HashMap
+This is a common comparison, especially when interviewing for roles involving data structure understanding.
+
+
+Feature	            LinkedList	                    HashMap
+Structure	    Doubly Linked List (each node points to the next and previous node)	Hash Table (stores key-value pairs using hashing)
+Insertion/Deletion	✅ Fast at both ends (O(1))	✅ Fast for adding/updating values (O(1) average)
+Access by Index	    ❌ Slow (O(n), requires traversal)	❌ No index (access via key)
+Search Time	    ❌ Slow (O(n), requires traversal)	✅ Fast (O(1) average for searching by key)
+Memory Usage	❌ High memory overhead (pointers for next/prev nodes)	✅ Moderate memory usage (only key-value pairs stored)
+Use Case	Best for frequent insertions/deletions at the ends	Best for fast lookups with key-value pairs
+
+Memory Trick for LinkedList vs HashMap:
+LinkedList: Think of a Linked Chain—you need to walk through each link to find what you want. Slow access but fast at the ends (inserting/removing).
+HashMap: Think of a Map with Keys—you can instantly jump to a key (like having a direct address), making fast lookups. But no order like a linked list.
+
+
+
+
+
+
+
+
+
+
+
+//----------------------------------
+but intervirew is asking how trree in sorted
+
+A TreeMap in Java is backed by a Red-Black Tree (a type of self-balancing binary search tree). Here’s how it works to maintain the sorting of keys:
+
+Red-Black Tree in Simple Terms:
+Binary Search Tree (BST):
+
+A BST is a type of tree where the left child node is always smaller than the parent, and the right child node is always greater. This property ensures that if you traverse the tree, you'll get the keys in sorted order.
+
+Self-Balancing:
+
+Over time, as elements are inserted and removed, the tree can become unbalanced, leading to poor performance (like a linked list).
+
+The Red-Black Tree is a type of self-balancing binary search tree, which means it automatically keeps itself balanced after each insertion or removal, maintaining efficient access.
+
+Coloring:
+
+Every node in a Red-Black Tree is colored either red or black.
+
+The tree maintains certain rules about how the colors should be distributed to ensure it remains balanced.
+
+These rules help in ensuring that the longest path from the root to a leaf is no more than twice the length of the shortest path, thus keeping the tree balanced.
+
+Sorting:
+The sorting in TreeMap is ensured by the binary search tree property:
+
+When you insert a key, it’s placed in the correct position in the tree (relative to other keys) using the ordering rules.
+
+By default, it uses the natural ordering of the keys (like ascending order for numbers, alphabetical for strings).
+
+If a custom comparator is provided, it will use that for ordering.
+
+How Insertion Works (to Keep Sorted):
+When a new key is added to a TreeMap, it follows these steps:
+
+Find the correct position: The tree is traversed to find where the new key should go. The left child will always be smaller, and the right child will always be larger.
+
+Insert the key: Once the correct spot is found, the key is added.
+
+Balance the tree: After insertion, the tree checks its balancing rules (red-black properties) and adjusts the tree structure if necessary (e.g., rotating nodes).
+
+Example:
+If we insert the keys: 10, 20, 5, 15, 25 into a TreeMap:
+
+Start with 10: The tree is empty, so 10 is placed as the root.
+
+Insert 20: 20 is greater than 10, so it goes to the right.
+
+Insert 5: 5 is less than 10, so it goes to the left.
+
+Insert 15: 15 is greater than 10 but less than 20, so it goes to the left of 20.
+
+Insert 25: 25 is greater than both 10 and 20, so it goes to the right of 20.
+
+The TreeMap now has the keys: 5, 10, 15, 20, 25 in sorted order.
+
+Key Takeaway for Interviews:
+A TreeMap in Java keeps its keys sorted using a Red-Black Tree.
+
+The BST property ensures that each key is inserted in a sorted position relative to others.
+
+It’s self-balancing, meaning it automatically adjusts to keep the tree balanced for efficient operations.
+
+🌳 Memory Trick for Interview:
+Red-Black Tree = "Sorted but Balanced"
+
+Red: The color, but more importantly, it means the tree is balanced.
+
+Black: The color, indicating that the tree maintains a structure that ensures efficient operations.
+
+
+# Common Annotations in Spring Framework
+Annotations in Spring help define beans, inject dependencies, map web requests, and configure the application in a declarative way (using metadata instead of XML).
+
+1. @Component
+Marks a class as a Spring-managed bean.
+2. @Service
+Specialized version of @Component, used for service layer classes.
+3. @Repository
+Used for DAO classes. Provides database exception translation.
+4. @Controller
+Used in Spring MVC to define a web controller.
+5. @RestController
+Combines @Controller + @ResponseBody. Used for REST APIs.
+6. @Autowired
+Automatically injects dependencies by type.
+7. @Qualifier
+Used with @Autowired when there are multiple beans of the same type.
+8. @Value
+Injects values from application.properties.
+example:
+    @Value("${server.port}")
+    private int port;
+9. @Configuration
+Marks a class that defines Spring beans via methods.
+10. @Bean
+Declares a bean inside a @Configuration class.
+11. @RequestMapping, @GetMapping, @PostMapping
+Maps HTTP requests to handler methods.
+12. @PathVariable and @RequestParam
+Extract values from the URL path or query string.
+
+# 1. What is Spring Framework?
+Spring is a powerful, feature-rich framework for building Java applications. It provides comprehensive infrastructure support for developing Java applications, especially enterprise applications.
+
+Core Features:
+Dependency Injection (IoC)
+Aspect-Oriented Programming (AOP)
+Transaction Management
+MVC Web Applications (Spring MVC)
+Security, Batch, JDBC, ORM, etc.
+
+2. What is Spring Boot?
+Spring Boot is built on top of Spring Framework to simplify and speed up the development of Spring applications.
+It eliminates the need for extensive configuration.
+
+Key Features:
+Auto-configuration
+Embedded server (Tomcat/Jetty)
+Spring Initializer & Starter Dependencies
+No need for XML configuration
+Built-in support for REST, JPA, Actuator, etc.
+
+# Spring framework  vs Spring Boot – Key Differences
+
+Feature	            Spring Framework        	Spring Boot
+Configuration	Manual (XML/Java-based)         	Auto-configured
+Server Setup	Requires external server (Tomcat, etc.)	    Comes with embedded server
+Dependency Management	Manual via pom.xml	        Uses starter dependencies
+Project Setup	    Requires time & effort	        Spring Initializr makes setup quick
+Complexity	        Requires deep knowledge of Spring	    Simplified for rapid development
+Microservices Support      Not directly supported   	Designed for microservices architecture
+Learning Curve	Steeper	    Easier for beginners
+
+Benefits of Using Spring Boot:
+Faster Development – Reduced boilerplate and configurations.
+Microservices Ready – Ideal for cloud-native and microservices apps.
+Auto Configuration – Smart default configurations.
+Embedded Server – No need to deploy WARs separately.
+Actuator – Built-in monitoring and health check endpoints.
+Easy Testing – Pre-configured test dependencies.
+
+# How to Define and Use Profiles in Spring Boot:
+1. Define Profiles in application.properties or application.yml
+You can create multiple configuration files for different profiles:
+application.properties (default)
+application-dev.properties (for dev profile)
+application-prod.properties (for prod profile)
+
+# diff  Query Parameters and Path Parameters
+1. Query Parameters:
+Definition:
+Query parameters are key-value pairs that appear after the question mark (?) in a URL. They are typically used to filter, sort, or provide additional data to a request.
+2. Path Parameters:
+Definition:
+Path parameters are part of the URL path itself, often used to identify specific resources. They are typically used when accessing a particular resource or group of resources.
+example: http://example.com/resource/{parameter}
+
+# Handle encryption and way in spring Boot 
+1. Use of Spring Security for Encryption
+Spring Security provides built-in support for encryption. You can use it to encrypt passwords and other sensitive information.
+
+Steps to handle encryption in Spring Boot with Spring Security:
+a. Add Dependencies in pom.xml
+You need to add Spring Security dependency to your pom.xml to use encryption utilities.
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+b. Example of Password Encryption Using BCrypt
+BCrypt is a popular algorithm for password hashing, which automatically handles salting and hashing the passwords.
+example:
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+public EncryptionService() {
+        this.passwordEncoder = new BCryptPasswordEncoder(); // Default strength 10
+    }
+
+# Sql injection how to prevent ?
+SQL injection is a serious security vulnerability that allows an attacker to interfere with the queries that your application makes to its database. This can lead to unauthorized access to sensitive data, modification of data, and even complete system compromise. Here are some best practices for preventing SQL injection:
+7. Use Web Application Firewalls (WAFs)
+A Web Application Firewall can help detect and block SQL injection attacks by monitoring and filtering HTTP requests before they reach your application.
+Many WAFs have rules that detect and block known SQL injection attack patterns.
+
+8. Error Handling
+Avoid detailed error messages that reveal internal database information.
+Never show SQL error details to users because this can provide attackers with hints on the structure of your database or the queries that are being executed.
+
+5. Limit Database Permissions
+Principle of Least Privilege: Ensure that the database user connecting to the database has only the permissions necessary for the application’s functionality.
+For example, avoid using the root or admin account for normal database queries. Instead, create a user account with only SELECT, INSERT, or UPDATE permissions, as required.
+
+# Steps to Write JUnit Test Cases
+1.make sure to add the JUnit dependency For Maven (pom.xml):
+@Test Annotation: Each test method is annotated with @Test to mark it as a test case. This tells JUnit to run it as part of the test suite.
+assertEquals(expected, actual): Used to verify that the expected result matches the actual result. If the assertion fails, the test fails.
+assertThrows: Used to verify that an exception is thrown when an operation is performed. In the testDivideByZero() method, we are checking that dividing by zero results in an ArithmeticException.
+Custom Error Message: You can provide a custom error message to describe the expected behavior if the assertion fails, e.g., "Addition should return correct result".
+
+# Mockito Overview
+Mockito is a popular mocking framework for unit testing in Java. It is mainly used for mocking the behavior of dependencies in unit tests so that you can isolate the unit of work you're testing. With Mockito, you can create mock objects and define their behavior, allowing you to focus on the behavior of the unit under test while ensuring that external dependencies (like databases, web services, etc.) do not interfere with the tests.
+
+Key Concepts in Mockito:
+Mocking: Creating mock objects that simulate the behavior of real objects in a controlled way.
+Stubbing: Defining the behavior of mocked methods.
+Verification: Checking if certain methods were called on the mocks.
+Argument Capturing: Capturing arguments passed to mocked methods.
+
+# diff primary and unique key
+Feature	            Primary Key     	         Unique Key
+Uniqueness	            Yes              	        Yes
+NULLs Allowed	        No	                        Yes (1+ allowed)
+Number Allowed	        Only one per table	        Multiple allowed
+Default Index	    Clustered (usually)         	Non-clustered (usually)
+Purpose	Main            identifier	                Alternate identifier
+
+# Foreign Key:
+A Foreign Key in SQL is a constraint used to link two tables together. It ensures referential integrity by enforcing a relationship between a column in one table (child) and the primary key in another table (parent).
+
+Key Points:
+A foreign key in one table points to the primary key in another table.
+Ensures only valid values are inserted into the child table.
+Helps maintain data consistency between related tables.
+
+# diff jpa and hibernet
+Feature	                JPA	                                    Hibernate
+It’s just a specification (rules/standard).	        It’s an implementation of JPA.
+Tells how ORM (Object Relational Mapping) should work.	 Actually provides the code to make ORM work.
+Code Available: only interfaces and rules.	             Yes, real classes and methods you can use.
+Examples:Interfaces like EntityManager, annotations like @Entity, @Table.	Classes like SessionFactory, Session, and extra features.
+
+conclusion:
+JPA = Rules (API)
+Hibernate = Tool that follows and extends the rules
+
+# CI/CD (Continuous Integration / Continuous Deployment)
+CI/CD is a set of practices used in DevOps to automate the process of software development, testing, and deployment.
+
+1. Continuous Integration (CI)
+What it is:
+Developers frequently push code to a shared repository (e.g., GitHub).
+Each code push triggers automated build and tests.
+Goal: Detect issues early.
+
+Tools:Jenkins,GitHub Actions,GitLab CI,Travis CI,CircleCI
+
+2. Continuous Deployment / Delivery (CD)
+Continuous Delivery:
+Every change is automatically tested and ready for deployment.
+Deployment to production is a manual step.
+Continuous Deployment:
+Every successful change is automatically deployed to production with no manual step.
+
+Tools:Jenkins + Docker + Kubernetes,ArgoCD,Spinnaker,AWS CodePipeline,Azure DevOps
+
+CI/CD Pipeline Flow:
+Developer commits code
+CI pipeline triggers:
+-Builds code
+-Runs tests (unit, integration)
+-Performs static code analysis
+CD pipeline (optional manual approval):
+-Deploys to staging/production
+-Runs smoke tests
+Monitoring and alerting after deployment
+
+Benefits of CI/CD:
+Faster development cycles
+Higher code quality
+Early bug detection
+Safer and reliable deployments
+Automation reduces human error
+
+# How donu get result of future object 
+You can get the result of a Future object using the get() method. It waits for the task to complete and returns the result.
+
+#  implement caching with eviction in Spring Boot( using @CacheEvict.)
+Approach:
+Use @Cacheable to cache the getProductById(id) method.
+Use @CacheEvict in the updateProduct() method to clear the cache when a product is updated.
+-You put it on a method, NOT in application.properties.
+example:
+@Service
+public class UserService {
+
+    @CacheEvict(value = "users", key = "#userId")
+    public void deleteUser(Long userId) {
+        // logic to delete user from database
+    }
+}
+
+# You have millions of records, and it's not feasible to cache everything (due to memory constraints). So, you need a smart caching strategy that evicts old or less frequently used entries.
+2. Goal
+Only cache the most relevant data
+Automatically evict less important or old data,so use LRU (Least Recently Used)	which Evicts the entry that hasn't been accessed in the longest time
+
+# Lru how implement 
+Approach:
+We use a combination of:
+HashMap: for O(1) access to key-value pairs
+Doubly Linked List: to maintain order of usage (most recently used at head, least at tail)
+
+Operations:
+get(key):If key exists, move the node to the head and return value Else, return -1.
+put(key, value):If key exists, update value and move node to head If not Add new node to head.
+If over capacity, remove the tail node.
+
+# how to implenet redis lru
+1. Configure Redis LRU Policy
+Update your Redis configuration (redis.conf or using redis-cli):
+2. Spring Boot Redis Configuration with TTL (Optional)
+4. Caching Your Data with @Cacheable
+
+# system design for rate limiting
+1. Problem Statement
+Design a rate-limiting service that restricts users to a defined number of requests per minute/hour/day.
+The system should be scalable, accurate, and highly available.
+
+2. Requirements
+Functional:
+Limit each user to N requests per time window (e.g., 100 req/min)
+Should work in a distributed/multi-instance environment
+Must support per-user, per-endpoint limits
+
+Non-Functional:
+High throughput & low latency,Scalable (millions of users),Fault-tolerant,Real-time response
+
+3. High-Level Compone:
+
+           +--------------+
+           |   Client     |
+           +------+-------+
+                  |
+                  v
+        +--------------------+
+        |   API Gateway /    |
+        |   Reverse Proxy    |
+        +--------+-----------+
+                 |
+                 v
+         +---------------+
+         | Rate Limiter  |
+         +---------------+
+                 |
+         +---------------+
+         | Redis / Cache |
+         +---------------+
+                 |
+                 v
+         +------------------+
+         | Backend Services |
+         +------------------+
+
+4. Component Breakdown
+1. API Gateway / Load Balancer
+Entry point to your system
+Redirects traffic to microservices
+Can implement basic rate-limiting via plugins (e.g., NGINX/Kong)
+
+2. Rate Limiter Service
+Core logic for applying rate limits
+Stateless
+Horizontally scalable
+
+3. Redis (or Memcached)
+Stores rate limit counters
+Fast in-memory access
+Supports atomic operations, expiration (TTL)
+
+4. Backend
+Your actual business logic
+Only receives requests allowed by the limiter
+
+# 1. What is CAP Theorem?
+CAP stands for:
+Consistency:Every read gets the latest write
+Availability:Every request gets a (non-error) response
+Partition Tolerance:System continues to operate even if parts fail
+
+# 1. What is the @Transactional Annotation?
+The @Transactional annotation is used to define the boundaries of a transaction. A transaction is a sequence of operations that must all be executed together. If any of the operations fail, the entire transaction is rolled back, ensuring data consistency.
+example:
+@Service
+public class PaymentService {
+
+    @Transactional
+    public void transferFunds(Long fromAccountId, Long toAccountId, Double amount) {
+        // debit from the 'from' account
+        accountRepository.debit(fromAccountId, amount);
+        
+        // credit to the 'to' account
+        accountRepository.credit(toAccountId, amount);
+        
+        // If an exception is thrown here, the entire transaction will be rolled back.
+    }
+}
 
 
 
