@@ -45,7 +45,14 @@ Explanation 1:
  The return linked list is the flatten sorted list.
  */
 
-
+class ListNode {
+    int val;
+    ListNode right, down;
+    ListNode(int x) {
+        val = x;
+        right = down = null;
+    }
+}
 
 public class flattenLinkedList {
     ListNode flatten(ListNode root) {

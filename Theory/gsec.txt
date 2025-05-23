@@ -1,0 +1,52 @@
+How many microservices here
+
+
+ChatGPT said:
+In the Issuance Module of the G-Sec Project, multiple microservices can be identified
+based on different responsibilities. Here’s a breakdown:
+
+Estimated Microservices in the Issuance Module
+1)Auction Management Service
+
+Handles auction creation by RBI.
+
+Manages auction parameters (bond type, interest rate, quantity).
+
+Provides an API for banks to view and participate in auctions.
+
+2)Bidding Service
+
+Manages bid placement by banks.
+
+Validates bid amounts and locks WCBDC funds in the bidder's wallet.
+
+Ensures compliance with auction rules.
+
+3)Bid Evaluation & Approval Service
+
+Allows RBI to review bids.
+
+Handles bid approval or rejection.
+
+Transfers locked WCBDC funds from winning bank’s wallet to RBI.
+
+4)Bond Issuance Service
+
+Allocates bonds to the winning bank after payment confirmation.
+
+Updates RBI’s bond inventory.
+
+5)Wallet Service (WCBDC Management)
+
+Manages WCBDC wallets for banks and RBI.
+
+Handles fund reservation and final settlement of winning bids.
+
+6)Bridge Communication Service
+
+Facilitates secure transactions between G-Sec and WCBDC networks.
+
+Ensures cross-network transaction verification and processing.
+
+Total: 6 Microservices
+Each of these microservices operates independently, ensuring modularity and scalability. Let me know if you need more details on their interactions!

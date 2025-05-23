@@ -1,0 +1,12 @@
+1. Key Features of UPI
+Instant Fund Transfer: Money can be transferred 24/7 without requiring bank details, only using a UPI ID.
+Multiple Bank Accounts: One UPI app can handle multiple bank accounts.
+QR Code Payments: Supports scanning QR codes for payments.
+Two-Factor Authentication: Secure transactions using MPIN.
+Auto-Pay & Recurring Payments: UPI 2.0 introduced auto-pay features for bills, subscriptions, etc.
+
+5. Use Cases of UPI
+Peer-to-peer (P2P) payments.
+Bill payments (electricity, water, mobile recharges).
+E-commerce & online shopping.
+Business-to-business (B2B) transactions.
